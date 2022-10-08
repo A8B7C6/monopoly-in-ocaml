@@ -21,9 +21,5 @@ finalcheck:
 	@bash check.sh final
 
 zip:
-	rm -f enigma.zip
-	zip -r enigma.zip . -x@exclude.lst
-
-clean:
-	dune clean
-	rm -f enigma.zip
+	rm -f monopoly.zip
+	zip -r monopoly.zip . -x@exclude.lst
