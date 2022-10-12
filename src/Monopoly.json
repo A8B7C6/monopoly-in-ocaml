@@ -1,0 +1,15 @@
+{
+  "0": {
+    "tile type": "go"
+  },
+  "1": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Mediterranean Avenue",
+      "price": "60"
+    },
+    "2": {
+      "title type": "cc"
+    }
+  }
+}
