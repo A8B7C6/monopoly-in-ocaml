@@ -7,6 +7,7 @@
 *.native
 *.byte
 _build
+.ocamlinit
 
 # temporary files
 *.swp
