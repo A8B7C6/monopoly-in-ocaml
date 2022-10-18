@@ -18,6 +18,11 @@ let property_record lst =
     price = lst |> member "price" |> to_int;
   }
 
+let rec find_tile (index : int) (tiles : (int * tile_type) list) =
+  match tiles with
+  | (x, y) :: t -> if x = index then y else find_tile index t
+  | [] -> raise Not_found
+
 let rec initialize_tiles index (json : Yojson.Basic.t)
     (tiles_map : (int * tile_type) list) =
   if index = 39 then tiles_map
