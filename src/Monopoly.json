@@ -10,6 +10,233 @@
     }
   },
   "2": {
-    "title type": "cc"
+    "tile type": "cc"
+  },
+  "3": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Baltic Avenue",
+      "price": "60"
+    }
+  },
+  "4": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Income Tax",
+      "price": "200"
+    }
+  },
+  "5": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Reading Railroad",
+      "price": "200"
+    }
+  },
+  "6": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Oriental Avenue",
+      "price": "100"
+    }
+  },
+  "7": {
+    "tile type": "chance"
+  },
+  "8": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Vermont Avenue",
+      "price": "100"
+    }
+  },
+  "9": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Connecticut Avenue",
+      "price": "120"
+    }
+  },
+  "10": {
+    "tile type": "go"
+  },
+  "11": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "St. Charles Place",
+      "price": "140"
+    }
+  },
+  "12": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Electric Company",
+      "price": "150"
+    }
+  },
+  "13": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "States Avenue",
+      "price": "140"
+    }
+  },
+  "14": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Virginia Avenue",
+      "price": "160"
+    }
+  },
+  "15": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Pennsylvania Railroad",
+      "price": "200"
+    }
+  },
+  "16": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "St. James Place",
+      "price": "180"
+    }
+  },
+  "17": {
+    "tile type": "cc"
+  },
+  "18": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Tennessee Avenue",
+      "price": "180"
+    }
+  },
+  "19": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "New York Avenue",
+      "price": "200"
+    }
+  },
+  "20": {
+    "tile type": "go"
+  },
+  "21": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Kentucky Avenue",
+      "price": "220"
+    }
+  },
+  "22": {
+    "tile type": "chance"
+  },
+  "23": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Indiana Avenue",
+      "price": "220"
+    }
+  },
+  "24": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Illinois Avenue",
+      "price": "240"
+    }
+  },
+  "25": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "B & O Railroad",
+      "price": "200"
+    }
+  },
+  "26": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Atlantic Avenue",
+      "price": "260"
+    }
+  },
+  "27": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Ventnor Avenue",
+      "price": "260"
+    }
+  },
+  "28": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Water Works",
+      "price": "150"
+    }
+  },
+  "29": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Marvin Gardens",
+      "price": "280"
+    }
+  },
+  "30": {
+    "tile type": "jail"
+  },
+  "31": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Pacific Avenue",
+      "price": "300"
+    }
+  },
+  "32": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "North Carolina Avenue",
+      "price": "300"
+    }
+  },
+  "33": {
+    "tile type": "cc"
+  },
+  "34": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Pennsylvania Avenue",
+      "price": "320"
+    }
+  },
+  "35": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Short Line",
+      "price": "200"
+    }
+  },
+  "36": {
+    "tile type": "chance"
+  },
+  "37": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Park Place",
+      "price": "350"
+    }
+  },
+  "38": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Luxury Tax",
+      "price": "75"
+    }
+  },
+  "39": {
+    "tile type": "property",
+    "contents": {
+      "tile name": "Boardwalk",
+      "price": "400"
+    }
   }
 }
