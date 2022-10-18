@@ -1,5 +1,7 @@
 open OUnit2
+open Monopoly
 open Locations
+open Player
 
 (** [sample_test name input expected_output] constructs an OUnit test named
     [name] that asserts the quality of [expected_output] with [input]. *)
