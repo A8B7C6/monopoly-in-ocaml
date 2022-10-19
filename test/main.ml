@@ -13,8 +13,12 @@ open Player
    initialize_tiles_test (name : string) (json : Yojson.Basic.t)
    (expected_output : (int * tile_type) list) : test = name >:: fun _ ->
    assert_equal json expected_output *)
+let mono = Yojson.Basic.from_file "Monopoly.json"
 
-let locations_tests = []
+let tiles_list_test name json expected : test =
+  name >:: fun _ -> assert_equal expected (tiles_list json)
+
+let locations_tests = [ (*tiles_list_test "full monopoly board" mono () *) ]
 let board_tests = []
 
 let suite =
