@@ -8,8 +8,9 @@
 (* Helper method utilized to simulate a single dice roll. Returns a number
    utilizing built-in Random module, reseeds the generator with the current UNIX
    time.*)
-(* let roll_dice () = let _ = Random.init (int_of_float (Unix.gettimeofday ()))
-   in Random.int 5 + 1 *)
+let roll_dice () =
+  let _ = Random.init (int_of_float (Unix.gettimeofday ())) in
+  Random.int 5 + 1
 
 (** [do_turn player] takes a player type and returns a new player with the
     updated board position after a dice roll *)

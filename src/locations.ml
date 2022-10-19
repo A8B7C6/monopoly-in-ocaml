@@ -34,7 +34,7 @@ let parse_tile_type tile =
 
 let rec parse_tiles (index : int) (json : Yojson.Basic.t)
     (tiles_map : (int * tile_type) list) =
-  if index = 39 then tiles_map
+  if index = 40 then tiles_map
   else
     let tile = json |> member (string_of_int index) in
     parse_tiles (index + 1) json ((index, parse_tile_type tile) :: tiles_map)
