@@ -25,20 +25,23 @@ let property_record contents =
   End of Helper Functions
   *************************************************************************)
 
-let parse_tile_type tile = raise (Failure "unimplemented parse_tile_type")
-let tiles_list json = raise (Failure "unimplemented tiles_list")
+let parse_tile_type tile =
+  let tile_type = tile |> member "tile type" |> to_string in
+  match tile_type with
+  | "property" -> Property (property_record (loc_contents tile))
+  | "go" -> Go
+  | _ -> assert false
+
+let rec parse_tiles (index : int) (json : Yojson.Basic.t)
+    (tiles_map : (int * tile_type) list) =
+  if index = 39 then tiles_map
+  else
+    let tile = json |> member (string_of_int index) in
+    parse_tiles (index + 1) json ((index, parse_tile_type tile) :: tiles_map)
+
+let tiles_list json = parse_tiles 0 json []
 
 let rec find_tile index tiles =
   match tiles with
   | (x, y) :: t -> if x = index then y else find_tile index t
   | [] -> raise Not_found
-
-(* let rec initialize_tiles index (json : Yojson.Basic.t) (tiles_map : (int *
-   tile_type) list) = if index = 39 then tiles_map else let tile = json |>
-   member (string_of_int index) in let tile_type = tile |> member "tile type" |>
-   to_string in match tile_type with | "property" -> (index, Property
-   (property_record (property_contents tile))) :: tiles_map |> initialize_tiles
-   (index + 1) json | "go" -> (index, Go) :: tiles_map |> initialize_tiles
-   (index + 1) json | _ -> assert false
-
-   let parse_board json = initialize_tiles 0 json [] *)
