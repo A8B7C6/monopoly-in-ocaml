@@ -14,6 +14,10 @@ open Player
    (expected_output : (int * tile_type) list) : test = name >:: fun _ ->
    assert_equal json expected_output *)
 
+let locations_tests = []
 let board_tests = []
-let suite = "Monopoly Test Suite: " >::: List.flatten [ board_tests ]
+
+let suite =
+  "Monopoly Test Suite: " >::: List.flatten [ locations_tests; board_tests ]
+
 let _ = run_test_tt_main suite

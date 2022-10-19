@@ -1,4 +1,4 @@
 (library
- (name Monopoly)
+ (name monopoly)
  (public_name Monopoly)
  (libraries yojson ANSITerminal))
