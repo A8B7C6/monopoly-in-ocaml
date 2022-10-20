@@ -9,6 +9,7 @@ type tile_type =
 
 val to_json : string -> Yojson.Basic.t
 val loc_contents : Yojson.Basic.t -> Yojson.Basic.t
+val make_contents : string -> int -> tile_type
 val make_tile : int -> string -> string -> int -> int * tile_type
 val property_record : Yojson.Basic.t -> _property
 

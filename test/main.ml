@@ -24,9 +24,12 @@ let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
 let tiles_list_test name json expected : test =
   name >:: fun _ -> assert_equal expected (tiles_list json)
 
+let find_tile_test name index tiles expected : test =
+  name >:: fun _ -> assert_equal expected (find_tile index tiles)
+
 let locations_tests =
   [
-    tiles_list_test "full monopoly board" mono
+    tiles_list_test "tiles_list_test: full monopoly board" mono
       [
         make_tile 0 "go" "" 0;
         make_tile 1 "property" "Mediterranean Avenue" 60;
@@ -69,6 +72,12 @@ let locations_tests =
         make_tile 38 "property" "Luxury Tax" 75;
         make_tile 39 "property" "Boardwalk" 400;
       ];
+    find_tile_test "find_tile_test: go" 0 (tiles_list mono) Go;
+    find_tile_test "find_tile_test: property" 1 (tiles_list mono)
+      (make_contents "Mediterranean Avenue" 60);
+    find_tile_test "find_tile_test: cc" 2 (tiles_list mono) CommunityChest;
+    find_tile_test "find_tile_test: chance" 7 (tiles_list mono) Chance;
+    find_tile_test "find_tile_test: jail" 30 (tiles_list mono) Jail;
   ]
 
 (*let board_tests = []*)
