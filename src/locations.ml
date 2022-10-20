@@ -1,19 +1,31 @@
 open Yojson.Basic.Util
 
-type property = {
+type _property = {
   name : string;
   price : int;
 }
 
 type tile_type =
-  | Property of property
+  | Property of _property
   | Go
+  | CommunityChest
+  | Chance
+  | Jail
 
 (***************************************************************************
   Helper Functions
   *************************************************************************)
 let to_json json = Yojson.Basic.from_file json
 let loc_contents j = j |> member "contents"
+
+let make_tile (index : int) type_of_tile name price =
+  match type_of_tile with
+  | "property" -> (index, Property { name; price })
+  | "go" -> (index, Go)
+  | "cc" -> (index, CommunityChest)
+  | "chance" -> (index, Chance)
+  | "jail" -> (index, Jail)
+  | _ -> assert false
 
 let property_record contents =
   {
@@ -30,11 +42,14 @@ let parse_tile_type tile =
   match tile_type with
   | "property" -> Property (property_record (loc_contents tile))
   | "go" -> Go
+  | "cc" -> CommunityChest
+  | "chance" -> Chance
+  | "jail" -> Jail
   | _ -> assert false
 
 let rec parse_tiles (index : int) (json : Yojson.Basic.t)
     (tiles_map : (int * tile_type) list) =
-  if index = 40 then tiles_map
+  if index = 1 then tiles_map
   else
     let tile = json |> member (string_of_int index) in
     parse_tiles (index + 1) json ((index, parse_tile_type tile) :: tiles_map)

@@ -1,1 +1,1 @@
-(* val roll_dice : unit -> int *)
+val roll_dice : unit -> int
