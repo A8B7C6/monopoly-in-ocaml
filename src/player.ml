@@ -1,5 +1,5 @@
 type player = {
-  board_position : int;
+  mutable board_position : int;
   name : string;
 }
 

@@ -14,7 +14,3 @@ _build
 *~
 \#*\#
 .DS_Store
-
-# temproarily ignore
-dune 
-src
