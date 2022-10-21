@@ -1,6 +1,7 @@
 open OUnit2
 open Monopoly
 open Locations
+open Board
 (*open Player*)
 
 (*let rec print_tile_list (list : (int * tile_type) list) = match list with | []
@@ -26,6 +27,14 @@ let tiles_list_test name json expected : test =
 
 let find_tile_test name index tiles expected : test =
   name >:: fun _ -> assert_equal expected (find_tile index tiles)
+
+let check_single_roll result = result >= 1 && result <= 6
+
+let roll_dice_test name expected : test =
+  name >:: fun _ ->
+  assert_equal expected
+    (check_single_roll (roll_dice ()))
+    ~printer:string_of_bool
 
 let locations_tests =
   [
@@ -80,10 +89,18 @@ let locations_tests =
     find_tile_test "find_tile_test: jail" 30 (tiles_list mono) Jail;
   ]
 
-(*let board_tests = []*)
+let board_tests =
+  [
+    roll_dice_test "roll_dice_test: 1st roll" true;
+    roll_dice_test "roll_dice_test: 2nd roll" true;
+    roll_dice_test "roll_dice_test: 3rd roll" true;
+    roll_dice_test "roll_dice_test: 4th roll" true;
+    roll_dice_test "roll_dice_test: 5th roll" true;
+    roll_dice_test "roll_dice_test: 6th roll" true;
+    roll_dice_test "roll_dice_test: 7th roll" true;
+  ]
 
 let suite =
-  "Monopoly Test Suite: "
-  >::: List.flatten [ locations_tests (*; board_tests*) ]
+  "Monopoly Test Suite: " >::: List.flatten [ locations_tests; board_tests ]
 
 let _ = run_test_tt_main suite

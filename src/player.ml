@@ -1,4 +1,4 @@
-type player = {
+type _player = {
   mutable board_position : int;
   name : string;
 }
