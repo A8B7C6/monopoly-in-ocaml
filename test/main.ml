@@ -42,7 +42,7 @@ let locations_tests =
         make_tile 7 "chance" "" 0;
         make_tile 8 "property" "Vermont Avenue" 100;
         make_tile 9 "property" "Connecticut Avenue" 120;
-        make_tile 10 "go" "" 0;
+        make_tile 10 "jail" "" 0;
         make_tile 11 "property" "St. Charles Place" 140;
         make_tile 12 "property" "Electric Company" 150;
         make_tile 13 "property" "States Avenue" 140;
@@ -52,7 +52,7 @@ let locations_tests =
         make_tile 17 "cc" "" 0;
         make_tile 18 "property" "Tennessee Avenue" 180;
         make_tile 19 "property" "New York Avenue" 200;
-        make_tile 20 "go" "" 0;
+        make_tile 20 "cc" "" 0;
         make_tile 21 "property" "Kentucky Avenue" 220;
         make_tile 22 "chance" "" 0;
         make_tile 23 "property" "Indiana Avenue" 220;
