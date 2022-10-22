@@ -1,3 +1,5 @@
+open Player
+
 (* Helper method utilized to simulate a single dice roll. Returns a number
    utilizing built-in Random module, reseeds the generator with the current UNIX
    time.*)
@@ -7,6 +9,7 @@ let roll_dice () =
 
 (** [do_turn player] takes a player type and returns a new player with the
     updated board position after a dice roll *)
+
 (* let do_turn (player : Player.player) : Player.player = (* before this we
    should output the player's turn has begun *) let dice1 = roll_dice () in let
    dice2 = roll_dice () in let total_movement = dice1 + dice2 in (* before this

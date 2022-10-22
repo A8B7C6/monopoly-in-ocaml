@@ -23,5 +23,5 @@
  `opam install -y ounit2 ANSITerminal <other packages>` <br>
 
 # Play Monopoly
- pass `dune build` into the terminal
- start game by typing '<fill in>' into your command line interface
+ pass `dune build` into the terminal <br>
+ start game by typing `dune exec bin/main.exe <your name> ` into your command line interface
