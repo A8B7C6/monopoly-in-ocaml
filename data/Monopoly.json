@@ -58,7 +58,7 @@
     }
   },
   "10": {
-    "tile type": "go"
+    "tile type": "jail"
   },
   "11": {
     "tile type": "property",
@@ -120,7 +120,7 @@
     }
   },
   "20": {
-    "tile type": "go"
+    "tile type": "cc"
   },
   "21": {
     "tile type": "property",
