@@ -9,13 +9,11 @@ type tile_type =
 
 val to_json : string -> Yojson.Basic.t
 val loc_contents : Yojson.Basic.t -> Yojson.Basic.t
-val make_contents : string -> int -> tile_type
+val loc_type : Yojson.Basic.t -> string
+val tile_type : string -> Yojson.Basic.t -> tile_type
+val tile_index : int -> Yojson.Basic.t -> int * tile_type
 val make_tile : int -> string -> string -> int -> int * tile_type
-val property_record : Yojson.Basic.t -> _property
-
-val parse_tile_type : Yojson.Basic.t -> tile_type
-(** [parse_tile_type tile] takes a tile, parse the tile into an approriate
-    record, and returns tile_type. Requires: a valid tile*)
+val make_contents : string -> int -> tile_type
 
 val tiles_list : Yojson.Basic.t -> (int * tile_type) list
 (** [tiles_list json] takes json representations of a monopoly board and returns

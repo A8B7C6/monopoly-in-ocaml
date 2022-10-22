@@ -4,23 +4,12 @@ open Locations
 open Board
 (*open Player*)
 
-(*let rec print_tile_list (list : (int * tile_type) list) = match list with | []
-  -> () | (a, Property {name; price}) :: rest -> Printf.printf "%i, %s; " a
-  Property { name; price }; print_tile_list rest | (a, b) :: rest ->
-  Printf.printf "%i, %s; " a b; print_tile_list rest*)
-
-(* (** [sample_test name input expected_output] constructs an OUnit test named
-   [name] that asserts the quality of [expected_output] with [input]. *) let
-   index_test (name : string) (input : string) (expected_output : string) : test
-   = name >:: fun _ -> assert_equal input expected_output
-
-   (** [sample_test name input expected_output] constructs an OUnit test named
-   [name] that asserts the quality of [expected_output] with [input]. *) let
-   initialize_tiles_test (name : string) (json : Yojson.Basic.t)
-   (expected_output : (int * tile_type) list) : test = name >:: fun _ ->
-   assert_equal json expected_output *)
 let data_dir_prefix = "data" ^ Filename.dir_sep
 let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
+
+(****************************************************************************
+  Helper Functions
+  ***************************************************************************)
 
 let tiles_list_test name json expected : test =
   name >:: fun _ -> assert_equal expected (tiles_list json)
@@ -36,6 +25,9 @@ let roll_dice_test name expected : test =
     (check_single_roll (roll_dice ()))
     ~printer:string_of_bool
 
+(****************************************************************************
+  End of Helper Functions
+  ***************************************************************************)
 let locations_tests =
   [
     tiles_list_test "tiles_list_test: full monopoly board" mono
