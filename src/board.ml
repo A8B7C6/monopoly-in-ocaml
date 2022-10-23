@@ -1,5 +1,3 @@
-open Player
-
 (* Helper method utilized to simulate a single dice roll. Returns a number
    utilizing built-in Random module, reseeds the generator with the current UNIX
    time.*)
