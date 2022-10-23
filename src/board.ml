@@ -3,7 +3,7 @@
    time.*)
 let roll_dice () =
   let _ = Random.init (int_of_float (Unix.gettimeofday ())) in
-  Random.int 5 + 1
+  Random.int 11 + 2 (*dice roll ranges from 2 to 12*)
 
 (** [do_turn player] takes a player type and returns a new player with the
     updated board position after a dice roll *)
