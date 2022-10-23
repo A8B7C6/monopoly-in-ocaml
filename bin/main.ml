@@ -4,24 +4,31 @@ open Board
 
 let do_turn (player : _player) =
   let cur = player.board_position in
-  let new_pos = cur + roll_dice () in
+  let dice_roll = roll_dice () in
+  print_endline ("You rolled a " ^ (dice_roll |> string_of_int));
+  let new_pos = cur + dice_roll in
   if new_pos > 39 then player.board_position <- new_pos - 39
   else player.board_position <- new_pos
 
-let player_one =
-  print_endline "What is your name?";
-  let name = read_line () in
-  init_player name
+let play_monopoly player =
+  let p1name = player.name in
+  print_endline
+    ("\n" ^ p1name ^ ", your current position is "
+    ^ (player |> get_board_position |> string_of_int)
+    ^ "\n");
 
-let play_monopoly =
-  let p1 = player_one in
-  do_turn p1;
-  print_endline (p1.board_position |> string_of_int)
+  do_turn player;
+  print_endline
+    (p1name ^ ", your new board position is "
+    ^ (player |> get_board_position |> string_of_int))
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
   ANSITerminal.print_string [ ANSITerminal.red ] "\n\nLet's play Monopoly.\n";
-  play_monopoly
+  print_endline "What is your name?";
+  let name = read_line () in
+  let p1 = init_player name in
+  play_monopoly p1
 
 (* Execute the game engine. *)
 
