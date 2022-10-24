@@ -7,7 +7,7 @@ let do_turn (player : _player) =
   let dice_roll = roll_dice () in
   print_endline ("You rolled a " ^ (dice_roll |> string_of_int));
   let new_pos = cur + dice_roll in
-  if new_pos > 39 then player.board_position <- new_pos - 40
+  if new_pos > 39 then player.board_position <- (new_pos mod 39) - 1
   else player.board_position <- new_pos
 
 let curr_pos_print player state =
