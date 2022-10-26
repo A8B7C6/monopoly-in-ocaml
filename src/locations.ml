@@ -12,13 +12,30 @@ type tile_type =
   | Chance
   | Jail
 
+(*******************************************************************************
+  Helper functions for Locations Tests
+  *****************************************************************************)
+let make_contents name price = Property { name; price }
+
+let make_tile (index : int) type_of_tile nm prc =
+  match type_of_tile with
+  | "property" -> (index, Property { name = nm; price = prc })
+  | "go" -> (index, Go)
+  | "cc" -> (index, CommunityChest)
+  | "chance" -> (index, Chance)
+  | "jail" -> (index, Jail)
+  | _ -> assert false
+
+(*******************************************************************************
+  End helper functions for Locations Tests
+  *****************************************************************************)
+
 (***************************************************************************
-  Helper Functions
+  Helper Functions for Locations
   *************************************************************************)
 let to_json json = Yojson.Basic.from_file json
 let loc_contents j = j |> member "contents"
 let loc_type j = j |> member "tile type" |> to_string
-let make_contents name price = Property { name; price }
 
 let property contents =
   {
@@ -35,17 +52,8 @@ let tile_type tt con =
   | "jail" -> Jail
   | _ -> assert false
 
-let make_tile (index : int) type_of_tile nm prc =
-  match type_of_tile with
-  | "property" -> (index, Property { name = nm; price = prc })
-  | "go" -> (index, Go)
-  | "cc" -> (index, CommunityChest)
-  | "chance" -> (index, Chance)
-  | "jail" -> (index, Jail)
-  | _ -> assert false
-
 (******************************************************************************
-  End of Helper Functions
+  End of Helper Functions for Locations
   *************************************************************************)
 let tile_index i loc =
   let con = loc_contents loc in
