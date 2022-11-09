@@ -8,8 +8,6 @@ type tile_type =
   | Jail
 
 val to_json : string -> Yojson.Basic.t
-val loc_contents : Yojson.Basic.t -> Yojson.Basic.t
-val loc_type : Yojson.Basic.t -> string
 val tile_type : string -> Yojson.Basic.t -> tile_type
 val tile_index : int -> Yojson.Basic.t -> int * tile_type
 val make_tile : int -> string -> string -> int -> int * tile_type
