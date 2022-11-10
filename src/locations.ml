@@ -52,9 +52,6 @@ let tile_type tt con =
   | "jail" -> Jail
   | _ -> assert false
 
-(******************************************************************************
-  End of Helper Functions for Locations
-  *************************************************************************)
 let tile_index i loc =
   let con = loc_contents loc in
   let tt = loc_type loc in
@@ -65,6 +62,9 @@ let tl_helper a =
   let index, loc = a in
   let i = int_of_string index in
   tile_index i loc
+(******************************************************************************
+  End of Helper Functions for Locations
+  *************************************************************************)
 
 let tiles_list json = json |> to_assoc |> List.map tl_helper
 

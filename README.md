@@ -24,4 +24,4 @@
 
 # Play Monopoly
  pass `dune build` into the terminal <br>
- start game by typing `make play` into your command line interface
+ start game by typing `make play` into the terminal
