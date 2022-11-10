@@ -1,0 +1,11 @@
+{
+  "example card": {
+    "name": "default",
+    "flavor text": "NA",
+    "actions": {
+      "move": "NA",
+      "pay bank": "NA",
+      "recieve bank": "NA"
+    }
+  }
+}
