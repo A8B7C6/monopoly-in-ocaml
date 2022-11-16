@@ -83,7 +83,7 @@ let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
   | "cc" -> (index, CommunityChest)
   | "chance" -> (index, Chance)
   | "jail" -> (index, Jail)
-  | "visiting_jail" -> (index, VisitingJail)
+  | "visiting jail" -> (index, VisitingJail)
   | "parking" -> (index, Parking)
   | _ -> assert false
 
