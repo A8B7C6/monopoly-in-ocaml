@@ -43,10 +43,10 @@ let locations_tests =
         make_tile 5 "railroad" "Reading Railroad" (tile_color "colorless") 200 0
           25 50 100 200 0 0 0;
         make_tile 6 "property" "Oriental Avenue" (tile_color "light blue") 100
-          50 5 30 90 270 400 550 0;
+          50 6 30 90 270 400 550 0;
         make_tile 7 "chance" "" (tile_color "colorless") 0 0 0 0 0 0 0 0 0;
         make_tile 8 "property" "Vermont Avenue" (tile_color "light blue") 100 50
-          5 30 90 270 400 550 0;
+          6 30 90 270 400 550 0;
         make_tile 9 "property" "Connecticut Avenue" (tile_color "light blue")
           120 50 8 40 100 300 450 600 0;
         make_tile 10 "visiting jail" "" (tile_color "colorless") 0 0 0 0 0 0 0 0

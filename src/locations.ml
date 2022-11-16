@@ -63,9 +63,39 @@ let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4
 let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
     lvl1 lvl2 lvl3 lvl4 hotel tax =
   match type_of_tile with
-  | "property" | "railroad" | "utility" ->
+  | "property" ->
       ( index,
         Property
+          {
+            name;
+            color;
+            price;
+            upgrade_cost;
+            base_rent;
+            _1rent = lvl1;
+            _2rent = lvl2;
+            _3rent = lvl3;
+            _4rent = lvl4;
+            hotel_rent = hotel;
+          } )
+  | "railroad" ->
+      ( index,
+        Railroad
+          {
+            name;
+            color;
+            price;
+            upgrade_cost;
+            base_rent;
+            _1rent = lvl1;
+            _2rent = lvl2;
+            _3rent = lvl3;
+            _4rent = lvl4;
+            hotel_rent = hotel;
+          } )
+  | "utility" ->
+      ( index,
+        Utility
           {
             name;
             color;
@@ -95,8 +125,7 @@ let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
   Helper Functions for Locations
   *************************************************************************)
 let to_json json = Yojson.Basic.from_file json
-
-(*let monopoly = to_json "data/Monopoly.json"*)
+let monopoly = to_json "data/Monopoly.json"
 let loc_contents j = j |> member "contents"
 let loc_type j = j |> member "tile type" |> to_string
 
