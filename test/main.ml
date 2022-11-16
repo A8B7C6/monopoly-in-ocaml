@@ -17,7 +17,7 @@ let tiles_list_test name json expected : test =
 let find_tile_test name index tiles expected : test =
   name >:: fun _ -> assert_equal expected (find_tile index tiles)
 
-let check_single_roll result = result >= 2 && result <= 12
+let check_single_roll result = result >= 1 && result <= 6
 
 let roll_dice_test name expected : test =
   name >:: fun _ ->
