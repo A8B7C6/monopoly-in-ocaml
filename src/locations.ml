@@ -11,7 +11,6 @@ type _property = {
   3_rent : int;
   4_rent : int;
   hotel_rent: int;
-  station_rent : int;
 }
 
 type _tax = {
@@ -45,11 +44,11 @@ type color =
 (*******************************************************************************
   Helper functions for Locations Tests
   *****************************************************************************)
-let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4 hotel station_rent = Property { name; color; price; upgrade_cost; base_rent; lvl1; lvl2; lvl3; lvl4; hotel; station_rent  }
+let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4 hotel = Property { name; color; price; upgrade_cost; base_rent; lvl1; lvl2; lvl3; lvl4; hotel }
 
-let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4 hotel station_rent =
+let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4 hotel =
   match type_of_tile with
-  | "property" || "railroad" || "utility" -> (index, Property { name = name; color = color; price = price; upgrade_cost = upgrade_cost; base_rent = base_rent; 1_rent = lvl1; 2_rent = lvl2; 3_rent = lvl3; 4_rent = lvl4; hotel_rent = hotel; station_rent = station_rent })
+  | "property" || "railroad" || "utility" -> (index, Property { name = name; color = color; price = price; upgrade_cost = upgrade_cost; base_rent = base_rent; 1_rent = lvl1; 2_rent = lvl2; 3_rent = lvl3; 4_rent = lvl4; hotel_rent = hotel })
   | "tax" -> (index, Tax { name = name; tax = tax })
   | "go" -> (index, Go)
   | "cc" -> (index, CommunityChest)
@@ -76,13 +75,12 @@ let property contents =
     color = contents |> member "color" |> to_string |> tile_color;
     price = contents |> member "price" |> to_string |> int_of_string;
     up_cost = contents |> member "upgrade cost" |> to_string |> int_of_string;
-    lvl0 = contents |> member "base_rent" |> to_string |> int_of_string;
-    lvl1 = contents |> member "1_rent" |> to_string |> int_of_string;
-    lvl2 = contents |> member "2_rent" |> to_string |> int_of_string;
-    lvl3 = contents |> member "3_rent" |> to_string |> int_of_string;
-    lvl4 = contents |> member "4_rent" |> to_string |> int_of_string;
-    hotel = contents |> member "hotel" |> to_string |> int_of_string;
-    station = contents |> member "station_rent" |> to_string |> int_of_string;
+    lvl0 = contents |> member "base rent" |> to_string |> int_of_string;
+    lvl1 = contents |> member "1 upgrade rent" |> to_string |> int_of_string;
+    lvl2 = contents |> member "2 upgrades rent" |> to_string |> int_of_string;
+    lvl3 = contents |> member "3 upgrades rent" |> to_string |> int_of_string;
+    lvl4 = contents |> member "4 upgrades rent" |> to_string |> int_of_string;
+    hotel = contents |> member "hotel rent" |> to_string |> int_of_string;
   }
 
 let tax contents = 
@@ -114,6 +112,7 @@ let tile_color tt = match tt with
   | "yellow" -> Yellow
   | "green" -> Green
   | "dark blue" -> DarkBlue
+  | "colorless" -> Colorless
 
 let tile_index i loc =
   let con = loc_contents loc in
