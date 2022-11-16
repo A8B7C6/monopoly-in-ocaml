@@ -2,11 +2,16 @@ type _property
 type _tax
 
 type tile_type =
-  | Property of _property
-  | Go
-  | CommunityChest
-  | Chance
-  | Jail
+| Property of _property
+| Railroad of _property
+| Utility of _property
+| Tax of _tax
+| Go
+| CommunityChest
+| Chance
+| Jail
+| VisitingJail
+| Parking
 
 type color
 
