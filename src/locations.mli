@@ -1,6 +1,4 @@
 type _property
-type _railroad
-type _utility
 type _tax
 
 type tile_type =
