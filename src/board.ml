@@ -1,4 +1,5 @@
 open Player
+(*open Locations*)
 
 (* Helper method utilized to simulate a single dice roll. Returns a number
    utilizing built-in Random module, reseeds the generator with the current UNIX
@@ -14,6 +15,9 @@ let do_turn player =
   print_endline
     ("You rolled a " ^ string_of_int frst ^ " and a " ^ string_of_int scnd);
   { player with board_position = (player.board_position + frst + scnd) mod 40 }
+
+(*let info_position player = let tilenm = find_tile (player.board_position)
+  monopoly in *)
 
 (* let do_turn (player : Player.player) : Player.player = (* before this we
    should output the player's turn has begun *) let dice1 = roll_dice () in let

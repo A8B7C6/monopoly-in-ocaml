@@ -101,6 +101,8 @@ let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
   Helper Functions for Locations
   *************************************************************************)
 let to_json json = Yojson.Basic.from_file json
+
+(*let monopoly = to_json "data/Monopoly.json"*)
 let loc_contents j = j |> member "contents"
 let loc_type j = j |> member "tile type" |> to_string
 

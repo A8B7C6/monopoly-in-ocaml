@@ -2,22 +2,23 @@ type _property
 type _tax
 
 type tile_type =
-| Property of _property
-| Railroad of _property
-| Utility of _property
-| Tax of _tax
-| Go
-| CommunityChest
-| Chance
-| Jail
-| VisitingJail
-| Parking
+  | Property of _property
+  | Railroad of _property
+  | Utility of _property
+  | Tax of _tax
+  | Go
+  | CommunityChest
+  | Chance
+  | Jail
+  | VisitingJail
+  | Parking
 
 type color
 
 val to_json : string -> Yojson.Basic.t
+val monopoly : Yojson.Basic.t
 val tile_type : string -> Yojson.Basic.t -> tile_type
-val color_type: string -> color
+val color_type : string -> color
 val tile_index : int -> Yojson.Basic.t -> int * tile_type
 val make_tile : int -> string -> string -> int -> int * tile_type
 val make_contents : string -> int -> tile_type
