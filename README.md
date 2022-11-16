@@ -20,7 +20,7 @@
  make an opam switch with `ocaml-base-compiler.4.14.0` if don't have one already <br>
  for linux Ubunu, put `opam create JINX ocaml-base-compiler.4.14.0` into CLI to have such a switch <br>
  a few packages are required to make this work, for linux ubuntu can download using following command <br>
- `opam install -y ounit2 ANSITerminal <other packages>` <br>
+ `opam install -y ounit2 ANSITerminal` <br>
 
 # Play Monopoly
  pass `dune build` into the terminal <br>

@@ -1,6 +1,5 @@
 {
-  "example card": {
-    "name": "default",
+  "example card name": {
     "flavor text": "NA",
     "actions": {
       "move": "NA",
