@@ -13,7 +13,16 @@ type tile_type =
   | VisitingJail
   | Parking
 
-type color
+type color =
+  | Brown
+  | LightBlue
+  | Pink
+  | Orange
+  | Red
+  | Yellow
+  | Green
+  | DarkBlue
+  | Colorless
 
 val to_json : string -> Yojson.Basic.t
 
