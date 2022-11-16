@@ -1,16 +1,27 @@
 open Yojson.Basic.Util
 
+type color =
+  | Brown
+  | LightBlue
+  | Pink
+  | Orange
+  | Red
+  | Yellow
+  | Green
+  | DarkBlue
+  | Colorless
+
 type _property = {
   name : string;
-  color: color;
+  color : color;
   price : int;
   upgrade_cost : int;
   base_rent : int;
-  1_rent : int;
-  2_rent : int;
-  3_rent : int;
-  4_rent : int;
-  hotel_rent: int;
+  _1rent : int;
+  _2rent : int;
+  _3rent : int;
+  _4rent : int;
+  hotel_rent : int;
 }
 
 type _tax = {
@@ -30,26 +41,50 @@ type tile_type =
   | VisitingJail
   | Parking
 
-type color =
-  | Brown
-  | LightBlue
-  | Pink
-  | Orange
-  | Red
-  | Yellow
-  | Green
-  | DarkBlue
-  | Colorless
-
 (*******************************************************************************
   Helper functions for Locations Tests
   *****************************************************************************)
-let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4 hotel = Property { name; color; price; upgrade_cost; base_rent; lvl1; lvl2; lvl3; lvl4; hotel }
+let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4
+    hotel =
+  Property
+    {
+      name;
+      color;
+      price;
+      upgrade_cost;
+      base_rent;
+      _1rent = lvl1;
+      _2rent = lvl2;
+      _3rent = lvl3;
+      _4rent = lvl4;
+      hotel_rent = hotel;
+    }
 
-let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4 hotel =
+let tax contents =
+  {
+    name = contents |> member "tile name" |> to_string;
+    tax = contents |> member "tax" |> to_string |> int_of_string;
+  }
+
+let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
+    lvl1 lvl2 lvl3 lvl4 hotel =
   match type_of_tile with
-  | "property" || "railroad" || "utility" -> (index, Property { name = name; color = color; price = price; upgrade_cost = upgrade_cost; base_rent = base_rent; 1_rent = lvl1; 2_rent = lvl2; 3_rent = lvl3; 4_rent = lvl4; hotel_rent = hotel })
-  | "tax" -> (index, Tax { name = name; tax = tax })
+  | "property" | "railroad" | "utility" ->
+      ( index,
+        Property
+          {
+            name;
+            color;
+            price;
+            upgrade_cost;
+            base_rent;
+            _1rent = lvl1;
+            _2rent = lvl2;
+            _3rent = lvl3;
+            _4rent = lvl4;
+            hotel_rent = hotel;
+          } )
+  | "tax" -> (index, Tax { name; tax })
   | "go" -> (index, Go)
   | "cc" -> (index, CommunityChest)
   | "chance" -> (index, Chance)
@@ -69,24 +104,32 @@ let to_json json = Yojson.Basic.from_file json
 let loc_contents j = j |> member "contents"
 let loc_type j = j |> member "tile type" |> to_string
 
+let tile_color tt =
+  match tt with
+  | "brown" -> Brown
+  | "light blue" -> LightBlue
+  | "pink" -> Pink
+  | "orange" -> Orange
+  | "red" -> Red
+  | "yellow" -> Yellow
+  | "green" -> Green
+  | "dark blue" -> DarkBlue
+  | "colorless" -> Colorless
+  | _ -> failwith "unmatched color"
+
 let property contents =
   {
     name = contents |> member "tile name" |> to_string;
     color = contents |> member "color" |> to_string |> tile_color;
     price = contents |> member "price" |> to_string |> int_of_string;
-    up_cost = contents |> member "upgrade cost" |> to_string |> int_of_string;
-    lvl0 = contents |> member "base rent" |> to_string |> int_of_string;
-    lvl1 = contents |> member "1 upgrade rent" |> to_string |> int_of_string;
-    lvl2 = contents |> member "2 upgrades rent" |> to_string |> int_of_string;
-    lvl3 = contents |> member "3 upgrades rent" |> to_string |> int_of_string;
-    lvl4 = contents |> member "4 upgrades rent" |> to_string |> int_of_string;
-    hotel = contents |> member "hotel rent" |> to_string |> int_of_string;
-  }
-
-let tax contents = 
-  {
-    name = contents |> member "tile name" |> to_string;
-    tax = contents |> member "tax" |> to_string |> string_of_int;
+    upgrade_cost =
+      contents |> member "upgrade cost" |> to_string |> int_of_string;
+    base_rent = contents |> member "base rent" |> to_string |> int_of_string;
+    _1rent = contents |> member "1 upgrade rent" |> to_string |> int_of_string;
+    _2rent = contents |> member "2 upgrades rent" |> to_string |> int_of_string;
+    _3rent = contents |> member "3 upgrades rent" |> to_string |> int_of_string;
+    _4rent = contents |> member "4 upgrades rent" |> to_string |> int_of_string;
+    hotel_rent = contents |> member "hotel rent" |> to_string |> int_of_string;
   }
 
 let tile_type tt con =
@@ -102,17 +145,6 @@ let tile_type tt con =
   | "visiting jail" -> VisitingJail
   | "parking" -> Parking
   | _ -> assert false
-
-let tile_color tt = match tt with
-  | "brown" -> Brown
-  | "light blue" -> LightBlue
-  | "pink" -> Pink
-  | "orange" -> Orange
-  | "red" -> Red
-  | "yellow" -> Yellow
-  | "green" -> Green
-  | "dark blue" -> DarkBlue
-  | "colorless" -> Colorless
 
 let tile_index i loc =
   let con = loc_contents loc in
