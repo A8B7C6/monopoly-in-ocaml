@@ -33,6 +33,7 @@ let play_monopoly player =
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
+  print_board ();
   ANSITerminal.print_string [ ANSITerminal.red ] "\n\nLet's play Monopoly.\n";
   print_endline "What is your name?";
   let name = read_line () in
