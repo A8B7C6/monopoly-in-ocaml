@@ -60,12 +60,6 @@ let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4
       hotel_rent = hotel;
     }
 
-let tax contents =
-  {
-    name = contents |> member "tile name" |> to_string;
-    tax = contents |> member "tax" |> to_string |> int_of_string;
-  }
-
 let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
     lvl1 lvl2 lvl3 lvl4 hotel tax =
   match type_of_tile with
@@ -132,6 +126,12 @@ let property contents =
     _3rent = contents |> member "3 upgrades rent" |> to_string |> int_of_string;
     _4rent = contents |> member "4 upgrades rent" |> to_string |> int_of_string;
     hotel_rent = contents |> member "hotel rent" |> to_string |> int_of_string;
+  }
+
+let tax contents =
+  {
+    name = contents |> member "tile name" |> to_string;
+    tax = contents |> member "tax" |> to_string |> int_of_string;
   }
 
 let tile_type tt con =
