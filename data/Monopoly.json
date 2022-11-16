@@ -106,7 +106,7 @@
     }
   },
   "10": {
-    "tile type": "jail"
+    "tile type": "visiting jail"
   },
   "11": {
     "tile type": "property",
