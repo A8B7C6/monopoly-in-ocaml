@@ -67,7 +67,7 @@ let tax contents =
   }
 
 let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
-    lvl1 lvl2 lvl3 lvl4 hotel =
+    lvl1 lvl2 lvl3 lvl4 hotel tax =
   match type_of_tile with
   | "property" | "railroad" | "utility" ->
       ( index,
