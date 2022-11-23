@@ -16,6 +16,19 @@ type _player = {
   mutable doubles : int;
 }
 
+(*******************************************************************************
+  Helper functions for Player Tests
+  *****************************************************************************)
+let make_balance total fivehun hun ffty twnty tens fives ones =
+  { total; fivehun; hun; ffty; twnty; tens; fives; ones }
+
+let make_player brdpos nm blnce dbls =
+  { board_position = brdpos; name = nm; balance = blnce; doubles = dbls }
+
+(*******************************************************************************
+  End helper functions for Locations Tests
+  *****************************************************************************)
+
 let init_balance =
   {
     total = 1500;

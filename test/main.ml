@@ -2,10 +2,12 @@ open OUnit2
 open Monopoly
 open Locations
 open Board
-(*open Player*)
+open Player
+open Cards
 
 let data_dir_prefix = "data" ^ Filename.dir_sep
 let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
+(*let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")*)
 
 (****************************************************************************
   Helper Functions
@@ -24,6 +26,13 @@ let roll_dice_test name expected : test =
   assert_equal expected
     (check_single_roll (roll_dice ()))
     ~printer:string_of_bool
+
+let init_player_test name nm expected : test =
+  name >:: fun _ -> assert_equal expected (init_player nm)
+
+let card_display_info_test name nm flvr_txt expected : test =
+  name >:: fun _ ->
+  assert_equal expected (init_card nm flvr_txt |> card_display_info)
 
 (****************************************************************************
   End of Helper Functions
@@ -124,7 +133,21 @@ let board_tests =
     roll_dice_test "roll_dice_test: 7th roll" true;
   ]
 
+let player_tests =
+  [
+    init_player_test "init_player_test: Initial balance and given name" "Joe"
+      (make_player 0 "Joe" (make_balance 1500 2 2 2 6 5 5 5) 0);
+  ]
+
+let cards_tests =
+  [
+    card_display_info_test "card_display_info_test : generic card"
+      "Generic Card" "generic flavor text"
+      "Picked up card Generic Card: generic flavor text";
+  ]
+
 let suite =
-  "Monopoly Test Suite: " >::: List.flatten [ locations_tests; board_tests ]
+  "Monopoly Test Suite: "
+  >::: List.flatten [ locations_tests; board_tests; player_tests; cards_tests ]
 
 let _ = run_test_tt_main suite

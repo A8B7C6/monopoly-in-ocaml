@@ -8,6 +8,13 @@ type card = {
 
 type t = Yojson.Basic.t
 
+(*******************************************************************************
+  Helper functions for Card Tests
+  *****************************************************************************)
+
+(*******************************************************************************
+  End helper functions for Card Tests
+  *****************************************************************************)
 let init_card nm flvr_txt = { name = nm; flavor_text = flvr_txt }
 
 (* FIX : think we should move this function so we dont have it written twice, as
