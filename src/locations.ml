@@ -157,7 +157,7 @@ let property contents =
     hotel_rent = contents |> member "hotel rent" |> to_string |> int_of_string;
   }
 
-let property_name p = p.name
+let property_name (p : _property) = p.name
 let tax_name t = t.name
 
 let tax contents =

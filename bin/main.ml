@@ -2,6 +2,10 @@ open Monopoly
 open Player
 open Board
 
+type players = { mutable pl_lst : _player list }
+
+let all_players = { pl_lst = [] }
+
 let do_turn (player : _player) =
   let cur = player.board_position in
   let dice_roll = roll_dice () in
@@ -35,7 +39,21 @@ let play_monopoly player =
 let main () =
   print_board ();
   ANSITerminal.print_string [ ANSITerminal.red ] "\n\nLet's play Monopoly.\n";
-  print_endline "What is your name?";
+
+  print_endline "How many players are there? (Enter a number)\n";
+  let num_players = read_line () |> int_of_string in
+  let index = ref 0 in
+  while !index < num_players do
+    let curr_player = string_of_int (!index + 1) in
+    print_endline ("Player " ^ curr_player ^ ", what is your name?");
+    let name = read_line () in
+    let pl = init_player name in
+    all_players.pl_lst <- all_players.pl_lst @ [ pl ];
+    index := !index + 1;
+    print_endline "\n"
+  done;
+  (*need to update play_monopoly to handle a player list*)
+  print_endline "What is your name? end of loop need to get rid of this part :/";
   let name = read_line () in
   let p1 = init_player name in
   play_monopoly p1
