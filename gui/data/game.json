@@ -1,0 +1,6 @@
+{
+  "gameStarted": true,
+  "currentPlayer": 1,
+  "lastDiceRoll": 10,
+  "players": [{ "id": 1, "name": "john", "balance": 500, "position": 6 }]
+}
