@@ -157,6 +157,9 @@ let property contents =
     hotel_rent = contents |> member "hotel rent" |> to_string |> int_of_string;
   }
 
+let property_name p = p.name
+let tax_name t = t.name
+
 let tax contents =
   {
     name = contents |> member "tile name" |> to_string;
@@ -192,6 +195,7 @@ let tl_helper a =
   *************************************************************************)
 
 let tiles_list json = json |> to_assoc |> List.map tl_helper
+let monopoly_list = tiles_list monopoly
 
 let rec find_tile index tiles =
   match tiles with
