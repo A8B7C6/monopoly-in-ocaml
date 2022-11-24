@@ -46,3 +46,13 @@ let init_player nm =
 
 let get_name player = player.name
 let get_board_position player = player.board_position
+
+(* TODO: function that updates the balance of a player. should take in a player
+   and return a player*)
+
+(* TODO: function that takes in a list of players and REMOVES one of them.
+   REquires: order of players maintained*)
+
+(* TODO: function that takes in a list of players and ADDS one of them.
+   Requires: order of the list is maintained and the player is added to the end
+   of the list *)

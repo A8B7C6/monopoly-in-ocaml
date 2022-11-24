@@ -1,7 +1,9 @@
-open Player
-
 val roll_dice : unit -> int
-val do_turn : _player -> _player
+(** [roll_dice] simulates a single dice roll. Returns an int.*)
 
-(**takes a player type and returns a new player with the updated board position
-   after a dice roll *)
+val monopoly_list : (int * Locations.tile_type) list
+(** [monopoly] returns the data from Monopoly.json in accessible format*)
+
+val do_turn : Player._player -> Player._player
+(** [do_turn p] copies a player [p] and returns a new player with an updated
+    board position *)
