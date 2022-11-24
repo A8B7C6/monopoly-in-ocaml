@@ -37,7 +37,6 @@ let play_monopoly player =
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
-  print_board ();
   ANSITerminal.print_string [ ANSITerminal.red ] "\n\nLet's play Monopoly.\n";
 
   print_endline "How many players are there? (Enter a number)\n";
