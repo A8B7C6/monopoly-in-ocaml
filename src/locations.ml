@@ -162,7 +162,7 @@ let jail_pos player =
     if use_card = "Y" then () else ()
   end
   else ();
-  { player with board_position = 10; in_jail = true }
+  (*{ player with board_position = 10; in_jail = true }*)
 (*When you get sent to Monopoly jail, your turn then ends. You have to wait
   until your next turn to use the Get Out of Jail Free card, pay the fine, or
   attempt to roll a double.
@@ -170,9 +170,9 @@ let jail_pos player =
 
 (*******************************************************************************
   ******************************************************************************
-  Helper functions for Locations Tests
-  ******************************************************************************
-  *****************************************************************************)
+                Helper functions for Locations Tests
+ ******************************************************************************
+*****************************************************************************)
 let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4
     hotel =
   Property
