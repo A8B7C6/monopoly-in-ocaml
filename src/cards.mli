@@ -1,3 +1,9 @@
+type actions = {
+  move : string;
+  pay : string;
+  receive : string;
+}
+
 type card = {
   name : string;
   flavor_text : string;
@@ -5,6 +11,9 @@ type card = {
 
 type t = Yojson.Basic.t
 
+val actions : t -> actions
+val card : t -> card
+val card_list : t -> card list
 val init_card : string -> string -> card
 
 val card_display_info : card -> string

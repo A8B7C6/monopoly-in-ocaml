@@ -1,18 +1,23 @@
 {
-  "example card name": {
-    "flavor text": "NA",
-    "actions": {
-      "move": "NA",
-      "pay bank": "NA",
-      "recieve bank": "NA"
+  "cards": 
+  [
+    {
+      "name": "example card name",
+      "flavor text": "NA",
+      "actions": {
+        "move": "NA",
+        "pay bank": "NA",
+        "receive bank": "NA"
+      }
+    },
+    {
+      "name": "another card",
+      "flavor text": "NA",
+      "actions": {
+        "move": "NA",
+        "pay bank": "NA",
+        "receive bank": "NA"
+      }
     }
-  },
-  "another card": {
-    "flavor text": "NA",
-    "actions": {
-      "move": "NA",
-      "pay bank": "NA",
-      "recieve bank": "NA"
-    }
-  }
+  ]
 }
