@@ -15,6 +15,7 @@ type _player = {
   balance : _balance;
   mutable doubles : int;
   free_jail : bool;
+  mutable in_jail : bool;
 }
 
 (*******************************************************************************
@@ -30,6 +31,7 @@ let make_player brdpos nm blnce dbls =
     balance = blnce;
     doubles = dbls;
     free_jail = false;
+    in_jail = false;
   }
 
 (*******************************************************************************
@@ -55,6 +57,7 @@ let init_player nm =
     balance = init_balance;
     doubles = 0;
     free_jail = false;
+    in_jail = false;
   }
 
 let get_name player = player.name
