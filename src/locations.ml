@@ -1,4 +1,5 @@
 open Yojson.Basic.Util
+open Player
 
 type color =
   | Brown
@@ -143,9 +144,29 @@ let get_tile_name index mlist =
 
 (* TODO: for tiles Chance and Community Chest, figure out how the functionality
    and or data type interacts with Cards*)
+let cc_chance c =
+  match c with
+  | Chance ->
+      failwith "todo: draw random card from chance deck"
+      (*need to create a list of cards that has them shuffled in random order*)
+  | CommunityChest -> failwith "todo:draw random card from cc deck"
+  | _ -> failwith "will never match against these"
 
 (* TODO: function/s for tiles like Jail. Potentailly make use of Player
    functions to adjust things like player position*)
+let jail_pos player =
+  if player.free_jail then begin
+    print_endline
+      "You have a get out of jail free card. Would you like to use it? Y/N";
+    let use_card = read_line () in
+    if use_card = "Y" then () else ()
+  end
+  else ();
+  { player with board_position = 10; in_jail = true }
+(*When you get sent to Monopoly jail, your turn then ends. You have to wait
+  until your next turn to use the Get Out of Jail Free card, pay the fine, or
+  attempt to roll a double.
+  https://www.monopolyland.com/get-out-of-jail-free-cards/*)
 
 (*******************************************************************************
   ******************************************************************************

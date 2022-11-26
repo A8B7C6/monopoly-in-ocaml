@@ -1,6 +1,7 @@
 open Monopoly
 open Player
 open Board
+open Locations
 
 type players = { mutable pl_lst : _player list }
 
@@ -23,6 +24,8 @@ let curr_pos_print player state =
 
 let play_monopoly player =
   curr_pos_print player "current";
+  cc_chance Chance;
+  jail_pos player;
   let rec play_loop continue =
     match continue with
     | "y" ->
