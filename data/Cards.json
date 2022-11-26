@@ -1,23 +1,44 @@
 {
-  "cards": 
-  [
-    {
-      "name": "example card name",
-      "flavor text": "NA",
-      "actions": {
-        "move": "NA",
-        "pay bank": "NA",
-        "receive bank": "NA"
+  "cards": {
+    "chance": [
+      {
+        "name": "example chance name",
+        "flavor text": "NA",
+        "actions": {
+          "move": "NA",
+          "pay bank": "NA",
+          "receive bank": "NA"
+        }
+      },
+      {
+        "name": "another chance",
+        "flavor text": "NA",
+        "actions": {
+          "move": "NA",
+          "pay bank": "NA",
+          "receive bank": "NA"
+        }
       }
-    },
-    {
-      "name": "another card",
-      "flavor text": "NA",
-      "actions": {
-        "move": "NA",
-        "pay bank": "NA",
-        "receive bank": "NA"
+    ],
+    "cc": [
+      {
+        "name": "example cc name",
+        "flavor text": "NA",
+        "actions": {
+          "move": "NA",
+          "pay bank": "NA",
+          "receive bank": "NA"
+        }
+      },
+      {
+        "name": "another cc",
+        "flavor text": "NA",
+        "actions": {
+          "move": "NA",
+          "pay bank": "NA",
+          "receive bank": "NA"
+        }
       }
-    }
-  ]
+    ]
+  }
 }

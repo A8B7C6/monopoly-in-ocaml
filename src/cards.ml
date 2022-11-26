@@ -43,7 +43,9 @@ let card j =
     actions = actions j;
   }
 
-let card_list j = j |> member "cards" |> to_list |> List.map card
+let chance_list j = j |> member "chance" |> to_list |> List.map card
+let cc_list j = j |> member "cc" |> to_list |> List.map card
+let card_list j = chance_list j @ cc_list j
 
 (*******************************************************************************
   End Functions that deal with JSON
@@ -55,8 +57,6 @@ let card_list j = j |> member "cards" |> to_list |> List.map card
 
 let init_card nm flvr_txt acts =
   { name = nm; flavor_text = flvr_txt; actions = acts }
-
-(* TODO : need to build card_list from Cards.json data*)
 
 (* TODO: function/s that execute the action/s of the card*)
 
