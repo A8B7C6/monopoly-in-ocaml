@@ -7,3 +7,5 @@ val monopoly_list : (int * Locations.tile_type) list
 val do_turn : Player._player -> Player._player
 (** [do_turn p] copies a player [p] and returns a new player with an updated
     board position *)
+
+val list_of_cards_json : Cards.card list
