@@ -33,6 +33,8 @@ val get_tile_name : int -> (int * tile_type) list -> string
 (** [get_tile_name i mlist] returns the tile name with index [i] from the list
     [mlist]*)
 
+(*val cc_chance : card -> unit*)
+
 (* Helper Functions for tests*)
 val make_tile :
   int ->

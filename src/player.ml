@@ -14,6 +14,7 @@ type _player = {
   name : string;
   balance : _balance;
   mutable doubles : int;
+  free_jail : bool;
 }
 
 (*******************************************************************************
@@ -23,7 +24,13 @@ let make_balance total fivehun hun ffty twnty tens fives ones =
   { total; fivehun; hun; ffty; twnty; tens; fives; ones }
 
 let make_player brdpos nm blnce dbls =
-  { board_position = brdpos; name = nm; balance = blnce; doubles = dbls }
+  {
+    board_position = brdpos;
+    name = nm;
+    balance = blnce;
+    doubles = dbls;
+    free_jail = false;
+  }
 
 (*******************************************************************************
   End helper functions for Locations Tests
@@ -42,7 +49,13 @@ let init_balance =
   }
 
 let init_player nm =
-  { board_position = 0; name = nm; balance = init_balance; doubles = 0 }
+  {
+    board_position = 0;
+    name = nm;
+    balance = init_balance;
+    doubles = 0;
+    free_jail = false;
+  }
 
 let get_name player = player.name
 let get_board_position player = player.board_position

@@ -22,6 +22,7 @@ type _property = {
   _3rent : int;
   _4rent : int;
   hotel_rent : int;
+  owner : string option;
 }
 
 type _tax = {
@@ -76,6 +77,7 @@ let property contents =
     _3rent = contents |> member "3 upgrades rent" |> to_string |> int_of_string;
     _4rent = contents |> member "4 upgrades rent" |> to_string |> int_of_string;
     hotel_rent = contents |> member "hotel rent" |> to_string |> int_of_string;
+    owner = None;
   }
 
 let tax contents =
@@ -144,6 +146,14 @@ let get_tile_name index mlist =
 (* TODO: for tiles Chance and Community Chest, figure out how the functionality
    and or data type interacts with Cards*)
 
+let cc_chance c =
+  match c with
+  | Chance ->
+      failwith "draw random card from chance deck"
+      (*need to create a list of cards that has them shuffled in random order*)
+  | CommunityChest -> failwith "draw random card from cc deck"
+  | _ -> failwith "will never match against these"
+
 (* TODO: function/s for tiles like Jail. Potentailly make use of Player
    functions to adjust things like player position*)
 
@@ -166,6 +176,7 @@ let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4
       _3rent = lvl3;
       _4rent = lvl4;
       hotel_rent = hotel;
+      owner = None;
     }
 
 let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
@@ -185,6 +196,7 @@ let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
             _3rent = lvl3;
             _4rent = lvl4;
             hotel_rent = hotel;
+            owner = None;
           } )
   | "railroad" ->
       ( index,
@@ -200,6 +212,7 @@ let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
             _3rent = lvl3;
             _4rent = lvl4;
             hotel_rent = hotel;
+            owner = None;
           } )
   | "utility" ->
       ( index,
@@ -215,6 +228,7 @@ let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
             _3rent = lvl3;
             _4rent = lvl4;
             hotel_rent = hotel;
+            owner = None;
           } )
   | "tax" -> (index, Tax { name; tax })
   | "go" -> (index, Go)

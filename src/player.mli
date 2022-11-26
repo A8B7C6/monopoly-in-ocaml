@@ -14,6 +14,7 @@ type _player = {
   name : string;
   balance : _balance;
   mutable doubles : int;
+  free_jail : bool;
 }
 
 val make_balance :
