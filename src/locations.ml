@@ -161,8 +161,9 @@ let jail_pos player =
     let use_card = read_line () in
     if use_card = "Y" then () else ()
   end
-  else ();
-  (*{ player with board_position = 10; in_jail = true }*)
+  else ()
+
+(*{ player with board_position = 10; in_jail = true }*)
 (*When you get sent to Monopoly jail, your turn then ends. You have to wait
   until your next turn to use the Get Out of Jail Free card, pay the fine, or
   attempt to roll a double.
