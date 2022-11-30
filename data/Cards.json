@@ -1,44 +1,28 @@
 {
-  "cards": {
-    "chance": [
-      {
-        "name": "example chance name",
+  "card list": [
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "random card",
         "flavor text": "NA",
         "actions": {
           "move": "NA",
-          "pay bank": "NA",
-          "receive bank": "NA"
-        }
-      },
-      {
-        "name": "another chance",
-        "flavor text": "NA",
-        "actions": {
-          "move": "NA",
-          "pay bank": "NA",
-          "receive bank": "NA"
+          "pay": "NA",
+          "receive": "NA"
         }
       }
-    ],
-    "cc": [
-      {
-        "name": "example cc name",
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "another random card",
         "flavor text": "NA",
         "actions": {
           "move": "NA",
-          "pay bank": "NA",
-          "receive bank": "NA"
-        }
-      },
-      {
-        "name": "another cc",
-        "flavor text": "NA",
-        "actions": {
-          "move": "NA",
-          "pay bank": "NA",
-          "receive bank": "NA"
+          "pay": "NA",
+          "receive": "NA"
         }
       }
-    ]
-  }
+    }
+  ]
 }

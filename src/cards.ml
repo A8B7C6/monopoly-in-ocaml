@@ -9,11 +9,22 @@ type actions = {
   receive : string;
 }
 
-type card = {
+type contents = {
   name : string;
   flavor_text : string;
   actions : actions;
 }
+
+type card = {
+  card_type : string;
+  contents : contents;
+}
+
+type card_deck = { card_deck : card list }
+
+type card_type =
+  | Chance of card
+  | CC of card
 
 type t = Yojson.Basic.t
 
@@ -32,20 +43,27 @@ type t = Yojson.Basic.t
 let actions j =
   {
     move = j |> member "move" |> to_string;
-    pay = j |> member "pay bank" |> to_string;
-    receive = j |> member "receive bank" |> to_string;
+    pay = j |> member "pay" |> to_string;
+    receive = j |> member "receive" |> to_string;
+  }
+
+let contents j =
+  {
+    name = j |> member "name" |> to_string;
+    flavor_text = j |> member "flavor text" |> to_string;
+    actions = j |> member "actions" |> actions;
   }
 
 let card j =
   {
-    name = j |> member "name" |> to_string;
-    flavor_text = j |> member "flavor text" |> to_string;
-    actions = actions j;
+    card_type = j |> member "card type" |> to_string;
+    contents = j |> member "contents" |> contents;
   }
 
-let chance_list j = j |> member "chance" |> to_list |> List.map card
-let cc_list j = j |> member "cc" |> to_list |> List.map card
-let card_list j = chance_list j @ cc_list j
+let card_deck j = j |> member "card list" |> to_list |> List.map card
+
+let parse j =
+  try card_deck j with Type_error (s, _) -> failwith ("Parsing error: " ^ s)
 
 (*******************************************************************************
   End Functions that deal with JSON
@@ -54,14 +72,16 @@ let card_list j = chance_list j @ cc_list j
 (*******************************************************************************
   Functions that DONT deal with JSON
   *****************************************************************************)
-
-let init_card nm flvr_txt acts =
+let init_contents nm flvr_txt acts =
   { name = nm; flavor_text = flvr_txt; actions = acts }
+
+let init_card ct nm flvr_txt acts =
+  { card_type = ct; contents = init_contents nm flvr_txt acts }
 
 (* TODO: function/s that execute the action/s of the card*)
 
-let card_display_info crd =
-  "Picked up card " ^ crd.name ^ ": " ^ crd.flavor_text
+let card_display_info (crd : card) =
+  "Picked up card " ^ crd.contents.name ^ ": " ^ crd.contents.flavor_text
 (*******************************************************************************
   End Functions that DONT deal with JSON
   *****************************************************************************)

@@ -30,9 +30,9 @@ let roll_dice_test name expected : test =
 let init_player_test name nm expected : test =
   name >:: fun _ -> assert_equal expected (init_player nm)
 
-let card_display_info_test name nm flvr_txt act expected : test =
+let card_display_info_test name ct nm flvr_txt acts expected : test =
   name >:: fun _ ->
-  assert_equal expected (init_card nm flvr_txt act |> card_display_info)
+  assert_equal expected (init_card ct nm flvr_txt acts |> card_display_info)
 
 (****************************************************************************
   End of Helper Functions
@@ -141,7 +141,7 @@ let player_tests =
 
 let cards_tests =
   [
-    card_display_info_test "card_display_info_test : generic card"
+    card_display_info_test "card_display_info_test : generic card" "chance"
       "Generic Card" "generic flavor text"
       { move = "NA"; pay = "NA"; receive = "NA" }
       "Picked up card Generic Card: generic flavor text";

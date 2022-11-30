@@ -10,7 +10,7 @@ let data_dir_prefix = "data" ^ Filename.dir_sep
 let monopoly = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
 let monopoly_list = tiles_list monopoly
 let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
-let list_of_cards_json = card_list cards
+let list_of_cards_json = parse cards
 
 let do_turn (player : _player) =
   print_endline (player.name ^ ", your turn has begun");
