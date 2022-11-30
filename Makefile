@@ -23,6 +23,13 @@ check:
 finalcheck:
 	@bash check.sh final
 
+bisect: bisect-clean
+	-dune exec --instrument-with bisect_ppx --force test/main.exe
+	bisect-ppx-report html
+
+bisect-clean:
+	rm -rf _coverage bisect*.coverage
+
 zip:
 	rm -f monopoly.zip
 	zip -r monopoly.zip . -x@exclude.lst
