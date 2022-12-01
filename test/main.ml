@@ -131,6 +131,11 @@ let board_tests =
     roll_dice_test "roll_dice_test: 5th roll" true;
     roll_dice_test "roll_dice_test: 6th roll" true;
     roll_dice_test "roll_dice_test: 7th roll" true;
+    ( "trying something" >:: fun _ ->
+      assert_equal 9
+        (let player = init_player "jo" in
+         Board.do_turn 3 6 player;
+         player.board_position) );
   ]
 
 let player_tests =

@@ -7,13 +7,13 @@ type players = { mutable pl_lst : _player list }
 
 let all_players = { pl_lst = [] }
 
-let do_turn (player : _player) =
-  let cur = player.board_position in
-  let dice_roll = roll_dice () in
-  print_endline ("You rolled a " ^ (dice_roll |> string_of_int));
-  let new_pos = cur + dice_roll in
-  if new_pos > 39 then player.board_position <- (new_pos mod 39) - 1
-  else player.board_position <- new_pos
+let do_turn frst scnd player =
+  Board.do_turn frst scnd player;
+  print_endline
+    ("You rolled a " ^ string_of_int frst ^ " and\n   a " ^ string_of_int scnd);
+  print_endline
+    ("Your new board position is "
+    ^ get_tile_name player.board_position monopoly_list)
 
 let curr_pos_print player state =
   let p1name = player.name in
@@ -29,7 +29,7 @@ let play_monopoly player =
   let rec play_loop continue =
     match continue with
     | "y" ->
-        do_turn player;
+        do_turn (roll_dice ()) (roll_dice ()) player;
         curr_pos_print player "new";
         print_endline "Continue playing? y/n";
         let cont = read_line () in

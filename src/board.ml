@@ -12,13 +12,6 @@ let monopoly_list = tiles_list monopoly
 let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
 let list_of_cards_json = parse cards
 
-let do_turn (player : _player) =
-  print_endline (player.name ^ ", your turn has begun");
-  let frst = roll_dice () in
-  let scnd = roll_dice () in
+let do_turn (frst : int) (scnd : int) (player : _player) =
   let total = frst + scnd in
-  print_endline
-    ("You rolled a " ^ string_of_int frst ^ " and a " ^ string_of_int scnd);
-  print_endline
-    ("Your new board position is " ^ get_tile_name total monopoly_list);
-  { player with board_position = (player.board_position + total) mod 40 }
+  set_board_position player (total + player.board_position)

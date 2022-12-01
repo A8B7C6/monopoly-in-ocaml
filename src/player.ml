@@ -62,6 +62,7 @@ let init_player nm =
 
 let get_name player = player.name
 let get_board_position player = player.board_position
+let set_board_position player pos = player.board_position <- pos
 
 (* TODO: function that updates the balance of a player. should take in a player
    and return a player*)
