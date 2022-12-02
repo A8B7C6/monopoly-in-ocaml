@@ -149,7 +149,7 @@ let cards_tests =
     card_display_info_test "card_display_info_test : generic card" Chance
       "Generic Card" "generic flavor text"
       {
-        move = -1;
+        move = "NA";
         money_change = 0;
         go_to_jail = false;
         out_of_jail_card = false;

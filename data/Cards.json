@@ -4,9 +4,48 @@
       "card type": "chance",
       "contents": {
         "name": "Move",
-        "flavor text": "Move to Boardwalk",
+        "flavor text": "Advance to Go. (Collect $200)",
         "actions": {
-          "move": "39",
+          "move": "Go",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
+        "flavor text": "Advance to Illinois Avenue.If you pass Go, collect $200.",
+        "actions": {
+          "move": "Illinois Avenue",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
+        "flavor text": "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled.",
+        "actions": {
+          "move": "Railroad",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
+        "flavor text": "Move to Go",
+        "actions": {
+          "move": "0",
           "receive": "0",
           "go to jail": "false",
           "get out of jail free card": "false"

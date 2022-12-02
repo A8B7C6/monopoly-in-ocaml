@@ -4,7 +4,7 @@ open Yojson.Basic.Util
 
 (* TODO: adjust type card so can store actions*)
 type actions = {
-  move : int;
+  move : string;
   money_change : int;
   go_to_jail : bool;
   out_of_jail_card : bool;
@@ -47,7 +47,7 @@ let bool_helper s =
 
 let actions j =
   {
-    move = j |> member "move" |> to_int;
+    move = j |> member "move" |> to_string;
     money_change = j |> member "receive" |> to_int;
     go_to_jail = j |> member "go to jail" |> to_string |> bool_helper;
     out_of_jail_card =

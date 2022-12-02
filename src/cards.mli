@@ -1,5 +1,5 @@
 type actions = {
-  move : int;
+  move : string;
   money_change : int;
   go_to_jail : bool;
   out_of_jail_card : bool;
