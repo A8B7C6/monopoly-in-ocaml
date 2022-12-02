@@ -26,3 +26,7 @@ val init_player : string -> _player
 val get_board_position : _player -> int
 val get_name : _player -> string
 val set_board_position : _player -> int -> unit
+val update_balance : _player -> _balance -> _player
+val enqueue_player : _player list -> _player -> _player list
+val dequeue_player : _player list -> _player * _player list
+val shuffle_player : _player list -> _player * _player list

@@ -64,12 +64,31 @@ let get_name player = player.name
 let get_board_position player = player.board_position
 let set_board_position player pos = player.board_position <- pos
 
-(* TODO: function that updates the balance of a player. should take in a player
-   and return a player*)
+let update_balance player new_bal =
+  {
+    board_position = player.board_position;
+    name = player.name;
+    balance = new_bal;
+    doubles = player.doubles;
+    free_jail = false;
+    in_jail = false;
+  }
 
-(* TODO: function that takes in a list of players and REMOVES one of them.
-   REquires: order of players maintained*)
+let rec remove_player players player_name =
+  match players with
+  | [] -> []
+  | h :: t ->
+      if h.name != player_name then h :: remove_player t player_name
+      else remove_player t player_name
 
-(* TODO: function that takes in a list of players and ADDS one of them.
-   Requires: order of the list is maintained and the player is added to the end
-   of the list *)
+let enqueue_player (players : _player list) (new_player : _player) =
+  players @ [ new_player ]
+
+let dequeue_player (players : _player list) : _player * _player list =
+  match players with
+  | [] -> failwith "no players in list"
+  | h :: t -> (h, t)
+
+let shuffle_player (players : _player list) =
+  let new_player_up, other_players = dequeue_player players in
+  (new_player_up, enqueue_player other_players new_player_up)
