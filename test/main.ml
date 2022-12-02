@@ -146,9 +146,15 @@ let player_tests =
 
 let cards_tests =
   [
-    card_display_info_test "card_display_info_test : generic card" "chance"
+    card_display_info_test "card_display_info_test : generic card" Chance
       "Generic Card" "generic flavor text"
-      { move = "NA"; pay = "NA"; receive = "NA" }
+      {
+        move = -1;
+        pay = 0;
+        receive = 0;
+        go_to_jail = "NA";
+        out_of_jail_card = "NA";
+      }
       "Picked up card Generic Card: generic flavor text";
   ]
 

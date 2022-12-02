@@ -4,9 +4,11 @@ open Yojson.Basic.Util
 
 (* TODO: adjust type card so can store actions*)
 type actions = {
-  move : string;
-  pay : string;
-  receive : string;
+  move : int;
+  pay : int;
+  receive : int;
+  go_to_jail : string;
+  out_of_jail_card : string;
 }
 
 type contents = {
@@ -15,17 +17,16 @@ type contents = {
   actions : actions;
 }
 
+type card_type =
+  | Chance
+  | CC
+
 type card = {
-  card_type : string;
+  card_type : card_type;
   contents : contents;
 }
 
 type card_deck = { card_deck : card list }
-
-type card_type =
-  | Chance of card
-  | CC of card
-
 type t = Yojson.Basic.t
 
 (*******************************************************************************
@@ -42,9 +43,11 @@ type t = Yojson.Basic.t
 
 let actions j =
   {
-    move = j |> member "move" |> to_string;
-    pay = j |> member "pay" |> to_string;
-    receive = j |> member "receive" |> to_string;
+    move = j |> member "move" |> to_int;
+    pay = j |> member "pay" |> to_int;
+    receive = j |> member "receive" |> to_int;
+    go_to_jail = j |> member "go to jail" |> to_string;
+    out_of_jail_card = j |> member "get out of jail free card" |> to_string;
   }
 
 let contents j =
@@ -54,9 +57,15 @@ let contents j =
     actions = j |> member "actions" |> actions;
   }
 
+let type_helper ct =
+  match ct with
+  | "chance" -> Chance
+  | "cc" -> CC
+  | _ -> failwith "Impossible"
+
 let card j =
   {
-    card_type = j |> member "card type" |> to_string;
+    card_type = j |> member "card type" |> to_string |> type_helper;
     contents = j |> member "contents" |> contents;
   }
 
@@ -79,6 +88,18 @@ let init_card ct nm flvr_txt acts =
   { card_type = ct; contents = init_contents nm flvr_txt acts }
 
 (* TODO: function/s that execute the action/s of the card*)
+let find_chance card =
+  match card with
+  | Chance, _ -> true
+  | _ -> failwith "Impossible"
+
+let find_cc card =
+  match card with
+  | CC, _ -> true
+  | _ -> failwith "Impossible"
+
+let make_chance_list cd = List.filter find_chance cd
+let make_cc_list cd = List.filter find_cc cd
 
 let card_display_info (crd : card) =
   "Picked up card " ^ crd.contents.name ^ ": " ^ crd.contents.flavor_text

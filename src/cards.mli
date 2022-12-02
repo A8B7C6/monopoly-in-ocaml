@@ -1,7 +1,9 @@
 type actions = {
-  move : string;
-  pay : string;
-  receive : string;
+  move : int;
+  pay : int;
+  receive : int;
+  go_to_jail : string;
+  out_of_jail_card : string;
 }
 
 type contents = {
@@ -10,21 +12,25 @@ type contents = {
   actions : actions;
 }
 
+type card_type =
+  | Chance
+  | CC
+
 type card = {
-  card_type : string;
+  card_type : card_type;
   contents : contents;
 }
 
 type card_deck = { card_deck : card list }
-
-type card_type =
-  | Chance of card
-  | CC of card
-
 type t = Yojson.Basic.t
 
 val parse : t -> card list
-val init_card : string -> string -> string -> actions -> card
+val init_card : card_type -> string -> string -> actions -> card
+
+val make_chance_list :
+  (card_type * contents) list -> (card_type * contents) list
+
+val make_cc_list : (card_type * contents) list -> (card_type * contents) list
 
 val card_display_info : card -> string
 (** [card_display_info crd] takes [crd] and returns a string detailing what card

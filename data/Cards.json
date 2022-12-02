@@ -3,12 +3,14 @@
     {
       "card type": "chance",
       "contents": {
-        "name": "random card",
-        "flavor text": "NA",
+        "name": "Move",
+        "flavor text": "Move to Boardwalk",
         "actions": {
-          "move": "NA",
+          "move": "39",
           "pay": "NA",
-          "receive": "NA"
+          "receive": "NA",
+          "go to jail": "NA",
+          "get out of jail free card": "NA"
         }
       }
     },
@@ -20,7 +22,9 @@
         "actions": {
           "move": "NA",
           "pay": "NA",
-          "receive": "NA"
+          "receive": "NA",
+          "go to jail": "NA",
+          "get out of jail free card": "NA"
         }
       }
     }
