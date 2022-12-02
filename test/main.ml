@@ -150,10 +150,9 @@ let cards_tests =
       "Generic Card" "generic flavor text"
       {
         move = -1;
-        pay = 0;
-        receive = 0;
-        go_to_jail = "NA";
-        out_of_jail_card = "NA";
+        money_change = 0;
+        go_to_jail = false;
+        out_of_jail_card = false;
       }
       "Picked up card Generic Card: generic flavor text";
   ]

@@ -1,9 +1,8 @@
 type actions = {
   move : int;
-  pay : int;
-  receive : int;
-  go_to_jail : string;
-  out_of_jail_card : string;
+  money_change : int;
+  go_to_jail : bool;
+  out_of_jail_card : bool;
 }
 
 type contents = {

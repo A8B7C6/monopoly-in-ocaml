@@ -7,10 +7,9 @@
         "flavor text": "Move to Boardwalk",
         "actions": {
           "move": "39",
-          "pay": "NA",
-          "receive": "NA",
-          "go to jail": "NA",
-          "get out of jail free card": "NA"
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
         }
       }
     },
@@ -21,7 +20,6 @@
         "flavor text": "NA",
         "actions": {
           "move": "NA",
-          "pay": "NA",
           "receive": "NA",
           "go to jail": "NA",
           "get out of jail free card": "NA"
