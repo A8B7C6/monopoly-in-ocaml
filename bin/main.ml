@@ -62,4 +62,3 @@ let main () =
   play_monopoly all_players.pl_lst
 
 let () = main ()
-git
