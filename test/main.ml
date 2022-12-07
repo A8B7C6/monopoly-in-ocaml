@@ -34,6 +34,9 @@ let card_display_info_test name ct nm flvr_txt acts expected : test =
   name >:: fun _ ->
   assert_equal expected (init_card ct nm flvr_txt acts |> card_display_info)
 
+let get_tile_name_test name index mlist expected_name : test =
+  name >:: fun _ -> assert_equal expected_name (get_tile_name index mlist)
+
 (****************************************************************************
   End of Helper Functions
   ***************************************************************************)
@@ -120,6 +123,22 @@ let locations_tests =
     find_tile_test "find_tile_test: cc" 2 (tiles_list mono) CommunityChest;
     find_tile_test "find_tile_test: chance" 7 (tiles_list mono) Chance;
     find_tile_test "find_tile_test: jail" 30 (tiles_list mono) Jail;
+    get_tile_name_test "get_tile_name_test w/ first tile" 0 (tiles_list mono)
+      "Go";
+    get_tile_name_test "get_tile_name_test w/ tax tile" 4 (tiles_list mono)
+      "Income Tax";
+    get_tile_name_test "get_tile_name_test w/ chance tile" 7 (tiles_list mono)
+      "Chance";
+    get_tile_name_test "get_tile_name_test w/ parking tile" 20 (tiles_list mono)
+      "Parking";
+    get_tile_name_test "get_tile_name_test w/ utility tile" 28 (tiles_list mono)
+      "Utility";
+    get_tile_name_test "get_tile_name_test w/ jail tile" 30 (tiles_list mono)
+      "Utility";
+    get_tile_name_test "get_tile_name_test w/ visiting jail tile" 10
+      (tiles_list mono) "Visiting Jail";
+    get_tile_name_test "get_tile_name_test w/ last tile" 39 (tiles_list mono)
+      "Boardwalk";
   ]
 
 let board_tests =
@@ -142,6 +161,9 @@ let player_tests =
   [
     init_player_test "init_player_test: Initial balance and given name" "Joe"
       (make_player 0 "Joe" (make_balance 1500 2 2 2 6 5 5 5) 0);
+    (* TODO: do we want to prohibit empty names? *)
+    init_player_test "init_player_test: Initial balance and empty name" ""
+      (make_player 0 "" (make_balance 1500 2 2 2 6 5 5 5) 0);
   ]
 
 let cards_tests =
