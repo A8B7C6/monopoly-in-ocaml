@@ -22,21 +22,24 @@ let curr_pos_print player state =
     ^ (player |> get_board_position |> string_of_int)
     ^ "\n")
 
-let play_monopoly player =
-  curr_pos_print player "current";
-  cc_chance Chance;
-  jail_pos player;
-  let rec play_loop continue =
+let play_monopoly players =
+  let rec play_loop continue players =
     match continue with
     | "y" ->
-        do_turn (roll_dice ()) (roll_dice ()) player;
-        curr_pos_print player "new";
+        let current_player, shuffled_players = shuffle_player players in
+        curr_pos_print current_player "current";
+        cc_chance Chance;
+        jail_pos current_player;
+        do_turn (roll_dice ()) (roll_dice ()) current_player;
+
+        curr_pos_print current_player "new";
         print_endline "Continue playing? y/n";
+
         let cont = read_line () in
-        play_loop cont
+        play_loop cont shuffled_players
     | _ -> exit 0
   in
-  play_loop "y"
+  play_loop "y" players
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
@@ -55,9 +58,8 @@ let main () =
     print_endline "\n"
   done;
   (*need to update play_monopoly to handle a player list*)
-  print_endline "What is your name? end of loop need to get rid of this part :/";
-  let name = read_line () in
-  let p1 = init_player name in
-  play_monopoly p1
+  (* let name = read_line () in let p1 = init_player name in *)
+  play_monopoly all_players.pl_lst
 
 let () = main ()
+git
