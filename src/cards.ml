@@ -43,12 +43,15 @@ let bool_helper s =
   match s with
   | "true" -> true
   | "false" -> false
+  | "NA" -> false
   | _ -> failwith "Impossible"
+
+let int_helper s : int = if s = "NA" then -1 else int_of_string s
 
 let actions j =
   {
     move = j |> member "move" |> to_string;
-    money_change = j |> member "receive" |> to_int;
+    money_change = j |> member "receive" |> to_string |> int_helper;
     go_to_jail = j |> member "go to jail" |> to_string |> bool_helper;
     out_of_jail_card =
       j |> member "get out of jail free card" |> to_string |> bool_helper;

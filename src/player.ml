@@ -81,6 +81,9 @@ let rec remove_player players player_name =
       if h.name != player_name then h :: remove_player t player_name
       else remove_player t player_name
 
+(* TODO: Remove -- disable warning temporarily *)
+let _ = remove_player
+
 let enqueue_player (players : _player list) (new_player : _player) =
   players @ [ new_player ]
 
