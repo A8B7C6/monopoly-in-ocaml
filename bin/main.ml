@@ -13,7 +13,9 @@ let do_turn frst scnd player =
     ("You rolled a " ^ string_of_int frst ^ " and\n   a " ^ string_of_int scnd);
   print_endline
     ("Your new board position is "
-    ^ get_tile_name player.board_position monopoly_list)
+    ^ get_tile_name player.board_position monopoly_list);
+  print_endline
+    ("Your current balance is is " ^ "$" ^ string_of_int player.balance.total)
 
 let curr_pos_print player state =
   let p1name = player.name in
