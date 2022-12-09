@@ -28,7 +28,7 @@ let play_monopoly players =
     | "y" ->
         let current_player, shuffled_players = shuffle_player players in
         curr_pos_print current_player "current";
-        cc_chance Chance;
+        (* cc_chance Chance; *)
         jail_pos current_player;
         do_turn (roll_dice ()) (roll_dice ()) current_player;
 

@@ -14,4 +14,6 @@ let list_of_cards_json = parse cards
 
 let do_turn (frst : int) (scnd : int) (player : _player) =
   let total = frst + scnd in
-  set_board_position player (total + player.board_position)
+  if total + player.board_position >= 40 then
+    set_board_position player (40 - (total + player.board_position))
+  else set_board_position player (total + player.board_position)
