@@ -2,7 +2,6 @@ open Yojson.Basic.Util
 
 (* source material: https://monopoly.fandom.com/wiki/Community_Chests*)
 
-(* TODO: adjust type card so can store actions*)
 type actions = {
   move : string;
   balance_change : int;
@@ -27,14 +26,6 @@ type card = {
 
 type card_deck = { card_deck : card list }
 type t = Yojson.Basic.t
-
-(*******************************************************************************
-  Helper functions for Card Tests
-  *****************************************************************************)
-
-(*******************************************************************************
-  End helper functions for Card Tests
-  *****************************************************************************)
 
 (*******************************************************************************
   Functions that deal with JSON
@@ -85,7 +76,7 @@ let parse j =
   *****************************************************************************)
 
 (*******************************************************************************
-  Functions that DONT deal with JSON
+  Card Functions
   *****************************************************************************)
 let init_actions mv rcv gtj ooj =
   { move = mv; balance_change = rcv; go_to_jail = gtj; out_of_jail_card = ooj }
@@ -123,5 +114,5 @@ let remove_jail crd (lst : card list ref) =
 let card_display_info (crd : card) =
   "Picked up card " ^ crd.contents.name ^ ": " ^ crd.contents.flavor_text
 (*******************************************************************************
-  End Functions that DONT deal with JSON
+  End Card Functions
   *****************************************************************************)

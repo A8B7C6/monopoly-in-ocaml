@@ -3,7 +3,7 @@ open Locations
 open Cards
 
 let roll_dice () =
-  let _ = Random.init (int_of_float (Unix.gettimeofday ())) in
+  let _ = Random.self_init in
   Random.int 6 + 1
 
 let data_dir_prefix = "data" ^ Filename.dir_sep

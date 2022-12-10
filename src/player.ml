@@ -68,17 +68,7 @@ let init_player nm =
 let get_name player = player.name
 let get_board_position player = player.board_position
 let set_board_position player pos = player.board_position <- pos
-
-let update_balance player new_bal =
-  {
-    board_position = player.board_position;
-    name = player.name;
-    balance = new_bal;
-    doubles = player.doubles;
-    free_jail = false;
-    in_jail = false;
-    jailstats = { turns_since = 0 };
-  }
+let update_balance player new_bal = player.balance <- new_bal
 
 let distribute_one player =
   player.balance.ones <- player.balance.ones + 1;

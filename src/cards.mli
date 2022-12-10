@@ -24,12 +24,20 @@ type card_deck = { card_deck : card list }
 type t = Yojson.Basic.t
 
 val parse : t -> card list
+(** [parse t] takes information from a json file [t] and generates a [card list]
+    with all [card_type]*)
 
 val init_card :
   card_type -> string -> string -> string -> int -> bool -> bool -> card
+(** [init_card ct nm flvr_txt mv rcv gtj ooj] creates a card of card_type [ct]*)
 
 val make_chance_list : card list -> card list
+(** [make_chance_list p] takes a card list [p] with multiple card types ad
+    returns a list with only the card type [Chance] *)
+
 val make_cc_list : card list -> card list
+(** [make_cc_list p] takes a card list [p] with multiple card types ad returns a
+    list with only the card type [CC] *)
 
 val card_display_info : card -> string
 (** [card_display_info crd] takes [crd] and returns a string detailing what card
