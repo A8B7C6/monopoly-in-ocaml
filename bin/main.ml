@@ -78,7 +78,7 @@ let _cc_action c player =
     distribute_change player bal_change;
     to_bottom c cc_lst)
 
-(**[_handle_cc] prints the text on the head of the Community Chance list*)
+(**[_handle_cc] prints the text on the head of the Community Chest list*)
 let _handle_cc player =
   let head = List.hd !cc_lst in
   print_endline (card_display_info head);
