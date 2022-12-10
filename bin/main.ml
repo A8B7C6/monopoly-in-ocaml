@@ -46,23 +46,26 @@ let play_monopoly players =
   play_loop "y" players
 
 (** [main ()] prompts for the game to play, then starts it. *)
-let main () =
+let rec main () =
   ANSITerminal.print_string [ ANSITerminal.red ] "\n\nLet's play Monopoly.\n";
-
-  print_endline "How many players are there? (Enter a number)\n";
-  let num_players = read_line () |> int_of_string in
-  let index = ref 0 in
-  while !index < num_players do
-    let curr_player = string_of_int (!index + 1) in
-    print_endline ("Player " ^ curr_player ^ ", what is your name?");
-    let name = read_line () in
-    let pl = init_player name in
-    all_players.pl_lst <- all_players.pl_lst @ [ pl ];
-    index := !index + 1;
-    print_endline "\n"
-  done;
-  (*need to update play_monopoly to handle a player list*)
-  (* let name = read_line () in let p1 = init_player name in *)
-  play_monopoly all_players.pl_lst
+  try
+    print_endline "How many players are there? (Enter a number)\n";
+    let num_players = read_line () |> int_of_string in
+    let index = ref 0 in
+    while !index < num_players do
+      let curr_player = string_of_int (!index + 1) in
+      print_endline ("Player " ^ curr_player ^ ", what is your name?");
+      let name = read_line () in
+      let pl = init_player name in
+      all_players.pl_lst <- all_players.pl_lst @ [ pl ];
+      index := !index + 1;
+      print_endline "\n"
+    done;
+    (*need to update play_monopoly to handle a player list*)
+    (* let name = read_line () in let p1 = init_player name in *)
+    play_monopoly all_players.pl_lst
+  with Failure _ ->
+    print_endline "Please provide a valid number of players.\n";
+    main ()
 
 let () = main ()

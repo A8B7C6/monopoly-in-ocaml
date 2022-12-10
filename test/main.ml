@@ -16,6 +16,9 @@ let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
 let tiles_list_test name json expected : test =
   name >:: fun _ -> assert_equal expected (tiles_list json)
 
+let tiles_list_test name json expected : test =
+  name >:: fun _ -> assert_equal expected (tiles_list json)
+
 let find_tile_test name index tiles expected : test =
   name >:: fun _ -> assert_equal expected (find_tile index tiles)
 
