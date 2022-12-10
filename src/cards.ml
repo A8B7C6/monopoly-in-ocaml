@@ -5,7 +5,7 @@ open Yojson.Basic.Util
 (* TODO: adjust type card so can store actions*)
 type actions = {
   move : string;
-  money_change : int;
+  balance_change : int;
   go_to_jail : bool;
   out_of_jail_card : bool;
 }
@@ -43,15 +43,14 @@ let bool_helper s =
   match s with
   | "true" -> true
   | "false" -> false
-  | "NA" -> false
   | _ -> failwith "Impossible"
 
-let int_helper s : int = if s = "NA" then -1 else int_of_string s
+let int_helper s : int = int_of_string s
 
 let actions j =
   {
     move = j |> member "move" |> to_string;
-    money_change = j |> member "receive" |> to_string |> int_helper;
+    balance_change = j |> member "receive" |> to_string |> int_helper;
     go_to_jail = j |> member "go to jail" |> to_string |> bool_helper;
     out_of_jail_card =
       j |> member "get out of jail free card" |> to_string |> bool_helper;
@@ -88,25 +87,38 @@ let parse j =
 (*******************************************************************************
   Functions that DONT deal with JSON
   *****************************************************************************)
-let init_contents nm flvr_txt acts =
-  { name = nm; flavor_text = flvr_txt; actions = acts }
+let init_actions mv rcv gtj ooj =
+  { move = mv; balance_change = rcv; go_to_jail = gtj; out_of_jail_card = ooj }
 
-let init_card ct nm flvr_txt acts =
-  { card_type = ct; contents = init_contents nm flvr_txt acts }
+let init_contents nm flvr_txt mv rcv gtj ooj =
+  { name = nm; flavor_text = flvr_txt; actions = init_actions mv rcv gtj ooj }
+
+let init_card ct nm flvr_txt mv rcv gtj ooj =
+  { card_type = ct; contents = init_contents nm flvr_txt mv rcv gtj ooj }
 
 (* TODO: function/s that execute the action/s of the card*)
-let find_chance card =
-  match card with
-  | Chance, _ -> true
-  | _ -> failwith "Impossible"
+let find_chance (cd : card) =
+  match cd with
+  | { card_type = Chance; _ } -> true
+  | _ -> false
 
-let find_cc card =
-  match card with
-  | CC, _ -> true
-  | _ -> failwith "Impossible"
+let find_cc (cd : card) =
+  match cd with
+  | { card_type = CC; _ } -> true
+  | _ -> false
 
-let make_chance_list cd = List.filter find_chance cd
-let make_cc_list cd = List.filter find_cc cd
+let make_chance_list cdl = List.filter find_chance cdl
+let make_cc_list cdl = List.filter find_cc cdl
+let card_json = Yojson.Basic.from_file "src/data/Cards.json"
+let chance_lst = ref (make_chance_list (parse card_json))
+let cc_lst = ref (make_chance_list (parse card_json))
+let _ = !chance_lst @ !cc_lst
+
+let to_bottom crd (lst : card list ref) =
+  lst := List.filter (fun x -> x != crd) !lst @ [ crd ]
+
+let remove_jail crd (lst : card list ref) =
+  lst := List.filter (fun x -> x != crd) !lst
 
 let card_display_info (crd : card) =
   "Picked up card " ^ crd.contents.name ^ ": " ^ crd.contents.flavor_text

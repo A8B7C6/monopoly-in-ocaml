@@ -34,6 +34,7 @@ val get_tile_name : int -> (int * tile_type) list -> string
     [mlist]*)
 
 val cc_chance : tile_type -> unit
+val monopoly_list : (int * tile_type) list
 
 (* Helper Functions for tests*)
 val make_tile :
@@ -54,7 +55,9 @@ val make_tile :
 
 val make_contents :
   string ->
+  string ->
   color ->
+  int ->
   int ->
   int ->
   int ->

@@ -124,6 +124,7 @@ let tl_helper a =
   *************************************************************************)
 
 let tiles_list json = json |> to_assoc |> List.map tl_helper
+let monopoly_list = tiles_list (Yojson.Basic.from_file "src/data/Monopoly.json")
 
 let rec find_tile index tiles =
   match tiles with
@@ -136,7 +137,7 @@ let get_tile_name index mlist =
   | Railroad r -> property_name r
   | Utility u -> property_name u
   | Tax t -> tax_name t
-  | Go -> "go"
+  | Go -> "Go"
   | CommunityChest -> "Community Chest"
   | Chance -> "Chance"
   | Jail -> "Jail"
@@ -164,22 +165,56 @@ let cc_chance c =
                 Helper functions for Locations Tests
  ******************************************************************************
 *****************************************************************************)
-let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4
-    hotel =
-  Property
-    {
-      name;
-      color;
-      price;
-      upgrade_cost;
-      base_rent;
-      _1rent = lvl1;
-      _2rent = lvl2;
-      _3rent = lvl3;
-      _4rent = lvl4;
-      hotel_rent = hotel;
-      owner = None;
-    }
+let make_contents type_of_tile name color price upgrade_cost base_rent lvl1 lvl2
+    lvl3 lvl4 hotel tax =
+  match type_of_tile with
+  | "property" ->
+      Property
+        {
+          name;
+          color;
+          price;
+          upgrade_cost;
+          base_rent;
+          _1rent = lvl1;
+          _2rent = lvl2;
+          _3rent = lvl3;
+          _4rent = lvl4;
+          hotel_rent = hotel;
+          owner = None;
+        }
+  | "railroad" ->
+      Railroad
+        {
+          name;
+          color;
+          price;
+          upgrade_cost;
+          base_rent;
+          _1rent = lvl1;
+          _2rent = lvl2;
+          _3rent = lvl3;
+          _4rent = lvl4;
+          hotel_rent = hotel;
+          owner = None;
+        }
+  | "utility" ->
+      Utility
+        {
+          name;
+          color;
+          price;
+          upgrade_cost;
+          base_rent;
+          _1rent = lvl1;
+          _2rent = lvl2;
+          _3rent = lvl3;
+          _4rent = lvl4;
+          hotel_rent = hotel;
+          owner = None;
+        }
+  | "tax" -> Tax { name; tax }
+  | _ -> assert false
 
 let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
     lvl1 lvl2 lvl3 lvl4 hotel tax =

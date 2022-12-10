@@ -7,7 +7,7 @@ open Cards
 
 let data_dir_prefix = "data" ^ Filename.dir_sep
 let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
-(*let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")*)
+let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
 
 (****************************************************************************
   Helper Functions
@@ -18,6 +18,9 @@ let tiles_list_test name json expected : test =
 
 let find_tile_test name index tiles expected : test =
   name >:: fun _ -> assert_equal expected (find_tile index tiles)
+
+let get_tile_name_test name index mlist expected_name : test =
+  name >:: fun _ -> assert_equal expected_name (get_tile_name index mlist)
 
 let check_single_roll result = result >= 1 && result <= 6
 
@@ -30,12 +33,27 @@ let roll_dice_test name expected : test =
 let init_player_test name nm expected : test =
   name >:: fun _ -> assert_equal expected (init_player nm)
 
-let card_display_info_test name ct nm flvr_txt acts expected : test =
-  name >:: fun _ ->
-  assert_equal expected (init_card ct nm flvr_txt acts |> card_display_info)
+(*let set_board_position_test name nm pos (expected : int) : test = name >:: fun
+  _ -> assert_equal expected (get_board_position (set_board_position
+  (init_player nm) pos))*)
 
-let get_tile_name_test name index mlist expected_name : test =
-  name >:: fun _ -> assert_equal expected_name (get_tile_name index mlist)
+let update_balance_test name nm total fivehun hun ffty twnty tens fives ones
+    expected : test =
+  name >:: fun _ ->
+  assert_equal expected
+    (update_balance (init_player nm)
+       (make_balance total fivehun hun ffty twnty tens fives ones))
+
+let card_display_info_test name ct nm flvr_txt mv rcv gtj ooj expected : test =
+  name >:: fun _ ->
+  assert_equal expected
+    (init_card ct nm flvr_txt mv rcv gtj ooj |> card_display_info)
+
+let make_chance_list_test name cards expected : test =
+  name >:: fun _ -> assert_equal expected (make_chance_list cards)
+
+let make_cc_list_test name cards expected : test =
+  name >:: fun _ -> assert_equal expected (make_cc_list cards)
 
 (****************************************************************************
   End of Helper Functions
@@ -118,23 +136,38 @@ let locations_tests =
       ];
     find_tile_test "find_tile_test: go" 0 (tiles_list mono) Go;
     find_tile_test "find_tile_test: property" 1 (tiles_list mono)
-      (make_contents "Mediterranean Avenue" (tile_color "brown") 60 50 2 10 30
-         90 160 250);
+      (make_contents "property" "Mediterranean Avenue" (tile_color "brown") 60
+         50 2 10 30 90 160 250 0);
+    find_tile_test "find_tile_test: tax" 38 (tiles_list mono)
+      (make_contents "tax" "Luxury Tax" (tile_color "colorless") 0 0 0 0 0 0 0 0
+         75);
+    find_tile_test "find_tile_test: utility" 12 (tiles_list mono)
+      (make_contents "utility" "Electric Company" (tile_color "colorless") 150 0
+         0 0 0 0 0 0 0);
+    find_tile_test "find_tile_test: railroad" 15 (tiles_list mono)
+      (make_contents "railroad" "Pennsylvania Railroad" (tile_color "colorless")
+         200 0 25 50 100 200 0 0 0);
     find_tile_test "find_tile_test: cc" 2 (tiles_list mono) CommunityChest;
     find_tile_test "find_tile_test: chance" 7 (tiles_list mono) Chance;
     find_tile_test "find_tile_test: jail" 30 (tiles_list mono) Jail;
+    find_tile_test "find_tile_test: jail" 10 (tiles_list mono) VisitingJail;
+    find_tile_test "find_tile_test: jail" 20 (tiles_list mono) Parking;
     get_tile_name_test "get_tile_name_test w/ first tile" 0 (tiles_list mono)
       "Go";
     get_tile_name_test "get_tile_name_test w/ tax tile" 4 (tiles_list mono)
       "Income Tax";
     get_tile_name_test "get_tile_name_test w/ chance tile" 7 (tiles_list mono)
       "Chance";
+    get_tile_name_test "get_tile_name_test w/ cc tile" 33 (tiles_list mono)
+      "Community Chest";
     get_tile_name_test "get_tile_name_test w/ parking tile" 20 (tiles_list mono)
       "Parking";
     get_tile_name_test "get_tile_name_test w/ utility tile" 28 (tiles_list mono)
-      "Utility";
+      "Water Works";
+    get_tile_name_test "get_tile_name_test w/ railroad tile" 5 (tiles_list mono)
+      "Reading Railroad";
     get_tile_name_test "get_tile_name_test w/ jail tile" 30 (tiles_list mono)
-      "Utility";
+      "Jail";
     get_tile_name_test "get_tile_name_test w/ visiting jail tile" 10
       (tiles_list mono) "Visiting Jail";
     get_tile_name_test "get_tile_name_test w/ last tile" 39 (tiles_list mono)
@@ -164,19 +197,132 @@ let player_tests =
     (* TODO: do we want to prohibit empty names? *)
     init_player_test "init_player_test: Initial balance and empty name" ""
       (make_player 0 "" (make_balance 1500 2 2 2 6 5 5 5) 0);
+    (*set_board_position_test "set_board_position_test : Initial position (Go)"
+      "Ann" 0 0; set_board_position_test "set_board_position_test : Boardwalk
+      (39)" "Ben" 39 39;*)
+    update_balance_test "update_balance_test : Initial balance" "Kim" 1500 2 2 2
+      6 5 5 5
+      (make_player 0 "Kim" (make_balance 1500 2 2 2 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 1" "Vera" 1501
+      2 2 2 6 5 5 6
+      (make_player 0 "Vera" (make_balance 1501 2 2 2 6 5 5 6) 0);
+    update_balance_test "update_balance_test : Initial balance + 5" "Victor"
+      1505 2 2 2 6 5 6 5
+      (make_player 0 "Victor" (make_balance 1505 2 2 2 6 5 6 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 10" "Violet"
+      1510 2 2 2 6 6 5 5
+      (make_player 0 "Violet" (make_balance 1510 2 2 2 6 6 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 20" "Van" 1520
+      2 2 2 7 5 5 5
+      (make_player 0 "Van" (make_balance 1520 2 2 2 7 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 50" "Valerie"
+      1550 2 2 3 6 5 5 5
+      (make_player 0 "Valerie" (make_balance 1550 2 2 3 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 100"
+      "Valentino" 1600 2 3 2 6 5 5 5
+      (make_player 0 "Valentino" (make_balance 1600 2 3 2 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 500" "Valeska"
+      2000 3 2 2 6 5 5 5
+      (make_player 0 "Valeska" (make_balance 2000 3 2 2 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Zero balance" "Yohanan" 0 0 0 0 0
+      0 0 0
+      (make_player 0 "Yohanan" (make_balance 0 0 0 0 0 0 0 0) 0);
   ]
 
 let cards_tests =
   [
     card_display_info_test "card_display_info_test : generic card" Chance
-      "Generic Card" "generic flavor text"
-      {
-        move = "NA";
-        money_change = 0;
-        go_to_jail = false;
-        out_of_jail_card = false;
-      }
+      "Generic Card" "generic flavor text" "NA" 0 false false
       "Picked up card Generic Card: generic flavor text";
+    make_chance_list_test "make_chance_list_test : full chance cards list"
+      (parse cards)
+      [
+        init_card Chance "Move" "Advance to Go. (Collect $200)" "Go" 0 false
+          false;
+        init_card Chance "Move"
+          "Advance to Illinois Avenue. If you pass Go, collect $200."
+          "Illinois Avenue" 0 false false;
+        init_card Chance "Move"
+          "Advance to St. Charles Place. If you pass Go, collect $200."
+          "St. Charles Place" 0 false false;
+        init_card Chance "Move"
+          "Advance token to the nearest Utility. If unowned, you may buy it \
+           from the Bank. If owned, throw dice and pay owner a total 10 (ten) \
+           times the amount thrown."
+          "Utility" 0 false false;
+        init_card Chance "Move"
+          "Advance to the nearest Railroad. If unowned, you may buy it from \
+           the Bank. If owned, pay owner twice the rental to which they are \
+           otherwise entitled."
+          "Railroad" 0 false false;
+        init_card Chance "Balance Change" "Bank pays you dividend of $50." "NA"
+          50 false false;
+        init_card Chance "Get Out of Jail Free Card"
+          "Get out of Jail Free. This card may be kept until needed, or \
+           traded/sold."
+          "NA" 0 false true;
+        init_card Chance "Move" "Go Back Three Spaces." "Back 3" 0 false false;
+        init_card Chance "Go to Jail"
+          "Go to Jail. Go directly to Jail. Do not pass Go, do not collect \
+           $200."
+          "NA" 0 true false;
+        init_card Chance "Balance Change"
+          "You forgot to mow your lawn, drawing your HOA's ire. Pay a fine of \
+           $75."
+          "NA" (-75) false false;
+        init_card Chance "Move"
+          "Take a trip to Reading Railroad. If you pass Go, collect $200."
+          "Reading Railroad" 0 false false;
+        init_card Chance "Move"
+          "Take a walk on the Boardwalk. Advance token to Boardwalk."
+          "Boardwalk" 0 false false;
+        init_card Chance "Balance Change"
+          "You have been elected Chairman of the Board. Pay $100." "NA" (-100)
+          false false;
+        init_card Chance "Balance Change"
+          "Your building loan matures. Receive $150." "NA" 150 false false;
+      ];
+    make_cc_list_test "make_cc_list_test : full cc cards list" (parse cards)
+      [
+        init_card CC "Move" "Advance to Go. (Collect $200)" "Go" 0 false false;
+        init_card CC "Balance Change" "Bank error in your favor. Collect $200."
+          "NA" 200 false false;
+        init_card CC "Balance Change" "Doctor's fees. Pay $50." "NA" (-50) false
+          false;
+        init_card CC "Balance Change" "From the sale of a stock you get $50."
+          "NA" 50 false false;
+        init_card CC "Get Out of Jail Free Card"
+          "Get out of Jail Free. This card may be kept until needed, or \
+           traded/sold."
+          "NA" 0 false true;
+        init_card CC "Go to Jail"
+          "Go to Jail. Go directly to Jail. Do not pass Go, do not collect \
+           $200."
+          "NA" 0 true false;
+        init_card CC "Balance Change" "Grand Opera Night. Collect $125." "NA"
+          125 false false;
+        init_card CC "Balance Change" "Holiday Fund matures. Receive $100." "NA"
+          100 false false;
+        init_card CC "Balance Change" "Income tax refund. Collect $20." "NA" 20
+          false false;
+        init_card CC "Balance Change"
+          "It's your birthday. Collect $25 as a gift." "NA" 25 false false;
+        init_card CC "Balance Change" "Life insurance matures. Collect $100."
+          "NA" 100 false false;
+        init_card CC "Balance Change" "Hospital fees. Pay $50." "NA" (-50) false
+          false;
+        init_card CC "Balance Change" "School fees. Pay $50." "NA" (-50) false
+          false;
+        init_card CC "Balance Change" "Receive $25 consultancy fee." "NA" 25
+          false false;
+        init_card CC "Balance Change"
+          "You are assessed for street repairs: Pay $155." "NA" (-155) false
+          false;
+        init_card CC "Balance Change"
+          "You have won second prize in a beauty contest. Collect $10." "NA" 10
+          false false;
+        init_card CC "Balance Change" "You inherit $100." "NA" 100 false false;
+      ];
   ]
 
 let suite =
