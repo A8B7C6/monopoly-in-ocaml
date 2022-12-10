@@ -56,7 +56,7 @@ let _chance_action c player =
     remove_jail c chance_lst
   end
 
-(**[_cc_card] will perform the designated action given in the community chance
+(**[_cc_action] will perform the designated action given in the community chance
    card [c] on [player]*)
 let _cc_action c player =
   let card_name = c.contents.name in
