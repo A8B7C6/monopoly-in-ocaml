@@ -57,7 +57,9 @@ val make_tile :
 
 val make_contents :
   string ->
+  string ->
   color ->
+  int ->
   int ->
   int ->
   int ->

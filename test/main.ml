@@ -125,21 +125,36 @@ let locations_tests =
       ];
     find_tile_test "find_tile_test: go" 0 (tiles_list mono) Go;
     find_tile_test "find_tile_test: property" 1 (tiles_list mono)
-      (make_contents "Mediterranean Avenue" (tile_color "brown") 60 50 2 10 30
-         90 160 250);
+      (make_contents "property" "Mediterranean Avenue" (tile_color "brown") 60
+         50 2 10 30 90 160 250 0);
+    find_tile_test "find_tile_test: tax" 38 (tiles_list mono)
+      (make_contents "tax" "Luxury Tax" (tile_color "colorless") 0 0 0 0 0 0 0 0
+         75);
+    find_tile_test "find_tile_test: utility" 12 (tiles_list mono)
+      (make_contents "utility" "Electric Company" (tile_color "colorless") 150 0
+         0 0 0 0 0 0 0);
+    find_tile_test "find_tile_test: railroad" 15 (tiles_list mono)
+      (make_contents "railroad" "Pennsylvania Railroad" (tile_color "colorless")
+         200 0 25 50 100 200 0 0 0);
     find_tile_test "find_tile_test: cc" 2 (tiles_list mono) CommunityChest;
     find_tile_test "find_tile_test: chance" 7 (tiles_list mono) Chance;
     find_tile_test "find_tile_test: jail" 30 (tiles_list mono) Jail;
+    find_tile_test "find_tile_test: jail" 10 (tiles_list mono) VisitingJail;
+    find_tile_test "find_tile_test: jail" 20 (tiles_list mono) Parking;
     get_tile_name_test "get_tile_name_test w/ first tile" 0 (tiles_list mono)
       "Go";
     get_tile_name_test "get_tile_name_test w/ tax tile" 4 (tiles_list mono)
       "Income Tax";
     get_tile_name_test "get_tile_name_test w/ chance tile" 7 (tiles_list mono)
       "Chance";
+    get_tile_name_test "get_tile_name_test w/ cc tile" 33 (tiles_list mono)
+      "Community Chest";
     get_tile_name_test "get_tile_name_test w/ parking tile" 20 (tiles_list mono)
       "Parking";
     get_tile_name_test "get_tile_name_test w/ utility tile" 28 (tiles_list mono)
       "Water Works";
+    get_tile_name_test "get_tile_name_test w/ railroad tile" 5 (tiles_list mono)
+      "Reading Railroad";
     get_tile_name_test "get_tile_name_test w/ jail tile" 30 (tiles_list mono)
       "Jail";
     get_tile_name_test "get_tile_name_test w/ visiting jail tile" 10

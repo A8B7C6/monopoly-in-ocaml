@@ -176,22 +176,56 @@ let jail_pos player =
                 Helper functions for Locations Tests
  ******************************************************************************
 *****************************************************************************)
-let make_contents name color price upgrade_cost base_rent lvl1 lvl2 lvl3 lvl4
-    hotel =
-  Property
-    {
-      name;
-      color;
-      price;
-      upgrade_cost;
-      base_rent;
-      _1rent = lvl1;
-      _2rent = lvl2;
-      _3rent = lvl3;
-      _4rent = lvl4;
-      hotel_rent = hotel;
-      owner = None;
-    }
+let make_contents type_of_tile name color price upgrade_cost base_rent lvl1 lvl2
+    lvl3 lvl4 hotel tax =
+  match type_of_tile with
+  | "property" ->
+      Property
+        {
+          name;
+          color;
+          price;
+          upgrade_cost;
+          base_rent;
+          _1rent = lvl1;
+          _2rent = lvl2;
+          _3rent = lvl3;
+          _4rent = lvl4;
+          hotel_rent = hotel;
+          owner = None;
+        }
+  | "railroad" ->
+      Railroad
+        {
+          name;
+          color;
+          price;
+          upgrade_cost;
+          base_rent;
+          _1rent = lvl1;
+          _2rent = lvl2;
+          _3rent = lvl3;
+          _4rent = lvl4;
+          hotel_rent = hotel;
+          owner = None;
+        }
+  | "utility" ->
+      Utility
+        {
+          name;
+          color;
+          price;
+          upgrade_cost;
+          base_rent;
+          _1rent = lvl1;
+          _2rent = lvl2;
+          _3rent = lvl3;
+          _4rent = lvl4;
+          hotel_rent = hotel;
+          owner = None;
+        }
+  | "tax" -> Tax { name; tax }
+  | _ -> assert false
 
 let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
     lvl1 lvl2 lvl3 lvl4 hotel tax =
