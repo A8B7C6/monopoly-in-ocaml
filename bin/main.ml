@@ -19,7 +19,8 @@ let _cc_card_action c player =
   end
   else begin
     if card_name = "Move" then
-      player.board_position <- 0 (*also update balance +200*)
+      player.board_position <-
+        0 (*also update balance +200 if the player passes Go*)
     else if card_name = "Go to Jail" then begin
       player.in_jail <- true;
       player.board_position <- 30

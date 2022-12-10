@@ -209,6 +209,9 @@ let player_tests =
     update_balance_test "update_balance_test : Initial balance + 5" "Victor"
       1505 2 2 2 6 5 6 5
       (make_player 0 "Victor" (make_balance 1505 2 2 2 6 5 6 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 5 ones"
+      "Victoria" 1505 2 2 2 6 5 5 10
+      (make_player 0 "Victoria" (make_balance 1505 2 2 2 6 5 5 10) 0);
     update_balance_test "update_balance_test : Initial balance + 10" "Violet"
       1510 2 2 2 6 6 5 5
       (make_player 0 "Violet" (make_balance 1510 2 2 2 6 6 5 5) 0);
