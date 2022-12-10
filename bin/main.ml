@@ -8,9 +8,6 @@ type players = { mutable pl_lst : _player list }
 
 let all_players = { pl_lst = [] }
 
-let handle_cc loc =
-  if get_tile_name loc monopoly_list = "Community Chest" then () else ()
-
 let do_turn frst scnd player =
   Board.do_turn frst scnd player;
   print_endline
@@ -18,6 +15,7 @@ let do_turn frst scnd player =
   print_endline
     ("Your new board position is "
     ^ get_tile_name player.board_position monopoly_list);
+
   print_endline
     ("Your current balance is is " ^ "$" ^ string_of_int player.balance.total)
 
