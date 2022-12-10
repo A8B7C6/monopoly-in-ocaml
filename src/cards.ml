@@ -109,7 +109,7 @@ let find_cc (cd : card) =
 
 let make_chance_list cdl = List.filter find_chance cdl
 let make_cc_list cdl = List.filter find_cc cdl
-let card_json = Yojson.Basic.from_file "src/data/Cards.json"
+let card_json = Yojson.Basic.from_file "data/Cards.json"
 let chance_lst = ref (make_chance_list (parse card_json))
 let cc_lst = ref (make_chance_list (parse card_json))
 let _ = !chance_lst @ !cc_lst
