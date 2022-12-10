@@ -68,7 +68,10 @@ let init_player nm =
 let get_name player = player.name
 let get_board_position player = player.board_position
 let set_board_position player pos = player.board_position <- pos
-let update_balance player new_bal = player.balance <- new_bal
+
+let update_balance player new_bal =
+  player.balance <- new_bal;
+  player
 
 let distribute_one player =
   player.balance.ones <- player.balance.ones + 1;
