@@ -46,3 +46,6 @@ val shuffle_player : _player list -> _player * _player list
 val check_jail_status : _player -> _player
 (** [shuffle_player playerlist] returns a tuple with the current player and list
     of upcoming players *)
+
+val distribute_change: _player ->int ->unit
+val decrement_balance: _player ->int ->unit
