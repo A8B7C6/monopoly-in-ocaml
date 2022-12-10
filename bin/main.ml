@@ -2,6 +2,7 @@ open Monopoly
 open Player
 open Board
 open Locations
+open Guihelper
 
 type players = { mutable pl_lst : _player list }
 
@@ -35,6 +36,7 @@ let play_monopoly players =
         do_turn (roll_dice ()) (roll_dice ()) current_player;
 
         curr_pos_print current_player "new";
+        update_game_data shuffled_players;
         print_endline "Continue playing? y/n";
 
         let cont = read_line () in

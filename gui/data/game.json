@@ -1,6 +1,1 @@
-{
-  "gameStarted": true,
-  "currentPlayer": 1,
-  "lastDiceRoll": 10,
-  "players": [{ "id": 1, "name": "john", "balance": 500, "position": 6 }]
-}
+{"gameStarted":true,"players":[{"id":"9","name":"a","balance":1500,"position":10}],"current_player":"a","lastDiceRoll":10}

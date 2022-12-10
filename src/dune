@@ -1,6 +1,7 @@
 (library
  (name monopoly)
  (public_name Monopoly)
- (libraries yojson ANSITerminal)
+ (libraries yojson core ppx_deriving_yojson.runtime ANSITerminal)
+(preprocess (pps ppx_deriving_yojson))
  (instrumentation
   (backend bisect_ppx)))
