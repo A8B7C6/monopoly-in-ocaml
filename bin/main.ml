@@ -3,10 +3,30 @@ open Player
 open Board
 open Locations
 open Guihelper
+open Cards
 
 type players = { mutable pl_lst : _player list }
 
 let all_players = { pl_lst = [] }
+
+let _cc_card_move c player =
+  let card_name = c.contents.name in
+  if card_name = "Move" then
+    player.board_position <- 0 (*also update balance +200*)
+  else if card_name = "Get Out of Jail Free Card" then player.free_jail <- true
+  else if card_name = "Go to Jail" then begin
+    player.in_jail <- true;
+    player.board_position <- 30
+  end
+  else if card_name = "Balance Change" then ()
+(*change balance according to what card says*)
+
+let _handle_cc loc =
+  if get_tile_name loc monopoly_list = "Community Chest" then
+    let head = List.hd chance_lst in
+    let flavor = head.contents.flavor_text in
+    print_endline flavor
+  else ()
 
 let do_turn frst scnd player =
   Board.do_turn frst scnd player;
@@ -15,11 +35,10 @@ let do_turn frst scnd player =
   print_endline
     ("Your new board position is "
     ^ get_tile_name player.board_position monopoly_list);
-
   print_endline
     ("Your current balance is is " ^ "$" ^ string_of_int player.balance.total)
 
-let curr_pos_print player state =
+let curr_pos_print (player : _player) state =
   let p1name = player.name in
   print_endline
     ("\n" ^ p1name ^ ", your " ^ state ^ " position is "

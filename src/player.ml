@@ -14,7 +14,7 @@ type _player = {
   name : string;
   balance : _balance;
   mutable doubles : int;
-  free_jail : bool;
+  mutable free_jail : bool;
   mutable in_jail : bool;
 }
 
