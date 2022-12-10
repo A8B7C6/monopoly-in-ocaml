@@ -28,16 +28,13 @@ let _cc_card_action c player =
     to_bottom c chance_lst
   end
 
-(*change balance according to what card says*)
-
 (**[_chance_action ] handles actions on the Chance card [_c] on [_player]*)
 let _chance_action _c _player = ()
 
 (**[_handle_cc] prints the text on the head of the Community Chance list*)
 let _handle_cc player =
   let head = List.hd !chance_lst in
-  let flavor = head.contents.flavor_text in
-  print_endline flavor;
+  print_endline (card_display_info head);
   _cc_card_action head player
 
 let handle_card loc player =

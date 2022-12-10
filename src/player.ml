@@ -158,7 +158,7 @@ let rec distribute_change (player : _player) (amt : int) =
   else if amt > 1 then
     let _ = distribute_one player in
     distribute_change player (amt - 1)
-  else player
+  else ()
 
 let rec decrement_balance (player : _player) amt =
   if amt < 0 then distribute_change player (amt * -1)
@@ -183,7 +183,7 @@ let rec decrement_balance (player : _player) amt =
   else if player.balance.fivehun > 0 then
     let _ = deduct_five_hundred player in
     decrement_balance player (amt - 500)
-  else player
+  else ()
 
 let rec remove_player players player_name =
   match players with
@@ -227,10 +227,10 @@ let rec handle_free_jail_card (player : _player) =
       handle_free_jail_card player
 
 let charge_jail_fine player =
-  let pl = decrement_balance player 50 in
-  remove_jailed pl;
-  pl.jailstats.turns_since <- 0;
-  pl
+  decrement_balance player 50;
+  remove_jailed player;
+  player.jailstats.turns_since <- 0;
+  player
 
 let rec handle_jail_fine (player : _player) =
   let _ = print_endline "Would you like to pay the 50$ fee to leave? y/n" in
