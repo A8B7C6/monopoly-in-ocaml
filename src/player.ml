@@ -235,6 +235,12 @@ let rec handle_jail_fine (player : _player) =
       print_endline "Please provide a valid response: y/n";
       handle_jail_fine player
 
+let handle_jail_doubles player = if player.in_jail then remove_jailed player
+
+let check_for_double player roll1 roll2 =
+  if roll1 = roll2 then player.doubles <- player.doubles + 1;
+  handle_jail_doubles player
+
 let handle_jailed_player (player : _player) =
   print_endline "You are currently in jail.";
   player.jailstats.turns_since <- player.jailstats.turns_since + 1;

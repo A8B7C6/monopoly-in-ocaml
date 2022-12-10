@@ -100,6 +100,9 @@ let handle_move loc player =
 
 let do_turn frst scnd player =
   Board.do_turn frst scnd player;
+  let current_doubles = player.doubles in
+  check_for_double player frst scnd;
+  if player.doubles > current_doubles then print_endline "You rolled a double!";
   print_endline
     ("You rolled a " ^ string_of_int frst ^ " and a " ^ string_of_int scnd);
   print_endline

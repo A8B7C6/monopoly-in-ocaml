@@ -49,3 +49,4 @@ val check_jail_status : _player -> _player
 
 val distribute_change: _player ->int ->unit
 val decrement_balance: _player ->int ->unit
+val check_for_double: _player -> int -> int -> unit
