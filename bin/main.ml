@@ -31,7 +31,8 @@ let chance_mv c player =
 
 let chance_bal c player =
   let bal = c.contents.actions.balance_change in
-  if bal < 0 then decrement_balance player bal else distribute_change player bal
+  if bal < 0 then decrement_balance player (bal * -1)
+  else distribute_change player bal
 
 let chance_jail player = player.board_position <- 30
 
@@ -55,8 +56,8 @@ let _chance_action c player =
     remove_jail c chance_lst
   end
 
-(**[_cc_card_action] will perform the designated action given in the community
-   chance card [c] on [player]*)
+(**[_cc_card] will perform the designated action given in the community chance
+   card [c] on [player]*)
 let _cc_action c player =
   let card_name = c.contents.name in
   if card_name = "Get Out of Jail Free Card" then begin
