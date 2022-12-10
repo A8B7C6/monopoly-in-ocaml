@@ -125,6 +125,7 @@ let tl_helper a =
   *************************************************************************)
 
 let tiles_list json = json |> to_assoc |> List.map tl_helper
+let monopoly_list = tiles_list (Yojson.Basic.from_file "src/data/Monopoly.json")
 
 let rec find_tile index tiles =
   match tiles with

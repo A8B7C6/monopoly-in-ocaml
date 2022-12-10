@@ -37,6 +37,7 @@ val get_tile_name : int -> (int * tile_type) list -> string
 
 val cc_chance : tile_type -> unit
 val jail_pos : _player -> unit
+val monopoly_list : (int * tile_type) list
 
 (* Helper Functions for tests*)
 val make_tile :

@@ -8,10 +8,13 @@ type players = { mutable pl_lst : _player list }
 
 let all_players = { pl_lst = [] }
 
+let handle_cc loc =
+  if get_tile_name loc monopoly_list = "Community Chest" then () else ()
+
 let do_turn frst scnd player =
   Board.do_turn frst scnd player;
   print_endline
-    ("You rolled a " ^ string_of_int frst ^ " and\n   a " ^ string_of_int scnd);
+    ("You rolled a " ^ string_of_int frst ^ " and a " ^ string_of_int scnd);
   print_endline
     ("Your new board position is "
     ^ get_tile_name player.board_position monopoly_list);
@@ -61,8 +64,6 @@ let rec main () =
       index := !index + 1;
       print_endline "\n"
     done;
-    (*need to update play_monopoly to handle a player list*)
-    (* let name = read_line () in let p1 = init_player name in *)
     play_monopoly all_players.pl_lst
   with Failure _ ->
     print_endline "Please provide a valid number of players.\n";
