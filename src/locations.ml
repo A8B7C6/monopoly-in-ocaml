@@ -137,7 +137,7 @@ let get_tile_name index mlist =
   | Railroad r -> property_name r
   | Utility u -> property_name u
   | Tax t -> tax_name t
-  | Go -> "go"
+  | Go -> "Go"
   | CommunityChest -> "Community Chest"
   | Chance -> "Chance"
   | Jail -> "Jail"

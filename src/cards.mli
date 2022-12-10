@@ -24,12 +24,12 @@ type card_deck = { card_deck : card list }
 type t = Yojson.Basic.t
 
 val parse : t -> card list
-val init_card : card_type -> string -> string -> actions -> card
 
-val make_chance_list :
-  (card_type * contents) list -> (card_type * contents) list
+val init_card :
+  card_type -> string -> string -> string -> int -> bool -> bool -> card
 
-val make_cc_list : (card_type * contents) list -> (card_type * contents) list
+val make_chance_list : card list -> card list
+val make_cc_list : card list -> card list
 
 val card_display_info : card -> string
 (** [card_display_info crd] takes [crd] and returns a string detailing what card

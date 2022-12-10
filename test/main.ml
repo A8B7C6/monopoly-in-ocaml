@@ -7,7 +7,7 @@ open Cards
 
 let data_dir_prefix = "data" ^ Filename.dir_sep
 let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
-(*let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")*)
+let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
 
 (****************************************************************************
   Helper Functions
@@ -16,11 +16,11 @@ let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
 let tiles_list_test name json expected : test =
   name >:: fun _ -> assert_equal expected (tiles_list json)
 
-let tiles_list_test name json expected : test =
-  name >:: fun _ -> assert_equal expected (tiles_list json)
-
 let find_tile_test name index tiles expected : test =
   name >:: fun _ -> assert_equal expected (find_tile index tiles)
+
+let get_tile_name_test name index mlist expected_name : test =
+  name >:: fun _ -> assert_equal expected_name (get_tile_name index mlist)
 
 let check_single_roll result = result >= 1 && result <= 6
 
@@ -33,12 +33,16 @@ let roll_dice_test name expected : test =
 let init_player_test name nm expected : test =
   name >:: fun _ -> assert_equal expected (init_player nm)
 
-let card_display_info_test name ct nm flvr_txt acts expected : test =
+let card_display_info_test name ct nm flvr_txt mv rcv gtj ooj expected : test =
   name >:: fun _ ->
-  assert_equal expected (init_card ct nm flvr_txt acts |> card_display_info)
+  assert_equal expected
+    (init_card ct nm flvr_txt mv rcv gtj ooj |> card_display_info)
 
-let get_tile_name_test name index mlist expected_name : test =
-  name >:: fun _ -> assert_equal expected_name (get_tile_name index mlist)
+let make_chance_list_test name cards expected : test =
+  name >:: fun _ -> assert_equal expected (make_chance_list cards)
+
+let make_cc_list_test name cards expected : test =
+  name >:: fun _ -> assert_equal expected (make_cc_list cards)
 
 (****************************************************************************
   End of Helper Functions
@@ -135,9 +139,9 @@ let locations_tests =
     get_tile_name_test "get_tile_name_test w/ parking tile" 20 (tiles_list mono)
       "Parking";
     get_tile_name_test "get_tile_name_test w/ utility tile" 28 (tiles_list mono)
-      "Utility";
+      "Water Works";
     get_tile_name_test "get_tile_name_test w/ jail tile" 30 (tiles_list mono)
-      "Utility";
+      "Jail";
     get_tile_name_test "get_tile_name_test w/ visiting jail tile" 10
       (tiles_list mono) "Visiting Jail";
     get_tile_name_test "get_tile_name_test w/ last tile" 39 (tiles_list mono)
@@ -172,14 +176,27 @@ let player_tests =
 let cards_tests =
   [
     card_display_info_test "card_display_info_test : generic card" Chance
-      "Generic Card" "generic flavor text"
-      {
-        move = "NA";
-        money_change = 0;
-        go_to_jail = false;
-        out_of_jail_card = false;
-      }
+      "Generic Card" "generic flavor text" "NA" 0 false false
       "Picked up card Generic Card: generic flavor text";
+    make_chance_list_test "make_chance_list_test : full chance cards list"
+      (parse cards)
+      [
+        init_card Chance "Move" "Advance to Go. (Collect $200)" "Go" 0 false
+          false;
+        init_card Chance "Move"
+          "Advance to Illinois Avenue. If you pass Go, collect $200."
+          "Illinois Avenue" 0 false false;
+        init_card Chance "Move"
+          "Advance to St. Charles Place. If you pass Go, collect $200."
+          "St. Charles Place" 0 false false;
+        init_card Chance "Move"
+          "Advance to the nearest Railroad. If unowned, you may buy it from \
+           the Bank. If owned, pay owner twice the rental to which they are \
+           otherwise entitled."
+          "Railroad" 0 false false;
+      ];
+    make_cc_list_test "make_cc_list_test : full cc cards list" (parse cards)
+      [ init_card CC "Move" "Advance to Go. (Collect $200)" "Go" 0 false false ];
   ]
 
 let suite =

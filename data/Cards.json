@@ -17,9 +17,22 @@
       "card type": "chance",
       "contents": {
         "name": "Move",
-        "flavor text": "Advance to Illinois Avenue.If you pass Go, collect $200.",
+        "flavor text": "Advance to Illinois Avenue. If you pass Go, collect $200.",
         "actions": {
           "move": "Illinois Avenue",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
+        "flavor text": "Advance to St. Charles Place. If you pass Go, collect $200.",
+        "actions": {
+          "move": "St. Charles Place",
           "receive": "0",
           "go to jail": "false",
           "get out of jail free card": "false"
@@ -40,28 +53,15 @@
       }
     },
     {
-      "card type": "chance",
+      "card type": "cc",
       "contents": {
         "name": "Move",
-        "flavor text": "Move to Go",
+        "flavor text": "Advance to Go. (Collect $200)",
         "actions": {
-          "move": "0",
+          "move": "Go",
           "receive": "0",
           "go to jail": "false",
           "get out of jail free card": "false"
-        }
-      }
-    },
-    {
-      "card type": "cc",
-      "contents": {
-        "name": "another random card",
-        "flavor text": "NA",
-        "actions": {
-          "move": "NA",
-          "receive": "NA",
-          "go to jail": "NA",
-          "get out of jail free card": "NA"
         }
       }
     }

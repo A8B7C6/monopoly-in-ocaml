@@ -88,25 +88,28 @@ let parse j =
 (*******************************************************************************
   Functions that DONT deal with JSON
   *****************************************************************************)
-let init_contents nm flvr_txt acts =
-  { name = nm; flavor_text = flvr_txt; actions = acts }
+let init_actions mv rcv gtj ooj =
+  { move = mv; money_change = rcv; go_to_jail = gtj; out_of_jail_card = ooj }
 
-let init_card ct nm flvr_txt acts =
-  { card_type = ct; contents = init_contents nm flvr_txt acts }
+let init_contents nm flvr_txt mv rcv gtj ooj =
+  { name = nm; flavor_text = flvr_txt; actions = init_actions mv rcv gtj ooj }
+
+let init_card ct nm flvr_txt mv rcv gtj ooj =
+  { card_type = ct; contents = init_contents nm flvr_txt mv rcv gtj ooj }
 
 (* TODO: function/s that execute the action/s of the card*)
-let find_chance card =
-  match card with
-  | Chance, _ -> true
-  | _ -> failwith "Impossible"
+let find_chance (cd : card) =
+  match cd with
+  | { card_type = Chance; _ } -> true
+  | _ -> false
 
-let find_cc card =
-  match card with
-  | CC, _ -> true
-  | _ -> failwith "Impossible"
+let find_cc (cd : card) =
+  match cd with
+  | { card_type = CC; _ } -> true
+  | _ -> false
 
-let make_chance_list cd = List.filter find_chance cd
-let make_cc_list cd = List.filter find_cc cd
+let make_chance_list cdl = List.filter find_chance cdl
+let make_cc_list cdl = List.filter find_cc cdl
 
 let card_display_info (crd : card) =
   "Picked up card " ^ crd.contents.name ^ ": " ^ crd.contents.flavor_text
