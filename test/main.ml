@@ -30,6 +30,10 @@ let roll_dice_test name expected : test =
     (check_single_roll (roll_dice ()))
     ~printer:string_of_bool
 
+let check_for_double_test name player dice1 dice2 expected : test =
+  let _ = check_for_double player dice1 dice2 in
+  name >:: fun _ -> assert_equal expected player.doubles
+
 let init_player_test name nm expected : test =
   name >:: fun _ -> assert_equal expected (init_player nm)
 
@@ -190,6 +194,30 @@ let board_tests =
          player.board_position) );
   ]
 
+let jailed_player = init_player "jailed"
+let () = jailed_player.in_jail <- true
+
+let jailed_tests : test list =
+  [
+    (let _ =
+       check_for_double_test
+         "Check for doubles frees jailed player with same dice roll"
+         jailed_player 1 1 1
+     in
+     "jailed player should be freed from jail" >:: fun _ ->
+     assert_equal jailed_player.in_jail false);
+  ]
+
+let doubles_tests =
+  [
+    check_for_double_test "Check for doubles increases with same dice roll"
+      (init_player "john") 1 1 1;
+    check_for_double_test
+      "Check for doubles does not increase with different dice roll"
+      (init_player "john") 1 1 1;
+  ]
+  @ jailed_tests
+
 let player_tests =
   [
     init_player_test "init_player_test: Initial balance and given name" "Joe"
@@ -231,6 +259,7 @@ let player_tests =
       0 0 0
       (make_player 0 "Yohanan" (make_balance 0 0 0 0 0 0 0 0) 0);
   ]
+  @ doubles_tests
 
 let cards_tests =
   [
@@ -333,3 +362,4 @@ let suite =
   >::: List.flatten [ locations_tests; board_tests; player_tests; cards_tests ]
 
 let _ = run_test_tt_main suite
+let _ = jailed_tests
