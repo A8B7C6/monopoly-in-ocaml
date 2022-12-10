@@ -110,9 +110,15 @@ let find_cc (cd : card) =
 let make_chance_list cdl = List.filter find_chance cdl
 let make_cc_list cdl = List.filter find_cc cdl
 let card_json = Yojson.Basic.from_file "src/data/Cards.json"
-let chance_lst = make_chance_list (parse card_json)
-let cc_lst = make_chance_list (parse card_json)
-let _ = chance_lst @ cc_lst
+let chance_lst = ref (make_chance_list (parse card_json))
+let cc_lst = ref (make_chance_list (parse card_json))
+let _ = !chance_lst @ !cc_lst
+
+let to_bottom crd (lst : card list ref) =
+  lst := List.filter (fun x -> x != crd) !lst @ [ crd ]
+
+let remove_jail crd (lst : card list ref) =
+  lst := List.filter (fun x -> x != crd) !lst
 
 let card_display_info (crd : card) =
   "Picked up card " ^ crd.contents.name ^ ": " ^ crd.contents.flavor_text
