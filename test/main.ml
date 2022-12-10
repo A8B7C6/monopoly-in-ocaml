@@ -190,13 +190,83 @@ let cards_tests =
           "Advance to St. Charles Place. If you pass Go, collect $200."
           "St. Charles Place" 0 false false;
         init_card Chance "Move"
+          "Advance token to the nearest Utility. If unowned, you may buy it \
+           from the Bank. If owned, throw dice and pay owner a total 10 (ten) \
+           times the amount thrown."
+          "Utility" 0 false false;
+        init_card Chance "Move"
           "Advance to the nearest Railroad. If unowned, you may buy it from \
            the Bank. If owned, pay owner twice the rental to which they are \
            otherwise entitled."
           "Railroad" 0 false false;
+        init_card Chance "Balance Change" "Bank pays you dividend of $50." "NA"
+          50 false false;
+        init_card Chance "Get Out of Jail Free Card"
+          "Get out of Jail Free. This card may be kept until needed, or \
+           traded/sold."
+          "NA" 0 false true;
+        init_card Chance "Move" "Go Back Three Spaces." "Back 3" 0 false false;
+        init_card Chance "Go to Jail"
+          "Go to Jail. Go directly to Jail. Do not pass Go, do not collect \
+           $200."
+          "NA" 0 true false;
+        init_card Chance "Balance Change"
+          "You forgot to mow your lawn, drawing your HOA's ire. Pay a fine of \
+           $75."
+          "NA" (-75) false false;
+        init_card Chance "Move"
+          "Take a trip to Reading Railroad. If you pass Go, collect $200."
+          "Reading Railroad" 0 false false;
+        init_card Chance "Move"
+          "Take a walk on the Boardwalk. Advance token to Boardwalk."
+          "Boardwalk" 0 false false;
+        init_card Chance "Balance Change"
+          "You have been elected Chairman of the Board. Pay $100." "NA" (-100)
+          false false;
+        init_card Chance "Balance Change"
+          "Your building loan matures. Receive $150." "NA" 150 false false;
       ];
     make_cc_list_test "make_cc_list_test : full cc cards list" (parse cards)
-      [ init_card CC "Move" "Advance to Go. (Collect $200)" "Go" 0 false false ];
+      [
+        init_card CC "Move" "Advance to Go. (Collect $200)" "Go" 0 false false;
+        init_card CC "Balance Change" "Bank error in your favor. Collect $200."
+          "NA" 200 false false;
+        init_card CC "Balance Change" "Doctor's fees. Pay $50." "NA" (-50) false
+          false;
+        init_card CC "Balance Change" "From the sale of a stock you get $50."
+          "NA" 50 false false;
+        init_card CC "Get Out of Jail Free Card"
+          "Get out of Jail Free. This card may be kept until needed, or \
+           traded/sold."
+          "NA" 0 false true;
+        init_card CC "Go to Jail"
+          "Go to Jail. Go directly to Jail. Do not pass Go, do not collect \
+           $200."
+          "NA" 0 true false;
+        init_card CC "Balance Change" "Grand Opera Night. Collect $125." "NA"
+          125 false false;
+        init_card CC "Balance Change" "Holiday Fund matures. Receive $100." "NA"
+          100 false false;
+        init_card CC "Balance Change" "Income tax refund. Collect $20." "NA" 20
+          false false;
+        init_card CC "Balance Change"
+          "It's your birthday. Collect $25 as a gift." "NA" 25 false false;
+        init_card CC "Balance Change" "Life insurance matures. Collect $100."
+          "NA" 100 false false;
+        init_card CC "Balance Change" "Hospital fees. Pay $50." "NA" (-50) false
+          false;
+        init_card CC "Balance Change" "School fees. Pay $50." "NA" (-50) false
+          false;
+        init_card CC "Balance Change" "Receive $25 consultancy fee." "NA" 25
+          false false;
+        init_card CC "Balance Change"
+          "You are assessed for street repairs: Pay $155." "NA" (-155) false
+          false;
+        init_card CC "Balance Change"
+          "You have won second prize in a beauty contest. Collect $10." "NA" 10
+          false false;
+        init_card CC "Balance Change" "You inherit $100." "NA" 100 false false;
+      ];
   ]
 
 let suite =

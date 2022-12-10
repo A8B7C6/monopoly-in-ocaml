@@ -1,6 +1,6 @@
 type actions = {
   move : string;
-  money_change : int;
+  balance_change : int;
   go_to_jail : bool;
   out_of_jail_card : bool;
 }

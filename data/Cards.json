@@ -43,10 +43,140 @@
       "card type": "chance",
       "contents": {
         "name": "Move",
+        "flavor text": "Advance token to the nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 (ten) times the amount thrown.",
+        "actions": {
+          "move": "Utility",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
         "flavor text": "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled.",
         "actions": {
           "move": "Railroad",
           "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Bank pays you dividend of $50.",
+        "actions": {
+          "move": "NA",
+          "receive": "50",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Get Out of Jail Free Card",
+        "flavor text": "Get out of Jail Free. This card may be kept until needed, or traded/sold.",
+        "actions": {
+          "move": "NA",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "true"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
+        "flavor text": "Go Back Three Spaces.",
+        "actions": {
+          "move": "Back 3",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Go to Jail",
+        "flavor text": "Go to Jail. Go directly to Jail. Do not pass Go, do not collect $200.",
+        "actions": {
+          "move": "NA",
+          "receive": "0",
+          "go to jail": "true",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "You forgot to mow your lawn, drawing your HOA's ire. Pay a fine of $75.",
+        "actions": {
+          "move": "NA",
+          "receive": "-75",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
+        "flavor text": "Take a trip to Reading Railroad. If you pass Go, collect $200.",
+        "actions": {
+          "move": "Reading Railroad",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Move",
+        "flavor text": "Take a walk on the Boardwalk. Advance token to Boardwalk.",
+        "actions": {
+          "move": "Boardwalk",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "You have been elected Chairman of the Board. Pay $100.",
+        "actions": {
+          "move": "NA",
+          "receive": "-100",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "chance",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Your building loan matures. Receive $150.",
+        "actions": {
+          "move": "NA",
+          "receive": "150",
           "go to jail": "false",
           "get out of jail free card": "false"
         }
@@ -60,6 +190,214 @@
         "actions": {
           "move": "Go",
           "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Bank error in your favor. Collect $200.",
+        "actions": {
+          "move": "NA",
+          "receive": "200",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Doctor's fees. Pay $50.",
+        "actions": {
+          "move": "NA",
+          "receive": "-50",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "From the sale of a stock you get $50.",
+        "actions": {
+          "move": "NA",
+          "receive": "50",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Get Out of Jail Free Card",
+        "flavor text": "Get out of Jail Free. This card may be kept until needed, or traded/sold.",
+        "actions": {
+          "move": "NA",
+          "receive": "0",
+          "go to jail": "false",
+          "get out of jail free card": "true"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Go to Jail",
+        "flavor text": "Go to Jail. Go directly to Jail. Do not pass Go, do not collect $200.",
+        "actions": {
+          "move": "NA",
+          "receive": "0",
+          "go to jail": "true",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Grand Opera Night. Collect $125.",
+        "actions": {
+          "move": "NA",
+          "receive": "125",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Holiday Fund matures. Receive $100.",
+        "actions": {
+          "move": "NA",
+          "receive": "100",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Income tax refund. Collect $20.",
+        "actions": {
+          "move": "NA",
+          "receive": "20",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "It's your birthday. Collect $25 as a gift.",
+        "actions": {
+          "move": "NA",
+          "receive": "25",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Life insurance matures. Collect $100.",
+        "actions": {
+          "move": "NA",
+          "receive": "100",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Hospital fees. Pay $50.",
+        "actions": {
+          "move": "NA",
+          "receive": "-50",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "School fees. Pay $50.",
+        "actions": {
+          "move": "NA",
+          "receive": "-50",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "Receive $25 consultancy fee.",
+        "actions": {
+          "move": "NA",
+          "receive": "25",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "You are assessed for street repairs: Pay $155.",
+        "actions": {
+          "move": "NA",
+          "receive": "-155",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "You have won second prize in a beauty contest. Collect $10.",
+        "actions": {
+          "move": "NA",
+          "receive": "10",
+          "go to jail": "false",
+          "get out of jail free card": "false"
+        }
+      }
+    },
+    {
+      "card type": "cc",
+      "contents": {
+        "name": "Balance Change",
+        "flavor text": "You inherit $100.",
+        "actions": {
+          "move": "NA",
+          "receive": "100",
           "go to jail": "false",
           "get out of jail free card": "false"
         }

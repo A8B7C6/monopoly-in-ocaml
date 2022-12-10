@@ -5,7 +5,7 @@ open Yojson.Basic.Util
 (* TODO: adjust type card so can store actions*)
 type actions = {
   move : string;
-  money_change : int;
+  balance_change : int;
   go_to_jail : bool;
   out_of_jail_card : bool;
 }
@@ -43,15 +43,14 @@ let bool_helper s =
   match s with
   | "true" -> true
   | "false" -> false
-  | "NA" -> false
   | _ -> failwith "Impossible"
 
-let int_helper s : int = if s = "NA" then -1 else int_of_string s
+let int_helper s : int = int_of_string s
 
 let actions j =
   {
     move = j |> member "move" |> to_string;
-    money_change = j |> member "receive" |> to_string |> int_helper;
+    balance_change = j |> member "receive" |> to_string |> int_helper;
     go_to_jail = j |> member "go to jail" |> to_string |> bool_helper;
     out_of_jail_card =
       j |> member "get out of jail free card" |> to_string |> bool_helper;
@@ -89,7 +88,7 @@ let parse j =
   Functions that DONT deal with JSON
   *****************************************************************************)
 let init_actions mv rcv gtj ooj =
-  { move = mv; money_change = rcv; go_to_jail = gtj; out_of_jail_card = ooj }
+  { move = mv; balance_change = rcv; go_to_jail = gtj; out_of_jail_card = ooj }
 
 let init_contents nm flvr_txt mv rcv gtj ooj =
   { name = nm; flavor_text = flvr_txt; actions = init_actions mv rcv gtj ooj }
