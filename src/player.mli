@@ -9,13 +9,16 @@ type _balance = {
   mutable ones : int;
 }
 
+type jail_stats = { mutable turns_since : int }
+
 type _player = {
   mutable board_position : int;
   name : string;
-  balance : _balance;
+  mutable balance : _balance;
   mutable doubles : int;
-  free_jail : bool;
+  mutable free_jail : bool;
   mutable in_jail : bool;
+  mutable jailstats : jail_stats;
 }
 
 val make_balance :
@@ -37,3 +40,4 @@ val dequeue_player : _player list -> _player * _player list
 
 val shuffle_player : _player list -> _player * _player list
 (** [shuffle_player playerlist] returns a tuple with the current player and list of upcoming players *)
+val check_jail_status : _player -> _player

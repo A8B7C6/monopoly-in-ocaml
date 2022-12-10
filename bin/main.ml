@@ -32,7 +32,7 @@ let play_monopoly players =
         let current_player, shuffled_players = shuffle_player players in
         curr_pos_print current_player "current";
         (* cc_chance Chance; *)
-        jail_pos current_player;
+        let current_player = check_jail_status current_player in
         do_turn (roll_dice ()) (roll_dice ()) current_player;
 
         curr_pos_print current_player "new";
