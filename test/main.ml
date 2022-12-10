@@ -33,6 +33,17 @@ let roll_dice_test name expected : test =
 let init_player_test name nm expected : test =
   name >:: fun _ -> assert_equal expected (init_player nm)
 
+(*let set_board_position_test name nm pos (expected : int) : test = name >:: fun
+  _ -> assert_equal expected (get_board_position (set_board_position
+  (init_player nm) pos))*)
+
+let update_balance_test name nm total fivehun hun ffty twnty tens fives ones
+    expected : test =
+  name >:: fun _ ->
+  assert_equal expected
+    (update_balance (init_player nm)
+       (make_balance total fivehun hun ffty twnty tens fives ones))
+
 let card_display_info_test name ct nm flvr_txt mv rcv gtj ooj expected : test =
   name >:: fun _ ->
   assert_equal expected
@@ -186,6 +197,36 @@ let player_tests =
     (* TODO: do we want to prohibit empty names? *)
     init_player_test "init_player_test: Initial balance and empty name" ""
       (make_player 0 "" (make_balance 1500 2 2 2 6 5 5 5) 0);
+    (*set_board_position_test "set_board_position_test : Initial position (Go)"
+      "Ann" 0 0; set_board_position_test "set_board_position_test : Boardwalk
+      (39)" "Ben" 39 39;*)
+    update_balance_test "update_balance_test : Initial balance" "Kim" 1500 2 2 2
+      6 5 5 5
+      (make_player 0 "Kim" (make_balance 1500 2 2 2 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 1" "Vera" 1501
+      2 2 2 6 5 5 6
+      (make_player 0 "Vera" (make_balance 1501 2 2 2 6 5 5 6) 0);
+    update_balance_test "update_balance_test : Initial balance + 5" "Victor"
+      1505 2 2 2 6 5 6 5
+      (make_player 0 "Victor" (make_balance 1505 2 2 2 6 5 6 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 10" "Violet"
+      1510 2 2 2 6 6 5 5
+      (make_player 0 "Violet" (make_balance 1510 2 2 2 6 6 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 20" "Van" 1520
+      2 2 2 7 5 5 5
+      (make_player 0 "Van" (make_balance 1520 2 2 2 7 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 50" "Valerie"
+      1550 2 2 3 6 5 5 5
+      (make_player 0 "Valerie" (make_balance 1550 2 2 3 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 100"
+      "Valentino" 1600 2 3 2 6 5 5 5
+      (make_player 0 "Valentino" (make_balance 1600 2 3 2 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Initial balance + 500" "Valeska"
+      2000 3 2 2 6 5 5 5
+      (make_player 0 "Valeska" (make_balance 2000 3 2 2 6 5 5 5) 0);
+    update_balance_test "update_balance_test : Zero balance" "Yohanan" 0 0 0 0 0
+      0 0 0
+      (make_player 0 "Yohanan" (make_balance 0 0 0 0 0 0 0 0) 0);
   ]
 
 let cards_tests =
