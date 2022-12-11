@@ -87,6 +87,17 @@ let tax contents =
   }
 
 let property_name (p : _property) = p.name
+let property_price (p : _property) = p.price
+let property_upgrade_cost (p : _property) = p.upgrade_cost
+
+let property_rent (p : _property) (upgrade_lvl : int) =
+  if upgrade_lvl = 1 then p._1rent
+  else if upgrade_lvl = 2 then p._2rent
+  else if upgrade_lvl = 3 then p._3rent
+  else if upgrade_lvl = 4 then p._4rent
+  else if upgrade_lvl = 5 then p.hotel_rent
+  else p.base_rent
+
 let tax_name t = t.name
 
 let tile_type tt con =

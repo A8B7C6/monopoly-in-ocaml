@@ -19,6 +19,8 @@ val tile_type : string -> Yojson.Basic.t -> tile_type
 val tile_color : string -> color
 val tile_index : int -> Yojson.Basic.t -> int * tile_type
 val property_name : _property -> string
+val property_price : _property -> int
+val property_upgrade_cost : _property -> int
 val tax_name : _tax -> string
 
 val tiles_list : Yojson.Basic.t -> (int * tile_type) list
@@ -35,6 +37,7 @@ val get_tile_name : int -> (int * tile_type) list -> string
 
 val cc_chance : tile_type -> unit
 val monopoly_list : (int * tile_type) list
+val property_rent : _property -> int -> int 
 
 (* Helper Functions for tests*)
 val make_tile :
