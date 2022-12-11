@@ -17,6 +17,35 @@ let move_new new_index player =
   end
   else player.board_position <- new_index
 
+let rec find_min min lst =
+  match lst with
+  | [] -> !min
+  | (a, b) :: t ->
+      if b < snd !min then begin
+        min := (a, b);
+        find_min min t
+      end
+      else find_min min lst
+
+let chance_rail_util_go curr player (board_pos, _) =
+  if curr <= board_pos then player.board_position <- board_pos
+  else player.board_position <- board_pos;
+  distribute_change player 200
+
+let chance_rail_util loc player =
+  let pos = player.board_position in
+  let railroads = [ 5; 15; 25; 35 ] in
+  let utilities = [ 12; 28 ] in
+  if loc = "Railroad" then
+    let r2 = List.map (fun x -> (x, Int.abs (x - pos))) railroads in
+    let min_ref = ref (List.hd r2) in
+    find_min min_ref r2 |> chance_rail_util_go pos player
+    (*have to check if railroad is owned and if have to pay price*)
+  else if loc = "Utilities" then
+    let u2 = List.map (fun x -> (x, Int.abs (x - pos))) utilities in
+    let min_ref = ref (List.hd u2) in
+    find_min min_ref u2 |> chance_rail_util_go pos player
+
 let chance_mv c player =
   let new_loc = c.contents.actions.move in
   if new_loc = "Boardwalk" then player.board_position <- 39
@@ -27,7 +56,8 @@ let chance_mv c player =
   else if new_loc = "Illinois Avenue" then move_new 24 player
   else if new_loc = "St. Charles Place" then move_new 11 player
   else if new_loc = "Reading Railroad" then move_new 5 player
-  else if new_loc = "Railroad" || new_loc = "Utility" then ()
+  else if new_loc = "Railroad" || new_loc = "Utility" then
+    chance_rail_util new_loc player
   else if new_loc = "Back 3" then ()
 
 let chance_bal c player =
@@ -35,7 +65,9 @@ let chance_bal c player =
   if bal < 0 then decrement_balance player (bal * -1)
   else distribute_change player bal
 
-let chance_jail player = player.board_position <- 30
+let chance_jail player =
+  player.board_position <- 30;
+  player.in_jail <- true
 
 (**[_chance_action ] handles actions on the Chance card [_c] on [_player]*)
 let _chance_action c player =
