@@ -2,8 +2,8 @@ open Locations
 open Player
 
 type rent_tile = {
-  mutable player : _player option;
-  mutable tile : tile_type;
+  player : _player option;
+  tile : tile_type;
   mutable upgrade_level : int;
   mutable rent_cost : int;
 }
@@ -72,12 +72,13 @@ let purchase_property player price board_pos (rTile : rent_tile) : unit =
         tile = rTile.tile;
         player = Some player;
         upgrade_level = 0;
-      }
+      };
+  decrement_balance player price
 
 let rec upgrade_property board_pos p price player =
   let _ =
     print_endline
-      ("Would you like to upgrade" ^ property_name p ^ " for "
+      ("Would you like to upgrade " ^ property_name p ^ " for "
      ^ string_of_int price ^ ": y/n")
   in
   let upgrade_response = read_line () in
@@ -103,7 +104,7 @@ let rec check_property board_pos player =
       if is_purchasable board_pos then (
         let _ =
           print_endline
-            ("Would you like to purchase" ^ property_name p ^ " for "
+            ("Would you like to purchase " ^ property_name p ^ " for "
             ^ string_of_int (property_price p)
             ^ ": y/n")
         in
@@ -124,3 +125,5 @@ let rec check_property board_pos player =
         | _ -> ()
       else ()
   | _ -> ()
+
+let _ = create_properties_map tiles
