@@ -21,27 +21,6 @@ type _player = {
   mutable jailstats : jail_stats;
 }
 
-(*******************************************************************************
-  Helper functions for Player Tests
-  *****************************************************************************)
-let make_balance total fivehun hun ffty twnty tens fives ones =
-  { total; fivehun; hun; ffty; twnty; tens; fives; ones }
-
-let make_player brdpos nm blnce dbls =
-  {
-    board_position = brdpos;
-    name = nm;
-    balance = blnce;
-    doubles = dbls;
-    free_jail = false;
-    in_jail = false;
-    jailstats = { turns_since = 0 };
-  }
-
-(*******************************************************************************
-  End helper functions for Locations Tests
-  *****************************************************************************)
-
 let init_balance =
   {
     total = 1500;
@@ -68,10 +47,6 @@ let init_player nm =
 let get_name player = player.name
 let get_board_position player = player.board_position
 let set_board_position player pos = player.board_position <- pos
-
-let update_balance player new_bal =
-  player.balance <- new_bal;
-  player
 
 let distribute_one player =
   player.balance.ones <- player.balance.ones + 1;
@@ -178,6 +153,8 @@ let rec decrement_balance (player : _player) amt =
     decrement_balance player (amt - 500)
   else ()
 
+(* TODO : complete functionality for removing a player from the game without
+   ending the game entirley*)
 let rec remove_player players player_name =
   match players with
   | [] -> []
@@ -257,3 +234,28 @@ let handle_jailed_player (player : _player) =
 
 let check_jail_status (player : _player) =
   if player.in_jail then handle_jailed_player player else player
+
+(*******************************************************************************
+  Helper functions for Player Tests
+  *****************************************************************************)
+let make_balance total fivehun hun ffty twnty tens fives ones =
+  { total; fivehun; hun; ffty; twnty; tens; fives; ones }
+
+let make_player brdpos nm blnce dbls =
+  {
+    board_position = brdpos;
+    name = nm;
+    balance = blnce;
+    doubles = dbls;
+    free_jail = false;
+    in_jail = false;
+    jailstats = { turns_since = 0 };
+  }
+
+let update_balance player new_bal =
+  player.balance <- new_bal;
+  player
+
+(*******************************************************************************
+  End helper functions for Player Tests
+  *****************************************************************************)
