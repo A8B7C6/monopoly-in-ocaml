@@ -21,3 +21,6 @@ bisect*.coverage
 
 #gui/data
 /gui/data/*.json
+
+# zip file
+monopoly.zip
