@@ -21,6 +21,9 @@ type _player = {
   mutable jailstats : jail_stats;
 }
 
+val init_balance : _balance
+(** [init_balance] creates a starting balance of [1500] *)
+
 val init_player : string -> _player
 (** [init_player nm] creates a player with name [nm], starting position at index
     0, and starting balance of [1500] *)

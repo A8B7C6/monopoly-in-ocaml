@@ -37,9 +37,13 @@ let check_for_double_test name player dice1 dice2 expected : test =
 let init_player_test name nm expected : test =
   name >:: fun _ -> assert_equal expected (init_player nm)
 
-(*let set_board_position_test name nm pos (expected : int) : test = name >:: fun
-  _ -> assert_equal expected (get_board_position (set_board_position
-  (init_player nm) pos))*)
+let get_name_test name brdpos nm blnce dbls expected : test =
+  name >:: fun _ ->
+  assert_equal expected (get_name (make_player brdpos nm blnce dbls))
+
+let get_board_position_test name brdpos nm blnce dbls expected : test =
+  name >:: fun _ ->
+  assert_equal expected (get_board_position (make_player brdpos nm blnce dbls))
 
 let update_balance_test name nm total fivehun hun ffty twnty tens fives ones
     expected : test =
@@ -225,9 +229,14 @@ let player_tests =
     (* TODO: do we want to prohibit empty names? *)
     init_player_test "init_player_test: Initial balance and empty name" ""
       (make_player 0 "" (make_balance 1500 2 2 2 6 5 5 5) 0);
-    (*set_board_position_test "set_board_position_test : Initial position (Go)"
-      "Ann" 0 0; set_board_position_test "set_board_position_test : Boardwalk
-      (39)" "Ben" 39 39;*)
+    get_name_test "get_name_test: A9B7C8" 0 "A9B7C8" init_balance 0 "A9B7C8";
+    get_name_test "get_name_test: !@#$$%^&*[]{}|:;'/?.,`~" 0
+      "!@#$$%^&*[]{}|:;'/?.,`~" init_balance 0 "!@#$$%^&*[]{}|:;'/?.,`~";
+    get_board_position_test "get_board_position_test: 0 (Go)" 0 "Grant"
+      init_balance 0 0;
+    get_board_position_test
+      "get_board_position_test: 15 (Pennsylvania Railroad)" 15 "Rosecrans"
+      init_balance 0 15;
     update_balance_test "update_balance_test : Initial balance" "Kim" 1500 2 2 2
       6 5 5 5
       (make_player 0 "Kim" (make_balance 1500 2 2 2 6 5 5 5) 0);
