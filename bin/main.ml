@@ -150,7 +150,8 @@ let handle_card loc player =
    a card or on some other type of tile*)
 let handle_move loc player =
   let card_locs = [ 2; 7; 17; 22; 33; 36 ] in
-  if List.mem loc card_locs then handle_card loc player else ()
+  if List.mem loc card_locs then handle_card loc player
+  else check_property player.board_position player
 
 let do_turn frst scnd player =
   Board.do_turn frst scnd player;
@@ -182,7 +183,7 @@ let play_monopoly players =
         (* cc_chance Chance; *)
         let current_player = check_jail_status current_player in
         do_turn (roll_dice ()) (roll_dice ()) current_player;
-        check_property current_player.board_position current_player;
+        handle_move current_player.board_position current_player;
         curr_pos_print current_player "new";
         update_game_data shuffled_players;
         print_endline "Continue playing? y/n";
