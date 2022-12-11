@@ -58,7 +58,8 @@ let chance_mv c player =
   else if new_loc = "Reading Railroad" then move_new 5 player
   else if new_loc = "Railroad" || new_loc = "Utility" then
     chance_rail_util new_loc player
-  else if new_loc = "Back 3" then ()
+  else if new_loc = "Back 3" then
+    player.board_position <- player.board_position - 3
 
 let chance_bal c player =
   let bal = c.contents.actions.balance_change in
