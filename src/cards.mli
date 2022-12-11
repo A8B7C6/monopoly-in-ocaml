@@ -25,7 +25,7 @@ type t = Yojson.Basic.t
 
 val parse : t -> card list
 (** [parse t] takes information from a json file [t] and generates a [card list]
-    with all [card_type]*)
+    with all of the [card_type] types*)
 
 val init_card :
   card_type -> string -> string -> string -> int -> bool -> bool -> card
@@ -44,7 +44,11 @@ val card_display_info : card -> string
     was picked up and what to expect from it. *)
 
 val chance_lst : card list ref
+(** [chance_lst] is a mutable instance that holds a list of cards with type
+    [Chance]*)
+
 val cc_lst : card list ref
+(** [cc_list] is a mutable instance that holds a list of cards with type [CC]*)
 
 val to_bottom : card -> card list ref -> unit
 (**[to_bottom crd lst] removes [crd] from the [lst] and appends it to the back

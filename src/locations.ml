@@ -155,22 +155,6 @@ let get_tile_name index mlist =
   | VisitingJail -> "Visiting Jail"
   | Parking -> "Parking"
 
-(* TODO: for tiles Chance and Community Chest, figure out how the functionality
-   and or data type interacts with Cards*)
-let cc_chance c =
-  match c with
-  | Chance ->
-      failwith "todo: draw random card from chance deck"
-      (*need to create a list of cards that has them shuffled in random order*)
-  | CommunityChest -> failwith "todo:draw random card from cc deck"
-  | _ -> failwith "will never match against these"
-
-(*{ player with board_position = 10; in_jail = true }*)
-(*When you get sent to Monopoly jail, your turn then ends. You have to wait
-  until your next turn to use the Get Out of Jail Free card, pay the fine, or
-  attempt to roll a double.
-  https://www.monopolyland.com/get-out-of-jail-free-cards/*)
-
 (*******************************************************************************
   ******************************************************************************
                 Helper functions for Locations Tests
@@ -232,52 +216,16 @@ let make_tile (index : int) type_of_tile name color price upgrade_cost base_rent
   match type_of_tile with
   | "property" ->
       ( index,
-        Property
-          {
-            name;
-            color;
-            price;
-            upgrade_cost;
-            base_rent;
-            _1rent = lvl1;
-            _2rent = lvl2;
-            _3rent = lvl3;
-            _4rent = lvl4;
-            hotel_rent = hotel;
-            owner = None;
-          } )
+        make_contents type_of_tile name color price upgrade_cost base_rent lvl1
+          lvl2 lvl3 lvl4 hotel tax )
   | "railroad" ->
       ( index,
-        Railroad
-          {
-            name;
-            color;
-            price;
-            upgrade_cost;
-            base_rent;
-            _1rent = lvl1;
-            _2rent = lvl2;
-            _3rent = lvl3;
-            _4rent = lvl4;
-            hotel_rent = hotel;
-            owner = None;
-          } )
+        make_contents type_of_tile name color price upgrade_cost base_rent lvl1
+          lvl2 lvl3 lvl4 hotel tax )
   | "utility" ->
       ( index,
-        Utility
-          {
-            name;
-            color;
-            price;
-            upgrade_cost;
-            base_rent;
-            _1rent = lvl1;
-            _2rent = lvl2;
-            _3rent = lvl3;
-            _4rent = lvl4;
-            hotel_rent = hotel;
-            owner = None;
-          } )
+        make_contents type_of_tile name color price upgrade_cost base_rent lvl1
+          lvl2 lvl3 lvl4 hotel tax )
   | "tax" -> (index, Tax { name; tax })
   | "go" -> (index, Go)
   | "cc" -> (index, CommunityChest)

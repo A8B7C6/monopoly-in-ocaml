@@ -15,13 +15,27 @@ type tile_type =
 
 type color
 
-val tile_type : string -> Yojson.Basic.t -> tile_type
 val tile_color : string -> color
-val tile_index : int -> Yojson.Basic.t -> int * tile_type
+(** [tile_color c] generates a [color] based on the string [c]*)
+
 val property_name : _property -> string
+(** [property_name t] grabes the name of a tile [t] of [tile_type] [Property],
+    [Railroad], or [Utility]*)
+
 val property_price : _property -> int
+(** [property_price t] grabes the price to purchase a tile [t] of [tile_type]
+    [Property], [Railroad], or [Utility]*)
+
 val property_upgrade_cost : _property -> int
+(** [property_upgrade_cost t] grabes the price to upgrade a tile [t] of
+    [tile_type] [Property], [Railroad], or [Utility]*)
+
 val tax_name : _tax -> string
+(**[tax_name tax] returns the name of [tax]*)
+
+val tile_type : string -> Yojson.Basic.t -> tile_type
+(** [tile_type tt con] returns a tile of the type [tt] with the information from
+    [con]*)
 
 val tiles_list : Yojson.Basic.t -> (int * tile_type) list
 (** [tiles_list json] takes json representations of a monopoly board and returns
@@ -35,26 +49,12 @@ val get_tile_name : int -> (int * tile_type) list -> string
 (** [get_tile_name i mlist] returns the tile name with index [i] from the list
     [mlist]*)
 
-val cc_chance : tile_type -> unit
 val monopoly_list : (int * tile_type) list
-val property_rent : _property -> int -> int 
+(** [monopoly_list] is an instance that holds data from Monopoly.json as
+    [(k,v) list]. [k] represents the position of a tile on a board as an int.
+    [v] holds the information about each tile*)
 
-(* Helper Functions for tests*)
-val make_tile :
-  int ->
-  string ->
-  string ->
-  color ->
-  int ->
-  int ->
-  int ->
-  int ->
-  int ->
-  int ->
-  int ->
-  int ->
-  int ->
-  int * tile_type
+val property_rent : _property -> int -> int
 
 val make_contents :
   string ->
@@ -70,3 +70,27 @@ val make_contents :
   int ->
   int ->
   tile_type
+(** [make_contents type_of_tile name color price upgrade_cost base_rent lvl1 lvl2
+    lvl3 lvl4 hotel tax]
+    makes a tile of type [Property], [Utility], [Railroad], or makes [Tax]. Used
+    exclusively for testing.*)
+
+val make_tile :
+  int ->
+  string ->
+  string ->
+  color ->
+  int ->
+  int ->
+  int ->
+  int ->
+  int ->
+  int ->
+  int ->
+  int ->
+  int ->
+  int * tile_type
+(** [make_tile type_of_tile name color price upgrade_cost base_rent
+    lvl1 lvl2 lvl3 lvl4 hotel tax]
+    creates a tile of type [type_of_tyle] and associates it with the proper
+    index. Used exclusively for testing *)

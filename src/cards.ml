@@ -87,7 +87,6 @@ let init_contents nm flvr_txt mv rcv gtj ooj =
 let init_card ct nm flvr_txt mv rcv gtj ooj =
   { card_type = ct; contents = init_contents nm flvr_txt mv rcv gtj ooj }
 
-(* TODO: function/s that execute the action/s of the card*)
 let find_chance (cd : card) =
   match cd with
   | { card_type = Chance; _ } -> true
