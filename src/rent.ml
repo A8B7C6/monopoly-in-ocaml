@@ -49,8 +49,8 @@ let pay_rent player board_pos =
   match potential_owner with
   | _, None -> ()
   | x, Some owner ->
-      decrement_balance player x;
-      distribute_change owner x;
+      deduct_money player x;
+      add_money owner x;
       print_endline
         ("Player " ^ player.name ^ "paid " ^ owner.name ^ "$" ^ string_of_int x
        ^ " in rent.")
@@ -73,7 +73,7 @@ let purchase_property player price board_pos (rTile : rent_tile) : unit =
         player = Some player;
         upgrade_level = 0;
       };
-  decrement_balance player price
+  deduct_money player price
 
 let rec upgrade_property board_pos p price player =
   let _ =
@@ -87,7 +87,7 @@ let rec upgrade_property board_pos p price player =
       if player.balance.total < price then
         print_endline
           "Sorry, you do not have enough balance to purchase this property"
-      else decrement_balance player price;
+      else deduct_money player price;
       rents_map.(board_pos).upgrade_level <-
         rents_map.(board_pos).upgrade_level + 1;
       rents_map.(board_pos).rent_cost <-

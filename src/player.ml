@@ -1,14 +1,4 @@
-type _balance = {
-  mutable total : int;
-  mutable fivehun : int;
-  mutable hun : int;
-  mutable ffty : int;
-  mutable twnty : int;
-  mutable tens : int;
-  mutable fives : int;
-  mutable ones : int;
-}
-
+type _balance = Bank._balance
 type jail_stats = { mutable turns_since : int }
 
 type _player = {
@@ -21,19 +11,8 @@ type _player = {
   mutable jailstats : jail_stats;
 }
 
-let init_balance =
-  {
-    total = 1500;
-    fivehun = 2;
-    hun = 2;
-    ffty = 2;
-    twnty = 6;
-    tens = 5;
-    fives = 5;
-    ones = 5;
-  }
-
 let init_player nm =
+  let open Bank in
   {
     board_position = 0;
     name = nm;
@@ -48,110 +27,18 @@ let get_name player = player.name
 let get_board_position player = player.board_position
 let set_board_position player pos = player.board_position <- pos
 
-let distribute_one player =
-  player.balance.ones <- player.balance.ones + 1;
-  player.balance.total <- player.balance.total + 1
+let update_balance f p i =
+  let old_balance = p.balance in
+  let new_balance = f old_balance i in
+  p.balance <- new_balance
 
-let distribute_five player =
-  player.balance.fives <- player.balance.fives + 1;
-  player.balance.total <- player.balance.total + 5
+let add_money p i =
+  let open Bank in
+  update_balance add_to_balance p i
 
-let distribute_ten player =
-  player.balance.tens <- player.balance.tens + 1;
-  player.balance.total <- player.balance.total + 10
-
-let distribute_twenty player =
-  player.balance.twnty <- player.balance.twnty + 20;
-  player.balance.total <- player.balance.total + 20
-
-let distribute_fifty player =
-  player.balance.ffty <- player.balance.ffty + 1;
-  player.balance.total <- player.balance.total + 50
-
-let distribute_hun player =
-  player.balance.hun <- player.balance.hun + 1;
-  player.balance.total <- player.balance.total + 100
-
-let distribute_five_hundred player =
-  player.balance.fivehun <- player.balance.fivehun + 1;
-  player.balance.total <- player.balance.total + 500
-
-let deduct_one player =
-  player.balance.ones <- player.balance.ones - 1;
-  player.balance.total <- player.balance.total - 1
-
-let deduct_five player =
-  player.balance.fives <- player.balance.fives - 1;
-  player.balance.total <- player.balance.total - 5
-
-let deduct_ten player =
-  player.balance.tens <- player.balance.tens - 1;
-  player.balance.total <- player.balance.total - 10
-
-let deduct_twenty player =
-  player.balance.twnty <- player.balance.twnty - 1;
-  player.balance.total <- player.balance.total - 20
-
-let deduct_fifty player =
-  player.balance.ffty <- player.balance.ffty - 1;
-  player.balance.total <- player.balance.total - 50
-
-let deduct_hundred player =
-  player.balance.hun <- player.balance.hun - 1;
-  player.balance.total <- player.balance.total - 100
-
-let deduct_five_hundred player =
-  player.balance.fivehun <- player.balance.fivehun - 1;
-  player.balance.total <- player.balance.total - 500
-
-let rec distribute_change (player : _player) (amt : int) =
-  if amt > 500 then
-    let _ = distribute_five_hundred player in
-    distribute_change player (amt - 500)
-  else if amt > 100 then
-    let _ = distribute_hun player in
-    distribute_change player (amt - 100)
-  else if amt > 50 then
-    let _ = distribute_fifty player in
-    distribute_change player (amt - 50)
-  else if amt > 20 then
-    let _ = distribute_twenty player in
-    distribute_change player (amt - 20)
-  else if amt > 10 then
-    let _ = distribute_ten player in
-    distribute_change player (amt - 10)
-  else if amt > 5 then
-    let _ = distribute_five player in
-    distribute_change player (amt - 5)
-  else if amt > 1 then
-    let _ = distribute_one player in
-    distribute_change player (amt - 1)
-  else ()
-
-let rec decrement_balance (player : _player) amt =
-  if amt < 0 then distribute_change player (amt * -1)
-  else if player.balance.ones > 0 then
-    let _ = deduct_one player in
-    decrement_balance player (amt - 1)
-  else if player.balance.fives > 0 then
-    let _ = deduct_five player in
-    decrement_balance player (amt - 5)
-  else if player.balance.tens > 0 then
-    let _ = deduct_ten player in
-    decrement_balance player (amt - 10)
-  else if player.balance.twnty > 0 then
-    let _ = deduct_twenty player in
-    decrement_balance player (amt - 20)
-  else if player.balance.ffty > 0 then
-    let _ = deduct_fifty player in
-    decrement_balance player (amt - 50)
-  else if player.balance.hun > 0 then
-    let _ = deduct_hundred player in
-    decrement_balance player (amt - 100)
-  else if player.balance.fivehun > 0 then
-    let _ = deduct_five_hundred player in
-    decrement_balance player (amt - 500)
-  else ()
+let deduct_money p i =
+  let open Bank in
+  update_balance deduct_from_balance p i
 
 (* TODO : complete functionality for removing a player from the game without
    ending the game entirley*)
@@ -197,7 +84,7 @@ let rec handle_free_jail_card (player : _player) =
       handle_free_jail_card player
 
 let charge_jail_fine player =
-  decrement_balance player 50;
+  deduct_money player 50;
   remove_jailed player;
   player.jailstats.turns_since <- 0;
   player
@@ -238,8 +125,6 @@ let check_jail_status (player : _player) =
 (*******************************************************************************
   Helper functions for Player Tests
   *****************************************************************************)
-let make_balance total fivehun hun ffty twnty tens fives ones =
-  { total; fivehun; hun; ffty; twnty; tens; fives; ones }
 
 let make_player brdpos nm blnce dbls =
   {
@@ -251,10 +136,6 @@ let make_player brdpos nm blnce dbls =
     in_jail = false;
     jailstats = { turns_since = 0 };
   }
-
-let update_balance player new_bal =
-  player.balance <- new_bal;
-  player
 
 (*******************************************************************************
   End helper functions for Player Tests

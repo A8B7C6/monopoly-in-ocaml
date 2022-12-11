@@ -4,6 +4,7 @@ open Locations
 open Board
 open Player
 open Cards
+open Bank
 
 let data_dir_prefix = "data" ^ Filename.dir_sep
 let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
@@ -44,13 +45,6 @@ let get_name_test name brdpos nm blnce dbls expected : test =
 let get_board_position_test name brdpos nm blnce dbls expected : test =
   name >:: fun _ ->
   assert_equal expected (get_board_position (make_player brdpos nm blnce dbls))
-
-let update_balance_test name nm total fivehun hun ffty twnty tens fives ones
-    expected : test =
-  name >:: fun _ ->
-  assert_equal expected
-    (update_balance (init_player nm)
-       (make_balance total fivehun hun ffty twnty tens fives ones))
 
 let card_display_info_test name ct nm flvr_txt mv rcv gtj ooj expected : test =
   name >:: fun _ ->
@@ -237,36 +231,6 @@ let player_tests =
     get_board_position_test
       "get_board_position_test: 15 (Pennsylvania Railroad)" 15 "Rosecrans"
       init_balance 0 15;
-    update_balance_test "update_balance_test : Initial balance" "Kim" 1500 2 2 2
-      6 5 5 5
-      (make_player 0 "Kim" (make_balance 1500 2 2 2 6 5 5 5) 0);
-    update_balance_test "update_balance_test : Initial balance + 1" "Vera" 1501
-      2 2 2 6 5 5 6
-      (make_player 0 "Vera" (make_balance 1501 2 2 2 6 5 5 6) 0);
-    update_balance_test "update_balance_test : Initial balance + 5" "Victor"
-      1505 2 2 2 6 5 6 5
-      (make_player 0 "Victor" (make_balance 1505 2 2 2 6 5 6 5) 0);
-    update_balance_test "update_balance_test : Initial balance + 5 ones"
-      "Victoria" 1505 2 2 2 6 5 5 10
-      (make_player 0 "Victoria" (make_balance 1505 2 2 2 6 5 5 10) 0);
-    update_balance_test "update_balance_test : Initial balance + 10" "Violet"
-      1510 2 2 2 6 6 5 5
-      (make_player 0 "Violet" (make_balance 1510 2 2 2 6 6 5 5) 0);
-    update_balance_test "update_balance_test : Initial balance + 20" "Van" 1520
-      2 2 2 7 5 5 5
-      (make_player 0 "Van" (make_balance 1520 2 2 2 7 5 5 5) 0);
-    update_balance_test "update_balance_test : Initial balance + 50" "Valerie"
-      1550 2 2 3 6 5 5 5
-      (make_player 0 "Valerie" (make_balance 1550 2 2 3 6 5 5 5) 0);
-    update_balance_test "update_balance_test : Initial balance + 100"
-      "Valentino" 1600 2 3 2 6 5 5 5
-      (make_player 0 "Valentino" (make_balance 1600 2 3 2 6 5 5 5) 0);
-    update_balance_test "update_balance_test : Initial balance + 500" "Valeska"
-      2000 3 2 2 6 5 5 5
-      (make_player 0 "Valeska" (make_balance 2000 3 2 2 6 5 5 5) 0);
-    update_balance_test "update_balance_test : Zero balance" "Yohanan" 0 0 0 0 0
-      0 0 0
-      (make_player 0 "Yohanan" (make_balance 0 0 0 0 0 0 0 0) 0);
   ]
   @ doubles_tests
 

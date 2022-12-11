@@ -16,7 +16,7 @@ let all_players = { pl_lst = [] }
 let move_new new_index player =
   if player.board_position > new_index then begin
     player.board_position <- new_index;
-    distribute_change player 200
+    add_money player 200
   end
   else player.board_position <- new_index
 
@@ -60,7 +60,7 @@ let chance_mv c player =
   if new_loc = "Boardwalk" then player.board_position <- 39
   else if new_loc = "Go" then begin
     player.board_position <- 0;
-    distribute_change player 200
+    add_money player 200
   end
   else if new_loc = "Illinois Avenue" then move_new 24 player
   else if new_loc = "St. Charles Place" then move_new 11 player
@@ -74,8 +74,7 @@ let chance_mv c player =
    instructions on the chance card [c]*)
 let chance_bal c player =
   let bal = c.contents.actions.balance_change in
-  if bal < 0 then decrement_balance player (bal * -1)
-  else distribute_change player bal
+  if bal < 0 then deduct_money player (bal * -1) else add_money player bal
 
 (**[chance_jail] moves[player] to jail and updates the player fields (in_jail
    and board_position) accordingly*)
@@ -114,7 +113,7 @@ let _cc_action c player =
   end
   else if card_name = "Move" then begin
     player.board_position <- 0;
-    distribute_change player 200;
+    add_money player 200;
     to_bottom c cc_lst
   end
   else if card_name = "Go to Jail" then begin
@@ -124,7 +123,7 @@ let _cc_action c player =
   end
   else if card_name = "Balance Change" then (
     let bal_change = c.contents.actions.balance_change in
-    distribute_change player bal_change;
+    add_money player bal_change;
     to_bottom c cc_lst)
 
 (**[_handle_cc] prints the text on the head of the Community Chest list*)
