@@ -66,14 +66,14 @@ let purchase_property player price board_pos (rTile : rent_tile) : unit =
     print_endline
       "Sorry, you do not have enough balance to purchase this property"
   else
+    let _ = deduct_money player price in
     rents_map.(board_pos) <-
       {
         rent_cost = rTile.rent_cost;
         tile = rTile.tile;
         player = Some player;
         upgrade_level = 0;
-      };
-  deduct_money player price
+      }
 
 let rec upgrade_property board_pos p price player =
   let _ =
@@ -87,11 +87,12 @@ let rec upgrade_property board_pos p price player =
       if player.balance.total < price then
         print_endline
           "Sorry, you do not have enough balance to purchase this property"
-      else deduct_money player price;
-      rents_map.(board_pos).upgrade_level <-
-        rents_map.(board_pos).upgrade_level + 1;
-      rents_map.(board_pos).rent_cost <-
-        determine_rent_price board_pos rents_map.(board_pos).tile
+      else
+        let _ = deduct_money player price in
+        rents_map.(board_pos).upgrade_level <-
+          rents_map.(board_pos).upgrade_level + 1;
+        rents_map.(board_pos).rent_cost <-
+          determine_rent_price board_pos rents_map.(board_pos).tile
   | "n" -> ()
   | "" | _ ->
       print_endline "Please provide a valid response: y/n";

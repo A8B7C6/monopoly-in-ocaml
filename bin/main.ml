@@ -163,7 +163,7 @@ let do_turn frst scnd player =
     ("Your new board position is "
     ^ get_tile_name player.board_position monopoly_list);
   print_endline
-    ("Your current balance is is " ^ "$" ^ string_of_int player.balance.total);
+    ("Your current balance is " ^ "$" ^ string_of_int player.balance.total);
   handle_move player.board_position player
 
 let curr_pos_print (player : _player) state =
