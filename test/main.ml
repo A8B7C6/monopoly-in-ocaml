@@ -46,16 +46,50 @@ let get_board_position_test name brdpos nm blnce dbls expected : test =
   name >:: fun _ ->
   assert_equal expected (get_board_position (make_player brdpos nm blnce dbls))
 
+let shuffle_player_test name (nms : string list) expected : test =
+  let plst = List.map init_player nms in
+  name >:: fun _ -> assert_equal expected (shuffle_player plst)
+
 let card_display_info_test name ct nm flvr_txt mv rcv gtj ooj expected : test =
   name >:: fun _ ->
   assert_equal expected
     (init_card ct nm flvr_txt mv rcv gtj ooj |> card_display_info)
 
-let make_chance_list_test name cards expected : test =
-  name >:: fun _ -> assert_equal expected (make_chance_list cards)
+let make_chance_list_test name crdlst expected : test =
+  name >:: fun _ -> assert_equal expected (make_chance_list crdlst)
 
-let make_cc_list_test name cards expected : test =
-  name >:: fun _ -> assert_equal expected (make_cc_list cards)
+let make_cc_list_test name crdlst expected : test =
+  name >:: fun _ -> assert_equal expected (make_cc_list crdlst)
+
+let to_bottom_test name ct nm flvr_txt mv rcv gtj ooj (crdlst : card list ref)
+    expected : test =
+  let rec find_last lst =
+    match lst with
+    | [] -> failwith "No cards"
+    | [ c ] -> c
+    | _ :: t -> find_last t
+  in
+  name >:: fun _ ->
+  assert_equal expected
+    (find_last
+       (to_bottom (init_card ct nm flvr_txt mv rcv gtj ooj) crdlst;
+        !crdlst))
+
+let remove_jail_test name ct (crdlst : card list ref) : test =
+  let ooj_crd =
+    init_card ct "Get Out of Jail Free Card"
+      "Get out of Jail Free. This card may be kept until needed, or \
+       traded/sold."
+      "NA" 0 false false
+  in
+  let check_ooj_crd_presence lst =
+    if List.filter (fun x -> x = ooj_crd) lst = lst then true else false
+  in
+  name >:: fun _ ->
+  assert_equal false
+    (check_ooj_crd_presence
+       (remove_jail ooj_crd crdlst;
+        !crdlst))
 
 (****************************************************************************
   End of Helper Functions
@@ -221,6 +255,10 @@ let bank_tests =
       (make_balance 1404 2 2 2 5 0 0 4);
     deduct_bank_test "remove $888 from init_balance" () 888
       (make_balance 612 1 1 0 0 1 0 2);
+    deduct_bank_test "remove -$1 from (aka add $1 to) init_balance" () (-1)
+      (make_balance 1501 2 2 2 6 5 5 6);
+    deduct_bank_test "remove $0 from init_balance" () 0
+      (make_balance 1500 2 2 2 6 5 5 5);
   ]
 
 let board_tests =
@@ -279,6 +317,18 @@ let player_tests =
     get_board_position_test
       "get_board_position_test: 15 (Pennsylvania Railroad)" 15 "Rosecrans"
       (init_balance ()) 0 15;
+    shuffle_player_test "shuffle_player_test : 1 player - A" [ "A" ]
+      (init_player "A", [ init_player "A" ]);
+    shuffle_player_test "shuffle_player_test : 2 players - X, Y" [ "X"; "Y" ]
+      (init_player "X", [ init_player "Y"; init_player "X" ]);
+    shuffle_player_test "shuffle_player_test : 3 players - X, Y, Z"
+      [ "X"; "Y"; "Z" ]
+      (init_player "X", [ init_player "Y"; init_player "Z"; init_player "X" ]);
+    shuffle_player_test "shuffle_player_test : 4 players - A, B, C, D"
+      [ "A"; "B"; "C"; "D" ]
+      ( init_player "A",
+        [ init_player "B"; init_player "C"; init_player "D"; init_player "A" ]
+      );
   ]
   @ doubles_tests
 
@@ -376,6 +426,21 @@ let cards_tests =
           false false;
         init_card CC "Balance Change" "You inherit $100." "NA" 100 false false;
       ];
+    to_bottom_test "to_bottom_test: chance card named 'Testing'" Chance
+      "Testing" "This is a card used for testing" "NA" 0 false false chance_lst
+      (init_card Chance "Testing" "This is a card used for testing" "NA" 0 false
+         false);
+    to_bottom_test "to_bottom_test: cc card named 'Examining'" CC "Examining"
+      "This is a card used for examination" "NA" 0 false false cc_lst
+      (init_card CC "Examining" "This is a card used for examination" "NA" 0
+         false false);
+    remove_jail_test
+      "remove_jail_test: Remove Get Out of Jail Free Card from chance cards \
+       list"
+      Chance chance_lst;
+    remove_jail_test
+      "remove_jail_test: Remove Get Out of Jail Free Card from cc cards list" CC
+      cc_lst;
   ]
 
 let suite =
