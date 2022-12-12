@@ -183,7 +183,7 @@ let play_monopoly players =
         (* cc_chance Chance; *)
         let current_player = check_jail_status current_player in
         do_turn (roll_dice ()) (roll_dice ()) current_player;
-        handle_move current_player.board_position current_player;
+
         curr_pos_print current_player "new";
         update_game_data shuffled_players;
         print_endline "Continue playing? y/n";
