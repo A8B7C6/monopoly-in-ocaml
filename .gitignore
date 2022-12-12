@@ -19,8 +19,6 @@ _build
 _coverage
 bisect*.coverage
 
-#gui/data
-/gui/data/*.json
 
 # zip file
 monopoly.zip
