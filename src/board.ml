@@ -1,8 +1,8 @@
 open Player
 
 let roll_dice () =
-  let _ = Random.self_init in
-  Random.int 6 + 1
+  let state = Random.State.make_self_init () in
+  Random.State.int state 6 + 1
 
 let do_turn (frst : int) (scnd : int) (player : _player) =
   let total = frst + scnd in

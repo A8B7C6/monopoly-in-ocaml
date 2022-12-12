@@ -78,7 +78,7 @@ let shuffle_player (players : _player list) =
 let rec handle_free_jail_card (player : _player) =
   let _ =
     print_endline
-      "You have a get out of jail free card. Would you like to use it? Y/N"
+      "You have a get out of jail free card. Would you like to use it? y/n"
   in
   let card_resp = read_line () in
   match card_resp with
