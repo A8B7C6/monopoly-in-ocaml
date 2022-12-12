@@ -34,7 +34,7 @@ let add_ten b =
   b.total <- b.total + 10
 
 let add_twenty b =
-  b.twnty <- b.twnty + 20;
+  b.twnty <- b.twnty + 1;
   b.total <- b.total + 20
 
 let add_fifty b =

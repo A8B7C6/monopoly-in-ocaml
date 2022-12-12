@@ -201,14 +201,26 @@ let bank_tests =
       (make_balance 1500 2 2 2 6 5 5 5);
     add_bank_test "add $8 to init_balance" () 8
       (make_balance 1508 2 2 2 6 5 6 8);
+    add_bank_test "add $18 to init_balance" () 18
+      (make_balance 1518 2 2 2 6 6 6 8);
+    add_bank_test "add $28 to init_balance" () 28
+      (make_balance 1528 2 2 2 7 5 6 8);
+    add_bank_test "add $58 to init_balance" () 58
+      (make_balance 1558 2 2 3 6 5 6 8);
     add_bank_test "add $88 to init_balance" () 88
       (make_balance 1588 2 2 3 7 6 6 8);
+    add_bank_test "add $108 to init_balance" () 108
+      (make_balance 1608 2 3 2 6 5 6 8);
+    add_bank_test "add $808 to init_balance" () 808
+      (make_balance 2308 3 5 2 6 5 6 8);
     add_bank_test "add $888 to init_balance" () 888
       (make_balance 2388 3 5 3 7 6 6 8);
     deduct_bank_test "remove $8 from init_balance" () 8
       (make_balance 1492 2 2 2 6 5 4 2);
-    deduct_bank_test "remove $96 from init_balance" () 8
+    deduct_bank_test "remove $96 from init_balance" () 96
       (make_balance 1404 2 2 2 5 0 0 4);
+    deduct_bank_test "remove $888 from init_balance" () 888
+      (make_balance 612 1 1 0 0 1 0 2);
   ]
 
 let board_tests =
