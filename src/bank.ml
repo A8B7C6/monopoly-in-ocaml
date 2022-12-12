@@ -9,7 +9,7 @@ type _balance = {
   mutable ones : int;
 }
 
-let init_balance =
+let init_balance () =
   {
     total = 1500;
     fivehun = 2;

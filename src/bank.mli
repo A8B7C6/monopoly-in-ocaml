@@ -9,7 +9,7 @@ type _balance = {
   mutable ones : int;
 }
 
-val init_balance : _balance
+val init_balance : unit -> _balance
 (** [init_balance] creates a starting balance of [1500] *)
 
 val add_to_balance : _balance -> int -> _balance

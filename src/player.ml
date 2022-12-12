@@ -16,7 +16,7 @@ let init_player nm =
   {
     board_position = 0;
     name = nm;
-    balance = init_balance;
+    balance = init_balance ();
     doubles = 0;
     free_jail = false;
     in_jail = false;
@@ -30,6 +30,7 @@ let set_board_position player pos = player.board_position <- pos
 let update_balance f p i =
   let old_balance = p.balance in
   let new_balance = f old_balance i in
+
   p.balance <- new_balance
 
 let add_money p i =

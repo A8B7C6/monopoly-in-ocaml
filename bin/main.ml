@@ -165,7 +165,9 @@ let do_turn frst scnd player =
     ^ get_tile_name player.board_position monopoly_list);
   print_endline
     ("Your current balance is " ^ "$" ^ string_of_int player.balance.total);
-  handle_move player.board_position player
+  handle_move player.board_position player;
+  print_endline
+    ("Your updated balance is " ^ "$" ^ string_of_int player.balance.total)
 
 let curr_pos_print (player : _player) state =
   let p1name = player.name in

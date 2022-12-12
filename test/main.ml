@@ -223,14 +223,15 @@ let player_tests =
     (* TODO: do we want to prohibit empty names? *)
     init_player_test "init_player_test: Initial balance and empty name" ""
       (make_player 0 "" (make_balance 1500 2 2 2 6 5 5 5) 0);
-    get_name_test "get_name_test: A9B7C8" 0 "A9B7C8" init_balance 0 "A9B7C8";
+    get_name_test "get_name_test: A9B7C8" 0 "A9B7C8" (init_balance ()) 0
+      "A9B7C8";
     get_name_test "get_name_test: !@#$$%^&*[]{}|:;'/?.,`~" 0
-      "!@#$$%^&*[]{}|:;'/?.,`~" init_balance 0 "!@#$$%^&*[]{}|:;'/?.,`~";
+      "!@#$$%^&*[]{}|:;'/?.,`~" (init_balance ()) 0 "!@#$$%^&*[]{}|:;'/?.,`~";
     get_board_position_test "get_board_position_test: 0 (Go)" 0 "Grant"
-      init_balance 0 0;
+      (init_balance ()) 0 0;
     get_board_position_test
       "get_board_position_test: 15 (Pennsylvania Railroad)" 15 "Rosecrans"
-      init_balance 0 15;
+      (init_balance ()) 0 15;
   ]
   @ doubles_tests
 
