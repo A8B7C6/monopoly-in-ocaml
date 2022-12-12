@@ -7,5 +7,5 @@ let roll_dice () =
 let do_turn (frst : int) (scnd : int) (player : _player) =
   let total = frst + scnd in
   if total + player.board_position >= 40 then
-    set_board_position player (40 - (total + player.board_position))
+    set_board_position player (total + player.board_position - 40)
   else set_board_position player (total + player.board_position)

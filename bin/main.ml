@@ -123,7 +123,8 @@ let _cc_action c player =
   end
   else if card_name = "Balance Change" then (
     let bal_change = c.contents.actions.balance_change in
-    add_money player bal_change;
+    if bal_change < 0 then deduct_money player (bal_change * -1)
+    else add_money player bal_change;
     to_bottom c cc_lst)
 
 (**[_handle_cc] prints the text on the head of the Community Chest list*)
