@@ -275,6 +275,14 @@ let board_tests =
         (let player = init_player "jo" in
          Board.do_turn 3 6 player;
          player.board_position) );
+    ( "looping the board" >:: fun _ ->
+      assert_equal 1
+        (let player = init_player "jo" in
+         Board.do_turn 6 5 player;
+         Board.do_turn 6 4 player;
+         Board.do_turn 4 6 player;
+         Board.do_turn 5 5 player;
+         player.board_position) );
   ]
 
 let jailed_player = init_player "jailed"
