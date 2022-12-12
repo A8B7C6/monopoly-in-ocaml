@@ -3,5 +3,5 @@ val roll_dice : unit -> int
     range [1-6]*)
 
 val do_turn : int -> int -> Player._player -> unit
-(** [do_turn r1 r2 p] takes the rolls [r1] and [r2] the player [p]'s board
-    position *)
+(** [do_turn r1 r2 p] takes the rolls [r1] and [r2] to determine the player
+    [p]'s new board position *)

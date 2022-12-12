@@ -37,12 +37,12 @@ val shuffle_player : _player list -> _player * _player list
     Throws an exception if [playerlist] is empty *)
 
 val check_for_double : _player -> int -> int -> unit
-(** [check_for_double p r1 r2] moniters the number of doubles rolled by a
+(** [check_for_double p r1 r2] monitors the number of doubles rolled by a
     player. *)
 
 val check_jail_status : _player -> _player
 (** [shuffle_player playerlist] returns a tuple with the current player and list
-    of upcoming players *)
+    of upcoming players -- change to documentation about check_jail_status *)
 
 (*Helper functions for tests*)
 

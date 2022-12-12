@@ -74,7 +74,7 @@ let shuffle_player (players : _player list) =
 
 (*****************************************************************************)
 
-(********************** Handeling Player and Jail ***************************)
+(********************** Handling Player and Jail ***************************)
 let rec handle_free_jail_card (player : _player) =
   let _ =
     print_endline

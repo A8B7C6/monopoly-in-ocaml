@@ -63,7 +63,7 @@ let tile_color tt =
   | _ -> failwith "unmatched color"
 
 (** [property con] parses data that aligns with type [_property]. This means any
-    data the correlates to a player purchasble location*)
+    data that correlates to a player-purchasable location*)
 let property contents =
   {
     name = contents |> member "tile name" |> to_string;
