@@ -126,5 +126,14 @@ let rec deduct_from_balance b amt =
     deduct_from_balance b (amt - 500)
   else b
 
+(*Helper function for Bank Tests*)
 let make_balance total fivehun hun ffty twnty tens fives ones =
-  { total; fivehun; hun; ffty; twnty; tens; fives; ones }
+  let sum =
+    (fivehun * 500) + (hun * 100) + (ffty * 50) + (twnty * 20) + (tens * 10)
+    + (fives * 5) + ones
+  in
+  if total = sum then { total; fivehun; hun; ffty; twnty; tens; fives; ones }
+  else
+    failwith
+      (" total " ^ string_of_int total ^ " does not equal the sum of the parts "
+     ^ string_of_int sum)

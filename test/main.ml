@@ -176,6 +176,41 @@ let locations_tests =
       "Boardwalk";
   ]
 
+let bank_test name input expected_output : test =
+  name >:: fun _ ->
+  assert_equal expected_output input ~printer:(fun b ->
+      let bl =
+        [ b.total; b.fivehun; b.hun; b.ffty; b.twnty; b.tens; b.fives; b.ones ]
+      in
+      let rec string_balance sb =
+        match sb with
+        | [] -> "\n"
+        | h :: t -> string_of_int h ^ "   " ^ string_balance t
+      in
+      string_balance bl)
+
+let add_bank_test name u i expected_output =
+  bank_test name (add_to_balance (init_balance u) i) expected_output
+
+let deduct_bank_test name u i expected_output =
+  bank_test name (deduct_from_balance (init_balance u) i) expected_output
+
+let bank_tests =
+  [
+    bank_test "init_balance has appropriate values" (init_balance ())
+      (make_balance 1500 2 2 2 6 5 5 5);
+    add_bank_test "add $8 to init_balance" () 8
+      (make_balance 1508 2 2 2 6 5 6 8);
+    add_bank_test "add $88 to init_balance" () 88
+      (make_balance 1588 2 2 3 7 6 6 8);
+    add_bank_test "add $888 to init_balance" () 888
+      (make_balance 2388 3 5 3 7 6 6 8);
+    deduct_bank_test "remove $8 from init_balance" () 8
+      (make_balance 1492 2 2 2 6 5 4 2);
+    deduct_bank_test "remove $96 from init_balance" () 8
+      (make_balance 1404 2 2 2 5 0 0 4);
+  ]
+
 let board_tests =
   [
     roll_dice_test "roll_dice_test: 1st roll" true;
@@ -219,10 +254,10 @@ let doubles_tests =
 let player_tests =
   [
     init_player_test "init_player_test: Initial balance and given name" "Joe"
-      (make_player 0 "Joe" (make_balance 1500 2 2 2 6 5 5 5) 0);
+      (make_player 0 "Joe" (init_balance ()) 0);
     (* TODO: do we want to prohibit empty names? *)
     init_player_test "init_player_test: Initial balance and empty name" ""
-      (make_player 0 "" (make_balance 1500 2 2 2 6 5 5 5) 0);
+      (make_player 0 "" (init_balance ()) 0);
     get_name_test "get_name_test: A9B7C8" 0 "A9B7C8" (init_balance ()) 0
       "A9B7C8";
     get_name_test "get_name_test: !@#$$%^&*[]{}|:;'/?.,`~" 0
@@ -333,7 +368,8 @@ let cards_tests =
 
 let suite =
   "Monopoly Test Suite: "
-  >::: List.flatten [ locations_tests; board_tests; player_tests; cards_tests ]
+  >::: List.flatten
+         [ locations_tests; bank_tests; board_tests; player_tests; cards_tests ]
 
 let _ = run_test_tt_main suite
 let _ = jailed_tests

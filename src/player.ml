@@ -23,26 +23,22 @@ let init_player nm =
     jailstats = { turns_since = 0 };
   }
 
+(****************** Retrieval Functions for [_player] fields ******************)
 let get_name player = player.name
 let get_board_position player = player.board_position
-let set_board_position player pos = player.board_position <- pos
 
+(*****************************************************************************)
+
+(*********************** Player Helper Functions ******************************)
 let update_balance f p i =
   let old_balance = p.balance in
   let new_balance = f old_balance i in
-
   p.balance <- new_balance
 
-let add_money p i =
-  let open Bank in
-  update_balance add_to_balance p i
+let remove_jailed p = p.in_jail <- false
+let remove_free_jail_card p = p.free_jail <- false
+let handle_jail_doubles player = if player.in_jail then remove_jailed player
 
-let deduct_money p i =
-  let open Bank in
-  update_balance deduct_from_balance p i
-
-(* TODO : complete functionality for removing a player from the game without
-   ending the game entirley*)
 let rec remove_player players player_name =
   match players with
   | [] -> []
@@ -61,13 +57,24 @@ let dequeue_player (players : _player list) : _player * _player list =
   | [] -> failwith "no players in list"
   | h :: t -> (h, t)
 
+(*****************************************************************************)
+let add_money p i =
+  let open Bank in
+  update_balance add_to_balance p i
+
+let deduct_money p i =
+  let open Bank in
+  update_balance deduct_from_balance p i
+
+let set_board_position player pos = player.board_position <- pos
+
 let shuffle_player (players : _player list) =
   let new_player_up, other_players = dequeue_player players in
   (new_player_up, enqueue_player other_players new_player_up)
 
-let remove_jailed p = p.in_jail <- false
-let remove_free_jail_card p = p.free_jail <- false
+(*****************************************************************************)
 
+(********************** Handeling Player and Jail ***************************)
 let rec handle_free_jail_card (player : _player) =
   let _ =
     print_endline
@@ -99,8 +106,6 @@ let rec handle_jail_fine (player : _player) =
   | "" | _ ->
       print_endline "Please provide a valid response: y/n";
       handle_jail_fine player
-
-let handle_jail_doubles player = if player.in_jail then remove_jailed player
 
 let check_for_double player roll1 roll2 =
   if roll1 = roll2 then player.doubles <- player.doubles + 1;
