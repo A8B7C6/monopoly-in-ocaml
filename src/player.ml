@@ -11,24 +11,7 @@ type _player = {
   mutable jailstats : jail_stats;
 }
 
-let init_player nm =
-  let open Bank in
-  {
-    board_position = 0;
-    name = nm;
-    balance = init_balance ();
-    doubles = 0;
-    free_jail = false;
-    in_jail = false;
-    jailstats = { turns_since = 0 };
-  }
-
-(****************** Retrieval Functions for [_player] fields ******************)
-let get_name player = player.name
-let get_board_position player = player.board_position
-
 (*****************************************************************************)
-
 (*********************** Player Helper Functions ******************************)
 let update_balance f p i =
   let old_balance = p.balance in
@@ -58,6 +41,22 @@ let dequeue_player (players : _player list) : _player * _player list =
   | h :: t -> (h, t)
 
 (*****************************************************************************)
+(******************************* Player Functions ******************************)
+let init_player nm =
+  let open Bank in
+  {
+    board_position = 0;
+    name = nm;
+    balance = init_balance ();
+    doubles = 0;
+    free_jail = false;
+    in_jail = false;
+    jailstats = { turns_since = 0 };
+  }
+
+let get_board_position player = player.board_position
+let get_name player = player.name
+
 let add_money p i =
   let open Bank in
   update_balance add_to_balance p i
@@ -73,8 +72,18 @@ let shuffle_player (players : _player list) =
   (new_player_up, enqueue_player other_players new_player_up)
 
 (*****************************************************************************)
+(********************** Player + Jail Functions ***********************)
 
-(********************** Handling Player and Jail ***************************)
+let charge_jail_fine player =
+  deduct_money player 50;
+  remove_jailed player;
+  player.jailstats.turns_since <- 0;
+  player
+
+let check_for_double player roll1 roll2 =
+  if roll1 = roll2 then player.doubles <- player.doubles + 1;
+  handle_jail_doubles player
+
 let rec handle_free_jail_card (player : _player) =
   let _ =
     print_endline
@@ -91,12 +100,6 @@ let rec handle_free_jail_card (player : _player) =
       print_endline "Please provide a valid response: y/n";
       handle_free_jail_card player
 
-let charge_jail_fine player =
-  deduct_money player 50;
-  remove_jailed player;
-  player.jailstats.turns_since <- 0;
-  player
-
 let rec handle_jail_fine (player : _player) =
   let _ = print_endline "Would you like to pay the 50$ fee to leave? y/n" in
   let fine_resp = read_line () in
@@ -106,10 +109,6 @@ let rec handle_jail_fine (player : _player) =
   | "" | _ ->
       print_endline "Please provide a valid response: y/n";
       handle_jail_fine player
-
-let check_for_double player roll1 roll2 =
-  if roll1 = roll2 then player.doubles <- player.doubles + 1;
-  handle_jail_doubles player
 
 let handle_jailed_player (player : _player) =
   print_endline "You are currently in jail.";
@@ -128,9 +127,8 @@ let handle_jailed_player (player : _player) =
 let check_jail_status (player : _player) =
   if player.in_jail then handle_jailed_player player else player
 
-(*******************************************************************************
-  Helper functions for Player Tests
-  *****************************************************************************)
+(******************************************************************************)
+(******************** Player Tests Helper Function  ***********************)
 
 let make_player brdpos nm blnce dbls =
   {
@@ -143,6 +141,4 @@ let make_player brdpos nm blnce dbls =
     jailstats = { turns_since = 0 };
   }
 
-(*******************************************************************************
-  End helper functions for Player Tests
-  *****************************************************************************)
+(******************************************************************************)

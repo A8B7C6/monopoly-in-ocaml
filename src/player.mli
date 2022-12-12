@@ -47,3 +47,5 @@ val check_jail_status : _player -> _player
 (*Helper functions for tests*)
 
 val make_player : int -> string -> _balance -> int -> _player
+(** [make_player index name balance doubles] makes a player at [index] on the
+    board*)

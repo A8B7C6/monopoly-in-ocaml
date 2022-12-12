@@ -91,6 +91,28 @@ let remove_jail_test name ct (crdlst : card list ref) : test =
        (remove_jail ooj_crd crdlst;
         !crdlst))
 
+let bank_test name input expected_output : test =
+  name >:: fun _ ->
+  assert_equal expected_output input ~printer:(fun b ->
+      let bl =
+        [ b.total; b.fivehun; b.hun; b.ffty; b.twnty; b.tens; b.fives; b.ones ]
+      in
+      let rec string_balance sb =
+        match sb with
+        | [] -> "\n"
+        | h :: t -> string_of_int h ^ "   " ^ string_balance t
+      in
+      string_balance bl)
+
+let deduct_bank_test name u i expected_output =
+  bank_test name (deduct_from_balance (init_balance u) i) expected_output
+
+let add_bank_test name u i expected_output =
+  bank_test name (add_to_balance (init_balance u) i) expected_output
+
+let jailed_player = init_player "jailed"
+let () = jailed_player.in_jail <- true
+
 (****************************************************************************
   End of Helper Functions
   ***************************************************************************)
@@ -210,25 +232,6 @@ let locations_tests =
       "Boardwalk";
   ]
 
-let bank_test name input expected_output : test =
-  name >:: fun _ ->
-  assert_equal expected_output input ~printer:(fun b ->
-      let bl =
-        [ b.total; b.fivehun; b.hun; b.ffty; b.twnty; b.tens; b.fives; b.ones ]
-      in
-      let rec string_balance sb =
-        match sb with
-        | [] -> "\n"
-        | h :: t -> string_of_int h ^ "   " ^ string_balance t
-      in
-      string_balance bl)
-
-let add_bank_test name u i expected_output =
-  bank_test name (add_to_balance (init_balance u) i) expected_output
-
-let deduct_bank_test name u i expected_output =
-  bank_test name (deduct_from_balance (init_balance u) i) expected_output
-
 let bank_tests =
   [
     bank_test "init_balance has appropriate values" (init_balance ())
@@ -270,12 +273,12 @@ let board_tests =
     roll_dice_test "roll_dice_test: 5th roll" true;
     roll_dice_test "roll_dice_test: 6th roll" true;
     roll_dice_test "roll_dice_test: 7th roll" true;
-    ( "trying something" >:: fun _ ->
+    ( "do_turn" >:: fun _ ->
       assert_equal 9
         (let player = init_player "jo" in
          Board.do_turn 3 6 player;
          player.board_position) );
-    ( "looping the board" >:: fun _ ->
+    ( "looping do_turn" >:: fun _ ->
       assert_equal 1
         (let player = init_player "jo" in
          Board.do_turn 6 5 player;
@@ -284,9 +287,6 @@ let board_tests =
          Board.do_turn 5 5 player;
          player.board_position) );
   ]
-
-let jailed_player = init_player "jailed"
-let () = jailed_player.in_jail <- true
 
 let jailed_tests : test list =
   [
