@@ -52,7 +52,7 @@ let pay_rent player board_pos =
       deduct_money player x;
       add_money owner x;
       print_endline
-        ("Player " ^ player.name ^ "paid " ^ owner.name ^ "$" ^ string_of_int x
+        ("Player " ^ player.name ^ "paid " ^ owner.name ^ " $" ^ string_of_int x
        ^ " in rent.")
 
 let is_purchasable (board_pos : int) =
@@ -121,7 +121,7 @@ let rec check_property board_pos player =
             let price = property_upgrade_cost p in
             if pl.name = player.name then
               upgrade_property board_pos p price player
-            else pay_rent pl board_pos
+            else pay_rent player board_pos
         | _ -> ()
       else ()
   | _ -> ()
