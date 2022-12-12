@@ -175,9 +175,9 @@ let curr_pos_print (player : _player) state =
 
 let play_monopoly players =
   let rec play_loop continue players =
+    let current_player, shuffled_players = shuffle_player players in
     match continue with
     | "y" ->
-        let current_player, shuffled_players = shuffle_player players in
         curr_pos_print current_player "current";
         (* cc_chance Chance; *)
         let current_player = check_jail_status current_player in
@@ -189,7 +189,15 @@ let play_monopoly players =
 
         let cont = read_line () in
         play_loop cont shuffled_players
-    | _ -> exit 0
+    | _ -> (
+        print_endline "do you want to exit? yes/no";
+        let leave = read_line () in
+        match leave with
+        | "yes" -> exit 0
+        | "no" ->
+            print_endline "\n \n Let's continue \n \n";
+            play_loop "y" shuffled_players
+        | _ -> play_loop "try again" shuffled_players)
   in
   play_loop "y" players
 

@@ -96,7 +96,7 @@ let rec add_to_balance b amt =
   else if amt > 5 then
     let _ = add_five b in
     add_to_balance b (amt - 5)
-  else if amt > 1 then
+  else if amt >= 1 then
     let _ = add_one b in
     add_to_balance b (amt - 1)
   else b
