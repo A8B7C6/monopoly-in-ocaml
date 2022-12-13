@@ -22,16 +22,17 @@ let remove_jailed p = p.in_jail <- false
 let remove_free_jail_card p = p.free_jail <- false
 let handle_jail_doubles player = if player.in_jail then remove_jailed player
 
-let rec remove_player player player_list =
-  match player_list with
-  | [] -> failwith "how are you playing with an empty player list"
-  | [ _ ] -> []
-  | h :: t ->
-      if h != player then h :: remove_player player t
-      else remove_player player t
-
-(* TODO: Remove -- disable warning temporarily *)
-let _ = remove_player
+let remove_player player player_list =
+  let rec rem_player_helper player player_list =
+    match player_list with
+    | [] -> player_list
+    | h :: t ->
+        if h != player then h :: rem_player_helper player t
+        else rem_player_helper player t
+  in
+  if player_list = [] then
+    failwith "How are you playing with an empty player list?"
+  else rem_player_helper player player_list
 
 let enqueue_player (players : _player list) (new_player : _player) =
   players @ [ new_player ]

@@ -137,7 +137,10 @@ let play_monopoly players =
         print_endline "Continue playing? y/n/end game";
 
         let cont = read_line () in
-        if cont = "y" then play_loop cont shuffled_players
+        if cont = "y" then
+          if current_player.balance.total >= 0 then
+            play_loop cont shuffled_players
+          else play_loop cont (remove_player current_player shuffled_players)
         else play_loop cont players
     | "end game" -> (
         print_endline "do you want to end the game ? yes/no";

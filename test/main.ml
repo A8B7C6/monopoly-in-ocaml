@@ -75,6 +75,9 @@ let make_chance_list_test name crdlst expected : test =
 let make_cc_list_test name crdlst expected : test =
   name >:: fun _ -> assert_equal expected (make_cc_list crdlst)
 
+let find_min_test name (expected_min : 'a * 'b) lst : test =
+  name >:: fun _ -> assert_equal expected_min (find_min (ref (List.hd lst)) lst)
+
 let to_bottom_test name ct nm flvr_txt mv rcv gtj ooj (crdlst : card list ref)
     expected : test =
   let rec find_last lst =
@@ -124,6 +127,20 @@ let deduct_bank_test name u i expected_output =
 
 let add_bank_test name u i expected_output =
   bank_test name (add_to_balance (init_balance u) i) expected_output
+
+let init_player_test_fails name player : test =
+  name >:: fun _ ->
+  assert_raises (Failure "empty string") (fun () -> init_player player)
+
+let remove_player_test name player player_list expected_list =
+  name >:: fun _ ->
+  let pl_list = remove_player player player_list in
+  assert_equal (List.length expected_list) (List.length pl_list)
+
+let remove_player_test_fails name player player_list : test =
+  name >:: fun _ ->
+  assert_raises (Failure "How are you playing with an empty player list?")
+    (fun () -> remove_player player player_list)
 
 (****************************************************************************
   End of Helper Functions
@@ -276,6 +293,25 @@ let bank_tests =
       (make_balance 1500 2 2 2 6 5 5 5);
   ]
 
+let intList = [ (0, 0); (2, 2); (3, 3); (4, 4); (5, 5) ]
+let intList_One_Elem = [ (1, 1) ]
+let stringList = [ ("b", "b"); ("a", "a") ]
+let stringList_One_Elem = [ ("b", "b") ]
+let reverse_intList = [ (5, 5); (4, 4); (3, 3); (2, 2); (0, 0) ]
+
+let find_min_tests =
+  [
+    find_min_test "Find min test with multiple int list" (0, 0) intList;
+    find_min_test "Find min test with one element int list" (1, 1)
+      intList_One_Elem;
+    find_min_test "Find min test with multiple string list" ("a", "a")
+      stringList;
+    find_min_test "Find min test with one element string list" ("b", "b")
+      stringList_One_Elem;
+    find_min_test "Find min test with reverse order  int list" (0, 0)
+      reverse_intList;
+  ]
+
 let board_tests =
   [
     roll_dice_test "roll_dice_test: 1st roll" true;
@@ -299,6 +335,7 @@ let board_tests =
          Board.do_turn 5 5 player;
          player.board_position) );
   ]
+  @ find_min_tests
 
 let jailed_tests : test list =
   let jailed_player = init_player "jailed" in
@@ -323,8 +360,37 @@ let doubles_tests =
   ]
   @ jailed_tests
 
+let mockPlayer1 = init_player "John"
+let mockPlayer2 = init_player "Nguyen"
+let mockPlayer3 = init_player "Savitta"
+let mockPlayer4 = init_player "Kitil"
+let playerList = [ mockPlayer1; mockPlayer2; mockPlayer3; mockPlayer4 ]
+let test1List = [ mockPlayer2; mockPlayer3; mockPlayer4 ]
+let test2List = [ mockPlayer3; mockPlayer4 ]
+let test3List = [ mockPlayer4 ]
+let test4List = []
+let mockPlayer5 = init_player "Uh,oh"
+
+let remove_player_tests =
+  [
+    remove_player_test "Test remove john from player: " mockPlayer1 playerList
+      test1List;
+    remove_player_test "Test remove Nguyen from player: " mockPlayer2 test1List
+      test2List;
+    remove_player_test "Test remove Savitta from player: " mockPlayer3 test2List
+      test3List;
+    remove_player_test "Test remove Kitil from player: " mockPlayer4 test3List
+      test4List;
+    remove_player_test "Test remove player not in game: " mockPlayer5 playerList
+      playerList;
+    remove_player_test_fails "Remove player should fail with empty list: "
+      mockPlayer5 [];
+  ]
+
 let player_tests =
   [
+    init_player_test_fails
+      "Init player test fails with empty string for player " "";
     init_player_test "init_player_test: Initial balance and given name" "Joe"
       (make_player 0 "Joe" (init_balance ()) 0);
     get_name_test "get_name_test: A9B7C8" 0 "A9B7C8" (init_balance ()) 0
@@ -349,7 +415,7 @@ let player_tests =
         [ init_player "B"; init_player "C"; init_player "D"; init_player "A" ]
       );
   ]
-  @ doubles_tests
+  @ doubles_tests @ remove_player_tests
 
 let cards_tests =
   [
