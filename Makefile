@@ -31,6 +31,7 @@ bisect-clean:
 	rm -rf _coverage bisect*.coverage
 
 zip:
+	dune clean
 	rm -f monopoly.zip
 	zip -r monopoly.zip . -x@exclude.lst
 
