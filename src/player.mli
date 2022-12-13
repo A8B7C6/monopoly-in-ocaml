@@ -11,9 +11,11 @@ type _player = {
   mutable jailstats : jail_stats;
 }
 
+val remove_player : _player -> _player list -> _player list
+
 val init_player : string -> _player
 (** [init_player nm] creates a player with name [nm], starting position at index
-    0, and starting balance of [1500] *)
+    0, and starting balance of [1500]. Requires: [nm] can not be an empty string *)
 
 val get_board_position : _player -> int
 (** [get_board_position p] gives the [board_position] of player [p]*)

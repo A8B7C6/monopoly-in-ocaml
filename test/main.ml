@@ -110,9 +110,6 @@ let deduct_bank_test name u i expected_output =
 let add_bank_test name u i expected_output =
   bank_test name (add_to_balance (init_balance u) i) expected_output
 
-let jailed_player = init_player "jailed"
-let () = jailed_player.in_jail <- true
-
 (****************************************************************************
   End of Helper Functions
   ***************************************************************************)
@@ -289,6 +286,8 @@ let board_tests =
   ]
 
 let jailed_tests : test list =
+  let jailed_player = init_player "jailed" in
+  let () = jailed_player.in_jail <- true in
   [
     (let _ =
        check_for_double_test
@@ -313,9 +312,6 @@ let player_tests =
   [
     init_player_test "init_player_test: Initial balance and given name" "Joe"
       (make_player 0 "Joe" (init_balance ()) 0);
-    (* TODO: do we want to prohibit empty names? *)
-    init_player_test "init_player_test: Initial balance and empty name" ""
-      (make_player 0 "" (init_balance ()) 0);
     get_name_test "get_name_test: A9B7C8" 0 "A9B7C8" (init_balance ()) 0
       "A9B7C8";
     get_name_test "get_name_test: !@#$$%^&*[]{}|:;'/?.,`~" 0

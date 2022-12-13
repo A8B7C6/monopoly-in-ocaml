@@ -22,12 +22,13 @@ let remove_jailed p = p.in_jail <- false
 let remove_free_jail_card p = p.free_jail <- false
 let handle_jail_doubles player = if player.in_jail then remove_jailed player
 
-let rec remove_player players player_name =
-  match players with
-  | [] -> []
+let rec remove_player player player_list =
+  match player_list with
+  | [] -> failwith "how are you playing with an empty player list"
+  | [ _ ] -> []
   | h :: t ->
-      if h.name != player_name then h :: remove_player t player_name
-      else remove_player t player_name
+      if h != player then h :: remove_player player t
+      else remove_player player t
 
 (* TODO: Remove -- disable warning temporarily *)
 let _ = remove_player
@@ -43,16 +44,18 @@ let dequeue_player (players : _player list) : _player * _player list =
 (*****************************************************************************)
 (******************************* Player Functions ******************************)
 let init_player nm =
-  let open Bank in
-  {
-    board_position = 0;
-    name = nm;
-    balance = init_balance ();
-    doubles = 0;
-    free_jail = false;
-    in_jail = false;
-    jailstats = { turns_since = 0 };
-  }
+  if nm = "" then failwith "empty string"
+  else
+    let open Bank in
+    {
+      board_position = 0;
+      name = nm;
+      balance = init_balance ();
+      doubles = 0;
+      free_jail = false;
+      in_jail = false;
+      jailstats = { turns_since = 0 };
+    }
 
 let get_board_position player = player.board_position
 let get_name player = player.name
