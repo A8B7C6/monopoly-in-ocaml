@@ -30,7 +30,7 @@ let rec find_min min lst =
         min := (a, b);
         find_min min t
       end
-      else find_min min lst
+      else find_min min t
 
 (** [chance_rail_util loc player] will move [player] to the nearst board
     position [loc] that has type 'Railroad' or 'Utilities'. Function is used to
