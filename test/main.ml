@@ -105,17 +105,18 @@ let remove_jail_test name ct (crdlst : card list ref) : test =
        (remove_jail ooj_crd crdlst;
         !crdlst))
 
+let rec print_list l f =
+  match l with
+  | [] -> "\n"
+  | h :: t -> f h ^ "  " ^ print_list t f
+
 let bank_test name input expected_output : test =
   name >:: fun _ ->
   assert_equal expected_output input ~printer:(fun b ->
       let bl =
         [ b.total; b.fivehun; b.hun; b.ffty; b.twnty; b.tens; b.fives; b.ones ]
       in
-      let rec string_balance sb =
-        match sb with
-        | [] -> "\n"
-        | h :: t -> string_of_int h ^ "   " ^ string_balance t
-      in
+      let string_balance sb = print_list sb string_of_int in
       string_balance bl)
 
 let deduct_bank_test name u i expected_output =

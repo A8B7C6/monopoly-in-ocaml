@@ -1,1 +1,1 @@
-{"gameStarted":true,"players":[{"id":"1","name":"j","balance":1500,"position":16}],"current_player":"j","lastDiceRoll":16}
+{"gameStarted":true,"players":[{"id":"2","name":"bi","balance":1500,"position":0},{"id":"1","name":"hi","balance":1500,"position":6}],"current_player":"bi","lastDiceRoll":0}
