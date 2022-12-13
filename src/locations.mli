@@ -1,3 +1,10 @@
+(** Representation of Static Locations on a Monopoly Board
+
+    The module represents the information stored in data/Monopoly.json makes
+    "tiles" out of different locations on a Monopoly Board. Handles majority of
+    loading and querying the data. Rent Module handles renting functionality for
+    some of the tiles*)
+
 type _property
 type _tax
 
@@ -55,6 +62,8 @@ val monopoly_list : (int * tile_type) list
     [v] holds the information about each tile*)
 
 val property_rent : _property -> int -> int
+(** [property_rent property ul] returns the cost of rent for [property] at the
+    level [ul]*)
 
 val make_contents :
   string ->

@@ -18,10 +18,23 @@ let tiles_list_test name json expected : test =
   name >:: fun _ -> assert_equal expected (tiles_list json)
 
 let find_tile_test name index tiles expected : test =
-  name >:: fun _ -> assert_equal expected (find_tile index tiles)
+  name >:: fun _ ->
+  assert_equal expected (find_tile index tiles) ~printer:(fun x ->
+      match x with
+      | Property _ -> "property"
+      | Railroad _ -> "railroad"
+      | Utility _ -> "utility"
+      | Tax _ -> "tax"
+      | Go -> "go"
+      | CommunityChest -> "community chest"
+      | Chance -> "chance"
+      | Jail -> "jail"
+      | VisitingJail -> "visiting jail"
+      | Parking -> "parking")
 
 let get_tile_name_test name index mlist expected_name : test =
-  name >:: fun _ -> assert_equal expected_name (get_tile_name index mlist)
+  name >:: fun _ ->
+  assert_equal expected_name (get_tile_name index mlist) ~printer:(fun x -> x)
 
 let check_single_roll result = result >= 1 && result <= 6
 
@@ -33,7 +46,8 @@ let roll_dice_test name expected : test =
 
 let check_for_double_test name player dice1 dice2 expected : test =
   let _ = check_for_double player dice1 dice2 in
-  name >:: fun _ -> assert_equal expected player.doubles
+  name >:: fun _ ->
+  assert_equal expected player.doubles ~printer:(fun x -> string_of_int x)
 
 let init_player_test name nm expected : test =
   name >:: fun _ -> assert_equal expected (init_player nm)

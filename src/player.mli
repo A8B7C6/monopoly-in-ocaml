@@ -1,3 +1,8 @@
+(** Representation and Functionality of a Player
+
+    Handles creating players and player list that are passed on from CLI.
+    Functionality includes dealing with funds and jail time. *)
+
 type _balance = Bank._balance
 type jail_stats = { mutable turns_since : int }
 
@@ -12,6 +17,8 @@ type _player = {
 }
 
 val remove_player : _player -> _player list -> _player list
+(** [remove_player p pl] removes a player [p] from list [pl] and returns the
+    resulting list. Requires: [pl] can not be empty *)
 
 val init_player : string -> _player
 (** [init_player nm] creates a player with name [nm], starting position at index

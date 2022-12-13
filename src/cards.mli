@@ -1,3 +1,8 @@
+(** Representation of Static Monopoly Chance Cards and Community Chest Cards
+
+    The module represents the information stored in data/Cards.json. Handles
+    loading of data and querying the data.*)
+
 type actions = {
   move : string;
   balance_change : int;

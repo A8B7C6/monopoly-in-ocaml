@@ -1,3 +1,9 @@
+(** Functionality for a Player's Funds
+
+    An extraction of a Player's funds due to Player verbosity. It handles
+    tracking, adding, and subtracting bills from a balance. The results are used
+    in regards to the field Player._player.balance *)
+
 type _balance = {
   mutable total : int;
   mutable fivehun : int;

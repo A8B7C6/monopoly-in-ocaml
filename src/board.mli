@@ -1,3 +1,8 @@
+(** Supposed to Manage the State of the Game
+
+    most of the functionality that would go here is currently in bin/main.ml.
+    Organizational goal would be to move some functionality from there to here. *)
+
 val roll_dice : unit -> int
 (** [roll_dice ()] simulates a single dice roll. Returns a randomized int in the
     range [1-6]*)
