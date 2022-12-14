@@ -14,8 +14,8 @@ val move_new : int -> Player._player -> unit
     they pass Go*)
 
 val chance_mv : Cards.card -> Player._player -> unit
-(* [chance_mv c player] handles moving [player] according to the instructions in
-   the cad [c]*)
+(** [chance_mv c player] handles moving [player] according to the instructions
+    in the cad [c]*)
 
 val find_min : 'a -> ('a * 'b) list -> 'a
 (** [find_min min lst] returns the second smallest element [min] in [lst].

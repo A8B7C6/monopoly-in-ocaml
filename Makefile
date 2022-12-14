@@ -34,12 +34,18 @@ zip:
 	dune clean
 	rm -f monopoly.zip
 	zip -r monopoly.zip . -x@exclude.lst
-	
+
+clean:
+	dune clean
+	rm -f adventure.zip
+
 navigate-gui:
 	open http://localhost:8000
 
 doc:
+	dune build
 	dune build @doc
+
 
 opendoc: doc
 	@bash opendoc.sh
