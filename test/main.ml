@@ -11,7 +11,8 @@ let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
 let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
 
 (******************************** Testing Plan ********************************
-  OUnit Tests were made the modules: Bank, Board, Cards, Locations, Player, Rent
+  OUnit Tests were made for functions in: Bank, Board, Cards, Locations, Player,
+  Rent
 
   Black box testing and glass box testing were applied. Bisect was also
   implemented, and tests were written to cover all functions we could write
@@ -20,7 +21,7 @@ let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
   testing every single permutation, our group's test suite ensures the
   correctness of each function to prove the correctness of the program.
 
-  Manual Tests were conducted the modules: GUIhelper, bin/Main
+  Manual Tests were conducted for functions in: GUIhelper, Player, bin/Main
 
   Manual testing through playing the game was extensively applied to the two
   modules in order to check for their correctness.
