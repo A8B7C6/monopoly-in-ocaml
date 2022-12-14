@@ -398,12 +398,18 @@ let board_tests =
        the Bank. If owned, throw dice and pay owner a total 10 (ten) times the \
        amount thrown."
       "Utility" 0 false false 12;
-    chance_mv_test "chance_mv_test: Nearest Utility (28)" 36 "Uris 2" 0 Chance
+    chance_mv_test "chance_mv_test: Nearest Utility (12)" 36 "Uris 2" 0 Chance
       "Move"
       "Advance token to the nearest Utility. If unowned, you may buy it from \
        the Bank. If owned, throw dice and pay owner a total 10 (ten) times the \
        amount thrown."
       "Utility" 0 false false 12;
+    chance_mv_test "chance_mv_test: Nearest Utility (28)" 22 "Uris 3" 0 Chance
+      "Move"
+      "Advance token to the nearest Utility. If unowned, you may buy it from \
+       the Bank. If owned, throw dice and pay owner a total 10 (ten) times the \
+       amount thrown."
+      "Utility" 0 false false 28;
     chance_mv_test "chance_mv_test: Back 3 (36 - 3 = 33)" 36 "Walker" 0 Chance
       "Move" "Go Back Three Spaces." "Back 3" 0 false false 33;
   ]
