@@ -137,10 +137,10 @@ let remove_player_test name player player_list expected_list =
   let pl_list = remove_player player player_list in
   assert_equal (List.length expected_list) (List.length pl_list)
 
-let remove_player_test_fails name player player_list : test =
+let update_last_dice_roll_test name player expected : test =
   name >:: fun _ ->
-  assert_raises (Failure "How are you playing with an empty player list?")
-    (fun () -> remove_player player player_list)
+  let _ = update_last_dice_roll player expected in
+  assert_equal player.last_dice_roll expected
 
 (****************************************************************************
   End of Helper Functions
@@ -381,10 +381,10 @@ let remove_player_tests =
       test3List;
     remove_player_test "Test remove Kitil from player: " mockPlayer4 test3List
       test4List;
+    remove_player_test "Test remove player already removed: " mockPlayer3
+      test3List test3List;
     remove_player_test "Test remove player not in game: " mockPlayer5 playerList
       playerList;
-    remove_player_test_fails "Remove player should fail with empty list: "
-      mockPlayer5 [];
   ]
 
 let player_tests =
@@ -414,6 +414,14 @@ let player_tests =
       ( init_player "A",
         [ init_player "B"; init_player "C"; init_player "D"; init_player "A" ]
       );
+    update_last_dice_roll_test
+      "update last dice roll updates with lowest possible dice roll" mockPlayer1
+      2;
+    update_last_dice_roll_test
+      "update last dice roll updates with highest possible dice roll"
+      mockPlayer1 12;
+    update_last_dice_roll_test "update last dice roll updates with 6 dice roll"
+      mockPlayer1 6;
   ]
   @ doubles_tests @ remove_player_tests
 

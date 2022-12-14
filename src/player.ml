@@ -9,6 +9,7 @@ type _player = {
   mutable free_jail : bool;
   mutable in_jail : bool;
   mutable jailstats : jail_stats;
+  mutable last_dice_roll : int;
 }
 
 (*****************************************************************************)
@@ -54,10 +55,12 @@ let init_player nm =
       free_jail = false;
       in_jail = false;
       jailstats = { turns_since = 0 };
+      last_dice_roll = 0;
     }
 
 let get_board_position player = player.board_position
 let get_name player = player.name
+let update_last_dice_roll p i = p.last_dice_roll <- i
 
 let add_money p i =
   let open Bank in
@@ -141,6 +144,7 @@ let make_player brdpos nm blnce dbls =
     free_jail = false;
     in_jail = false;
     jailstats = { turns_since = 0 };
+    last_dice_roll = 0;
   }
 
 (******************************************************************************)

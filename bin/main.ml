@@ -106,6 +106,7 @@ let print_turn_info frst scnd player =
 
 let do_turn frst scnd player =
   Board.do_turn frst scnd player;
+  update_last_dice_roll player (frst + scnd);
   let current_doubles = player.doubles in
   check_for_double player frst scnd;
   match player.doubles > current_doubles with

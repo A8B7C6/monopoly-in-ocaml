@@ -14,6 +14,7 @@ type _player = {
   mutable free_jail : bool;
   mutable in_jail : bool;
   mutable jailstats : jail_stats;
+  mutable last_dice_roll : int;
 }
 
 val remove_player : _player -> _player list -> _player list
@@ -39,6 +40,9 @@ val deduct_money : _player -> int -> unit
 val set_board_position : _player -> int -> unit
 (** [set_board_position p i] sets the [board_position] of player [p] to be at
     index [i]*)
+
+val update_last_dice_roll : _player -> int -> unit
+(** [update_last_dice_roll p i] sets the [dice_roll] of player [p] to be of value [i]*)
 
 val shuffle_player : _player list -> _player * _player list
 (** [shuffle_player playerlist] is a pair [(p, pl)]. [p] is the element at the

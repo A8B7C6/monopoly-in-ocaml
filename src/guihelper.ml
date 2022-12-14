@@ -7,6 +7,7 @@ type game_data_player = {
   name : string;
   balance : int;
   position : int;
+  last_dice_roll : int;
 }
 [@@deriving yojson] [@@yojson.allow_extra_fields]
 
@@ -25,6 +26,7 @@ let format_game_data_player (player : _player) =
     name = player.name;
     balance = player.balance.total;
     position = player.board_position;
+    last_dice_roll = player.last_dice_roll;
   }
 
 let create_game_data (players : _player list) =
@@ -39,8 +41,7 @@ let create_game_data (players : _player list) =
       gameStarted = true;
       players = formatted_players;
       current_player = (List.hd formatted_players).name;
-      (* TODO: Save last dice roll *)
-      lastDiceRoll = (List.hd formatted_players).position;
+      lastDiceRoll = (List.hd formatted_players).last_dice_roll;
     }
   in
   game_data
