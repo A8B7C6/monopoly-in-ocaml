@@ -6,7 +6,10 @@
     some of the tiles*)
 
 type _property
+(**[_property] is the type that represents properties in Monopoly*)
+
 type _tax
+(**[_tax] is the type that represents the tax tiles in Monopoly*)
 
 type tile_type =
   | Property of _property
@@ -20,7 +23,11 @@ type tile_type =
   | VisitingJail
   | Parking
 
+(**[tile_type] is the type that decides what type of tile a location is and
+   holds any relevant information for that type*)
+
 type color
+(**[color] is the type representing the color that a property is *)
 
 val tile_color : string -> color
 (** [tile_color c] generates a [color] based on the string [c]*)
