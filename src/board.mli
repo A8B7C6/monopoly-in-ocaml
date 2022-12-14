@@ -18,7 +18,8 @@ val chance_mv : Cards.card -> Player._player -> unit
    the cad [c]*)
 
 val find_min : 'a -> ('a * 'b) list -> 'a
-(** [find_min min lst] returns the smallest element [min] in [lst]. Comparisons
-    are done on the second element of the tuples. Function is used as a helper
-    in finding the closest Railroad or Utility to which a player has to move
-    when drawing a chance card *)
+(** [find_min min lst] returns the second smallest element [min] in [lst].
+    Comparisons are done on the first element of the tuples. Function is used as
+    a helper in finding the closest Railroad or Utility to which a player has to
+    move when drawing a chance card.contents Requires: [lst] is sorted in
+    ascending order by the first element*)

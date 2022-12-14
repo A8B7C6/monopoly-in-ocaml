@@ -18,25 +18,6 @@ let move_new new_index player =
   end
   else player.board_position <- new_index
 
-(** [find_min min lst] returns the smallest element [min] in [lst]. Comparisons
-    are done on the second element of the tuples. Function is used as a helper
-    in finding the closest Railroad or Utility to which a player has to move
-    when drawing a chance card*)
-(*let rec find_min min lst = match lst with | [] -> !min | (a, b) :: t -> if b <
-  snd !min then begin min := (a, b); find_min min t end else find_min min t
-
-  (** [chance_rail_util loc player] will move [player] to the nearst board
-  position [loc] that has type 'Railroad' or 'Utilities'. Function is used to
-  intitiate the player's move to the nearest board pos given by chance card *)
-  let chance_rail_util loc player = let pos = player.board_position in let
-  railroads = [ 5; 15; 25; 35 ] in let utilities = [ 12; 28 ] in if loc =
-  "Railroad" then let r2 = List.map (fun x -> (x, Int.abs (x - pos))) railroads
-  in let min_ref = ref (List.hd r2) in let new_board_pos = find_min min_ref r2
-  in move_new (snd new_board_pos) player (*have to check if railroad is owned
-  and if have to pay price*) else if loc = "Utilities" then let u2 = List.map
-  (fun x -> (x, Int.abs (x - pos))) utilities in let min = ref (List.hd u2) in
-  let new_util_pos = find_min min u2 |> snd in move_new new_util_pos player *)
-
 let rec find_min min lst =
   match lst with
   | [] -> min
