@@ -327,6 +327,7 @@ let intList_One_Elem = [ (1, 1) ]
 let stringList = [ ("a", "a"); ("b", "b") ]
 let stringList_One_Elem = [ ("b", "b") ]
 let intList2 = [ (2, 2); (6, 7); (7, 0); (10, 20) ]
+let empty = []
 
 let find_min_tests =
   [
@@ -336,6 +337,7 @@ let find_min_tests =
     find_min_test "Find min test with one element string list" "b" "b"
       stringList_One_Elem;
     find_min_test "Find min test with reverse order  int list" 2 6 intList2;
+    find_min_test "Find min test with empty int list" 0 0 empty;
   ]
 
 let board_tests =
