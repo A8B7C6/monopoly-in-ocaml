@@ -34,7 +34,7 @@ zip:
 	dune clean
 	rm -f monopoly.zip
 	zip -r monopoly.zip . -x@exclude.lst
-	
+
 navigate-gui:
 	open http://localhost:8000
 
