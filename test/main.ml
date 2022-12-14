@@ -10,6 +10,23 @@ let data_dir_prefix = "data" ^ Filename.dir_sep
 let mono = Yojson.Basic.from_file (data_dir_prefix ^ "Monopoly.json")
 let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
 
+(******************************** Testing Plan ********************************
+  OUnit Tests were made the modules: Bank, Board, Cards, Locations, Player, Rent
+
+  Black box testing and glass box testing were applied. Bisect was also
+  implemented, and tests were written to cover all functions we could write
+  tests for in src/ that were not tested manually. As the large number of state
+  transitions across modules makes it impracticable to prove correctness by
+  testing every single permutation, our group's test suite ensures the
+  correctness of each function to prove the correctness of the program.
+
+  Manual Tests were conducted the modules: GUIhelper, bin/Main
+
+  Manual testing through playing the game was extensively applied to the two
+  modules in order to check for their correctness.
+
+  *******************************************************************************)
+
 (****************************************************************************
   Helper Functions
   ***************************************************************************)
@@ -77,6 +94,16 @@ let make_cc_list_test name crdlst expected : test =
 
 let find_min_test name (expected_min : 'a * 'b) lst : test =
   name >:: fun _ -> assert_equal expected_min (find_min (ref (List.hd lst)) lst)
+
+let chance_mv_test name brdpos playernm dbls ct nm flvr_txt mv rcv gtj ooj
+    expected : test =
+  let pl1 =
+    make_player brdpos playernm (make_balance 1500 2 2 2 6 5 5 5) dbls
+  in
+  name >:: fun _ ->
+  assert_equal expected
+    (chance_mv (init_card ct nm flvr_txt mv rcv gtj ooj) pl1;
+     get_board_position pl1)
 
 let to_bottom_test name ct nm flvr_txt mv rcv gtj ooj (crdlst : card list ref)
     expected : test =
@@ -334,6 +361,40 @@ let board_tests =
          Board.do_turn 4 6 player;
          Board.do_turn 5 5 player;
          player.board_position) );
+    chance_mv_test "chance_mv_test: Boardwalk (39)" 7 "Walker" 0 Chance "Move"
+      "Take a walk on the Boardwalk. Advance token to Boardwalk." "Boardwalk" 0
+      false false 39;
+    chance_mv_test "chance_mv_test: Go (0)" 7 "Gofer" 0 Chance "Move"
+      "Advance to Go. (Collect $200)" "Go" 0 false false 0;
+    chance_mv_test "chance_mv_test: Illinois Avenue (24)" 7 "Illyanna" 0 Chance
+      "Move" "Advance to Illinois Avenue. If you pass Go, collect $200."
+      "Illinois Avenue" 0 false false 24;
+    chance_mv_test "chance_mv_test: St. Charles Place (11)" 7 "Charlie" 0 Chance
+      "Move" "Advance to St. Charles Place. If you pass Go, collect $200."
+      "St. Charles Place" 0 false false 11;
+    chance_mv_test "chance_mv_test: Reading Railroad (5)" 22 "Reader" 0 Chance
+      "Move" "Take a trip to Reading Railroad. If you pass Go, collect $200."
+      "Reading Railroad" 0 false false 5;
+    chance_mv_test "chance_mv_test: Nearest Railroad (5)" 7 "Disraeli 1" 0
+      Chance "Move"
+      "Advance to the nearest Railroad. If unowned, you may buy it from the \
+       Bank. If owned, pay owner twice the rental to which they are otherwise \
+       entitled."
+      "Railroad" 0 false false 5;
+    chance_mv_test "chance_mv_test: Nearest Railroad (25)" 22 "Disraeli 2" 0
+      Chance "Move"
+      "Advance to the nearest Railroad. If unowned, you may buy it from the \
+       Bank. If owned, pay owner twice the rental to which they are otherwise \
+       entitled."
+      "Railroad" 0 false false 25;
+    chance_mv_test "chance_mv_test: Nearest Railroad (35)" 36 "Disraeli 3" 0
+      Chance "Move"
+      "Advance to the nearest Railroad. If unowned, you may buy it from the \
+       Bank. If owned, pay owner twice the rental to which they are otherwise \
+       entitled."
+      "Railroad" 0 false false 35;
+    chance_mv_test "chance_mv_test: Back 3 (36 - 3 = 33)" 36 "Walker" 0 Chance
+      "Move" "Go Back Three Spaces." "Back 3" 0 false false 33;
   ]
   @ find_min_tests
 

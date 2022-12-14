@@ -54,10 +54,6 @@ let chance_rail_util loc player =
 let chance_mv c player =
   let new_loc = c.contents.actions.move in
   if new_loc = "Boardwalk" then player.board_position <- 39
-  else if new_loc = "Go" then begin
-    player.board_position <- 0;
-    add_money player 200
-  end
   else if new_loc = "Illinois Avenue" then move_new 24 player
   else if new_loc = "St. Charles Place" then move_new 11 player
   else if new_loc = "Reading Railroad" then move_new 5 player
@@ -65,3 +61,7 @@ let chance_mv c player =
     chance_rail_util new_loc player
   else if new_loc = "Back 3" then
     player.board_position <- player.board_position - 3
+  else if new_loc = "Go" then begin
+    player.board_position <- 0;
+    add_money player 200
+  end
