@@ -1,1 +1,6 @@
-{"gameStarted":true,"players":[{"id":"8","name":"s","balance":1400,"position":13,"last_dice_roll":5},{"id":"7","name":"y","balance":1500,"position":15,"last_dice_roll":5}],"current_player":"s","lastDiceRoll":5}
+{
+  "gameStarted": false,
+  "players": [{ "name": "N/A", "balance": 0 }],
+  "current_player": "",
+  "lastDiceRoll": 10
+}

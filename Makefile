@@ -39,13 +39,15 @@ clean:
 	dune clean
 	rm -f adventure.zip
 
+webserver:
+	cd gui && python3 -m http.server
+
 navigate-gui:
 	open http://localhost:8000
 
 doc:
 	dune build
 	dune build @doc
-
 
 opendoc: doc
 	@bash opendoc.sh

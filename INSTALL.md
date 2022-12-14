@@ -16,3 +16,7 @@ a few packages are required to make this work, for Linux and Mac systems, can do
 
 pass `dune build` into the terminal <br>
 start game by typing `make play` into the terminal
+
+## Supplemental GUI (Not part of OCaml System)
+
+After running `make play` and initiating a game, you may additionally see the current player and their respective key statistics by hosting a webserver out of the /gui directory. The reccomended approach is to use the "Live Server" extension and serving the index.html file located in /gui.
