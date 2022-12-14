@@ -19,12 +19,40 @@ let cards = Yojson.Basic.from_file (data_dir_prefix ^ "Cards.json")
   tests for in src/ that were not tested manually. As the large number of state
   transitions across modules makes it impracticable to prove correctness by
   testing every single permutation, our group's test suite ensures the
-  correctness of each function to prove the correctness of the program.
+  correctness of each function to prove the correctness of the program. The Test
+  suite itself contains helper functions to avoid duplicate code for writing
+  tests and to easily provide informative output for different tests. How much
+  glass box and black box testing is dependent on the module.
 
   Manual Tests were conducted for functions in: GUIhelper, Player, bin/Main
 
   Manual testing through playing the game was extensively applied to the two
   modules in order to check for their correctness.
+
+  Bank : Emphasis on Glass Box testing because the majority of functionality in
+  Bank is hidden away. In addition, a more verbose printer function was required
+  to more easily see potential error when so many numbers are being used.
+
+  Board : Emphasis on Black Box testing, especially testing edge cases. For
+  roll_dice was Glass Box testing according to the precondition for the
+  function. For the rest of the functions dependent on player movement the focus
+  was on testing the boundry cases and different kinds of movement provided by
+  chance cards.
+
+  Cards and Locations : Glass Box testing to ensure JSON files were appropriatly
+  parsed.
+
+  Guihelper : Manual testing by looking for unwanted functionality or incomplete
+  functinality as a game progressed.
+
+  Player : Testing was harder since a lot of the functions had side effects, so
+  a good portion of the tests had to be done manually. It also involved the
+  basic Black Box testing you would do for any kind of list (like testing empty
+  lists). Other Black Box testing involved ensuring player information was
+  properly updated.
+
+  Rent : Manual Testing by playing the game and monitoring the player balance
+  after purchases and upgrade costs afterwards.
 
   *******************************************************************************)
 
