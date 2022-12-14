@@ -171,6 +171,13 @@ let update_last_dice_roll_test name player expected : test =
   let _ = update_last_dice_roll player expected in
   assert_equal player.last_dice_roll expected
 
+let go_balance_test name brdpos player crd nm flvr mv expected =
+  let pl = make_player brdpos player (make_balance 1500 2 2 2 6 5 5 5) 0 in
+  let cd = init_card crd nm flvr mv 0 false false in
+  chance_mv cd pl;
+  let new_bal = pl.balance.total in
+  name >:: fun _ -> assert_equal expected new_bal
+
 (****************************************************************************
   End of Helper Functions
   ***************************************************************************)
@@ -388,7 +395,7 @@ let board_tests =
        Bank. If owned, pay owner twice the rental to which they are otherwise \
        entitled."
       "Railroad" 0 false false 25;
-    chance_mv_test "chance_mv_test: Nearest Railroad (35)" 36 "Disraeli 3" 0
+    chance_mv_test "chance_mv_test: Nearest Railroad (5)" 36 "Disraeli 3" 0
       Chance "Move"
       "Advance to the nearest Railroad. If unowned, you may buy it from the \
        Bank. If owned, pay owner twice the rental to which they are otherwise \
@@ -414,6 +421,12 @@ let board_tests =
       "Utility" 0 false false 28;
     chance_mv_test "chance_mv_test: Back 3 (36 - 3 = 33)" 36 "Walker" 0 Chance
       "Move" "Go Back Three Spaces." "Back 3" 0 false false 33;
+    go_balance_test "move to nearest railroad; balance should be +=200" 36
+      "Cammul" Chance "Move"
+      "Advance to the nearest Railroad. If unowned, you may buy it from the \
+       Bank. If owned, pay owner twice the rental to which they are otherwise \
+       entitled."
+      "Railroad" 1700;
   ]
   @ find_min_tests
 
