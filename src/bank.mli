@@ -14,6 +14,7 @@ type _balance = {
   mutable fives : int;
   mutable ones : int;
 }
+(**[_balance] is the type for all of the player balances*)
 
 val init_balance : unit -> _balance
 (** [init_balance] creates a starting balance of [1500] *)

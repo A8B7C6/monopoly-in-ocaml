@@ -39,7 +39,9 @@ navigate-gui:
 	open http://localhost:8000
 
 doc:
+	dune build
 	dune build @doc
+
 
 opendoc: doc
 	@bash opendoc.sh
