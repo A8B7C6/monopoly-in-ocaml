@@ -47,7 +47,7 @@ async function readJSON(file) {
 
 let count = 0;
 const refreshInterval = setInterval(async () => {
-  await readJSON("..//data/game.json");
+  await readJSON("./data/game.json");
   console.log("updated!");
 }, 300);
 

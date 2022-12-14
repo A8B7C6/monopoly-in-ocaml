@@ -9,24 +9,35 @@ type actions = {
   go_to_jail : bool;
   out_of_jail_card : bool;
 }
+(**[actions] is the type that holds the information related to which moves the
+   card has the player do*)
 
 type contents = {
   name : string;
   flavor_text : string;
   actions : actions;
 }
+(**[contents] is the type that holds the name of the card, the description, and
+   the actions that must be perfomed as given on the card*)
 
 type card_type =
   | Chance
   | CC
 
+(**[card_type] is whether the card is a Chance or Community Chest card*)
+
 type card = {
   card_type : card_type;
   contents : contents;
 }
+(**[card] is the type that holds the information of what type of [card] this is
+   and the [contents]*)
 
 type card_deck = { card_deck : card list }
+(**[card_deck] is the type that represents the entire stack of cards*)
+
 type t = Yojson.Basic.t
+(**[t] is the abstract type of json files*)
 
 val parse : t -> card list
 (** [parse t] takes information from a json file [t] and generates a [card list]
