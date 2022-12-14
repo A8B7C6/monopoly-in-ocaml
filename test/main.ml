@@ -104,6 +104,7 @@ let chance_mv_test name brdpos playernm dbls ct nm flvr_txt mv rcv gtj ooj
   assert_equal expected
     (chance_mv (init_card ct nm flvr_txt mv rcv gtj ooj) pl1;
      get_board_position pl1)
+    ~printer:string_of_int
 
 let to_bottom_test name ct nm flvr_txt mv rcv gtj ooj (crdlst : card list ref)
     expected : test =
@@ -393,6 +394,18 @@ let board_tests =
        Bank. If owned, pay owner twice the rental to which they are otherwise \
        entitled."
       "Railroad" 0 false false 35;
+    chance_mv_test "chance_mv_test: Nearest Utility (12)" 7 "Uris 1" 0 Chance
+      "Move"
+      "Advance token to the nearest Utility. If unowned, you may buy it from \
+       the Bank. If owned, throw dice and pay owner a total 10 (ten) times the \
+       amount thrown."
+      "Utility" 0 false false 12;
+    chance_mv_test "chance_mv_test: Nearest Utility (28)" 36 "Uris 2" 0 Chance
+      "Move"
+      "Advance token to the nearest Utility. If unowned, you may buy it from \
+       the Bank. If owned, throw dice and pay owner a total 10 (ten) times the \
+       amount thrown."
+      "Utility" 0 false false 28;
     chance_mv_test "chance_mv_test: Back 3 (36 - 3 = 33)" 36 "Walker" 0 Chance
       "Move" "Go Back Three Spaces." "Back 3" 0 false false 33;
   ]
