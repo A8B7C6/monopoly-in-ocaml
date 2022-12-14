@@ -94,6 +94,7 @@ let handle_move loc player =
   else check_property player.board_position player
 
 let print_turn_info frst scnd player =
+  update_game_data [ player ];
   print_endline
     ("You rolled a " ^ string_of_int frst ^ " and a " ^ string_of_int scnd
    ^ " \n Your new board position is "
@@ -134,7 +135,7 @@ let play_monopoly players =
         do_turn (roll_dice ()) (roll_dice ()) current_player;
 
         curr_pos_print current_player "new";
-        update_game_data shuffled_players;
+        update_game_data [ current_player ];
         print_endline "Continue playing? y/n/end game";
 
         let cont = read_line () in

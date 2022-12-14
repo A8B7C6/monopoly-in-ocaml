@@ -13,6 +13,7 @@ async function updateHTML(gameJSON) {
 
   // await movePiece(gameJSON.players[0].position);
   document.querySelector("#p1Name").innerHTML = gameJSON.players[0].name;
+  document.querySelector("#p1-piece").innerHTML = gameJSON.players[0].name;
   document.querySelector("#p1Bal").innerHTML =
     "$" + gameJSON.players[0].balance;
 
@@ -46,9 +47,9 @@ async function readJSON(file) {
 
 let count = 0;
 const refreshInterval = setInterval(async () => {
-  await readJSON("./data/game.json");
+  await readJSON("..//data/game.json");
   console.log("updated!");
-}, 500);
+}, 300);
 
 const positionsTransform = {
   0: {
