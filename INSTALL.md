@@ -20,4 +20,4 @@ start game by typing `make play` into the terminal
 
 ## Supplemental GUI (Not part of OCaml System)
 
-After running `make play` and initiating a game, you may additionally see the current player and their respective key statistics by hosting a webserver out of the /gui directory. The reccomended approach is to use the "Live Server" extension and serving the index.html file located in /gui.
+After running `make play` and initiating a game, you may additionally see the current player and their respective key statistics by hosting a webserver out of the /gui directory. [RECCOMENDED APPROACH]: use the "Live Server" extension and serving the index .html file located in /gui. The extension can be found here: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer Alternative Approach [NOT RECCOMENDED]: Utilize `make webserver` (requires Python3).
