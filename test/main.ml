@@ -92,8 +92,8 @@ let make_chance_list_test name crdlst expected : test =
 let make_cc_list_test name crdlst expected : test =
   name >:: fun _ -> assert_equal expected (make_cc_list crdlst)
 
-let find_min_test name (expected_min : 'a * 'b) lst : test =
-  name >:: fun _ -> assert_equal expected_min (find_min (ref (List.hd lst)) lst)
+let find_min_test name first (expected_min : 'a) (lst : ('a * 'b) list) : test =
+  name >:: fun _ -> assert_equal expected_min (find_min first lst)
 
 let chance_mv_test name brdpos playernm dbls ct nm flvr_txt mv rcv gtj ooj
     expected : test =
@@ -323,21 +323,18 @@ let bank_tests =
 
 let intList = [ (0, 0); (2, 2); (3, 3); (4, 4); (5, 5) ]
 let intList_One_Elem = [ (1, 1) ]
-let stringList = [ ("b", "b"); ("a", "a") ]
+let stringList = [ ("a", "a"); ("b", "b") ]
 let stringList_One_Elem = [ ("b", "b") ]
-let reverse_intList = [ (5, 5); (4, 4); (3, 3); (2, 2); (0, 0) ]
+let intList2 = [ (2, 2); (6, 7); (7, 0); (10, 20) ]
 
 let find_min_tests =
   [
-    find_min_test "Find min test with multiple int list" (0, 0) intList;
-    find_min_test "Find min test with one element int list" (1, 1)
-      intList_One_Elem;
-    find_min_test "Find min test with multiple string list" ("a", "a")
-      stringList;
-    find_min_test "Find min test with one element string list" ("b", "b")
+    find_min_test "Find min test with multiple int list" 0 2 intList;
+    find_min_test "Find min test with one element int list" 1 1 intList_One_Elem;
+    find_min_test "Find min test with multiple string list" "a" "b" stringList;
+    find_min_test "Find min test with one element string list" "b" "b"
       stringList_One_Elem;
-    find_min_test "Find min test with reverse order  int list" (0, 0)
-      reverse_intList;
+    find_min_test "Find min test with reverse order  int list" 2 6 intList2;
   ]
 
 let board_tests =
@@ -376,12 +373,12 @@ let board_tests =
     chance_mv_test "chance_mv_test: Reading Railroad (5)" 22 "Reader" 0 Chance
       "Move" "Take a trip to Reading Railroad. If you pass Go, collect $200."
       "Reading Railroad" 0 false false 5;
-    chance_mv_test "chance_mv_test: Nearest Railroad (5)" 7 "Disraeli 1" 0
+    chance_mv_test "chance_mv_test: Nearest Railroad (15)" 7 "Disraeli 1" 0
       Chance "Move"
       "Advance to the nearest Railroad. If unowned, you may buy it from the \
        Bank. If owned, pay owner twice the rental to which they are otherwise \
        entitled."
-      "Railroad" 0 false false 5;
+      "Railroad" 0 false false 15;
     chance_mv_test "chance_mv_test: Nearest Railroad (25)" 22 "Disraeli 2" 0
       Chance "Move"
       "Advance to the nearest Railroad. If unowned, you may buy it from the \
@@ -393,7 +390,7 @@ let board_tests =
       "Advance to the nearest Railroad. If unowned, you may buy it from the \
        Bank. If owned, pay owner twice the rental to which they are otherwise \
        entitled."
-      "Railroad" 0 false false 35;
+      "Railroad" 0 false false 5;
     chance_mv_test "chance_mv_test: Nearest Utility (12)" 7 "Uris 1" 0 Chance
       "Move"
       "Advance token to the nearest Utility. If unowned, you may buy it from \
@@ -405,7 +402,7 @@ let board_tests =
       "Advance token to the nearest Utility. If unowned, you may buy it from \
        the Bank. If owned, throw dice and pay owner a total 10 (ten) times the \
        amount thrown."
-      "Utility" 0 false false 28;
+      "Utility" 0 false false 12;
     chance_mv_test "chance_mv_test: Back 3 (36 - 3 = 33)" 36 "Walker" 0 Chance
       "Move" "Go Back Three Spaces." "Back 3" 0 false false 33;
   ]
