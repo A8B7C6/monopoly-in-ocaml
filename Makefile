@@ -47,6 +47,7 @@ navigate-gui:
 
 doc:
 	dune build
+	dune build @doc ; dune build
 	dune build @doc
 
 opendoc: doc

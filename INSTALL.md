@@ -11,6 +11,8 @@ make an opam switch with `ocaml-base-compiler.4.14.0` if don't have one already 
 for Linux or Mac system, can create switch by typing `opam create JINX ocaml-base-compiler.4.14.0` <br>
 a few packages are required to make this work, for Linux and Mac systems, can download using following command <br>
 `opam install -y ounit2 ppx_deriving_yojson core ANSITerminal` <br>
+`make doc` should be ran twice incase an error appears on the first run <br>
+`make opendoc` allows you to run `make doc` and open it in your file system
 
 # Play Monopoly
 
