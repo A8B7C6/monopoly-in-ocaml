@@ -30,9 +30,7 @@ let remove_player player player_list =
         if h != player then h :: rem_player_helper player t
         else rem_player_helper player t
   in
-  if player_list = [] then
-    failwith "How are you playing with an empty player list?"
-  else rem_player_helper player player_list
+  if player_list = [] then [] else rem_player_helper player player_list
 
 let enqueue_player (players : _player list) (new_player : _player) =
   players @ [ new_player ]

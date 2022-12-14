@@ -140,7 +140,13 @@ let play_monopoly players =
         if cont = "y" then
           if current_player.balance.total >= 0 then
             play_loop cont shuffled_players
-          else play_loop cont (remove_player current_player shuffled_players)
+          else
+            let removed_list = remove_player current_player shuffled_players in
+            if List.length removed_list = 0 then begin
+              print_endline "You lose. No more players";
+              exit 0
+            end
+            else play_loop cont (remove_player current_player shuffled_players)
         else play_loop cont players
     | "end game" -> (
         print_endline "do you want to end the game ? yes/no";

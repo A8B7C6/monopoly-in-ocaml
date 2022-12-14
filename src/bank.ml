@@ -103,6 +103,10 @@ let rec add_to_balance b amt =
 
 let rec deduct_from_balance b amt =
   if amt < 0 then add_to_balance b (amt * -1)
+  else if b.total <= 0 && amt > 0 then begin
+    b.total <- amt * -1;
+    b
+  end
   else if b.ones > 0 then
     let _ = deduct_one b in
     deduct_from_balance b (amt - 1)
